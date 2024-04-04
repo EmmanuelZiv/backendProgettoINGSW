@@ -5,7 +5,10 @@ import model.Acquirente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface AcquirenteRepository extends JpaRepository<Acquirente,String> {
@@ -13,12 +16,10 @@ public interface AcquirenteRepository extends JpaRepository<Acquirente,String> {
     // Questo metodo è fornito di default da JpaRepository, quindi non è necessario implementarlo manualmente.
     // List<Acquirente> findAll();
 
-    // Seleziona un utente con una certa email
     Acquirente findByEmail(String email);
 
-    // Aggiungi un utente con certi valori
-    // Questo metodo è fornito di default da JpaRepository attraverso il metodo save(Acquirente acquirente);
-    // Acquirente save(Acquirente acquirente);
+    @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = email AND password = password", nativeQuery = true)
+    public Optional<Acquirente> login(@Param("email") String username, @Param("password") String password);
 
     // Elimina un utente con una certa email
     @Transactional

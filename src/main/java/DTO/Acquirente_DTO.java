@@ -1,42 +1,30 @@
-package model;
+package DTO;
+
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name="acquirente")
-public class Acquirente {
-    @Column(name="nome")
+public class Acquirente_DTO {
     private String nome;
-    @Column(name="cognome")
     private String cognome;
-    @Id
-    @Column(name="indirizzo_email")
     private String email;
-    @Column(name="password")
     private String password;
-    @Column(name="bio")
     private String bio;
-    @Column(name="areageografica")
     private String paese;
-    @Column(name="link")
     private String sitoweb;
 
-    public Acquirente(){
+    public Acquirente_DTO(){
 
     }
-    public Acquirente(String nome,String cognome,String email,String password,String bio,String paese,String sitoweb){
-        this.nome=nome;
-        this.cognome=cognome;
-        this.email=email;
-        this.password=password;
-        this.bio=bio;
-        this.paese=paese;
-        this.sitoweb=sitoweb;
+    public Acquirente_DTO(String nome, String cognome, String email, String password,String bio, String paese, String sitoweb) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+        this.paese = paese;
+        this.sitoweb = sitoweb;
     }
-
 
     public String getNome() {
         return nome;
@@ -94,7 +82,4 @@ public class Acquirente {
     public void setSitoweb(String sitoweb) {
         this.sitoweb = sitoweb;
     }
-
-
-
 }
