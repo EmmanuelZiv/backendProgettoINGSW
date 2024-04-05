@@ -22,8 +22,10 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.modelmapper:modelmapper:2.4.4'
-	implementation 'org.springframework:spring-web:5.3.14'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-autoconfigure:3.2.4'
+	implementation 'org.springframework:spring-web:6.1.5'
+
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
 
 }
 
