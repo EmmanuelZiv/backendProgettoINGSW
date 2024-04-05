@@ -18,7 +18,7 @@ public interface AcquirenteRepository extends JpaRepository<Acquirente,String> {
 
     Acquirente findByEmail(String email);
 
-    @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = email AND password = password", nativeQuery = true)
+    @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = :email AND password = :password", nativeQuery = true)
     public Optional<Acquirente> login(@Param("email") String indirizzo_email, @Param("password") String password);
 
     // Elimina un utente con una certa email

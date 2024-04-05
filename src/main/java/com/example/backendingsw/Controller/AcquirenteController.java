@@ -26,7 +26,7 @@ public class AcquirenteController {
 
     @GetMapping("/login/{indirizzo_email}/{password}")
     public Acquirente_DTO log_in(@PathVariable String indirizzo_email, @PathVariable String password){
-        System.out.println("ok");
+        System.out.println("ok" + indirizzo_email + password);
 
         Optional<Acquirente> acquirente= i_acquirente_service.login(indirizzo_email,password);
 
