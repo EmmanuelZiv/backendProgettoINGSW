@@ -24,9 +24,11 @@ dependencies {
 	implementation 'org.modelmapper:modelmapper:2.4.4'
 	implementation 'org.springframework.boot:spring-boot-autoconfigure:3.2.4'
 	implementation 'org.springframework:spring-web:6.1.5'
-
+	implementation 'org.slf4j:slf4j-api:2.0.0-alpha0'
 	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
-
+	implementation 'org.slf4j:slf4j-api:2.0.12'
+	implementation 'ch.qos.logback:logback-classic:1.4.14'
+	implementation 'org.springframework.boot:spring-boot-starter'
 }
 
 tasks.named('test') {

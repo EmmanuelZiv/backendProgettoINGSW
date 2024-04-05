@@ -1,30 +1,35 @@
-package controller;
+package com.example.backendingsw.Controller;
 
 
-import DTO.Acquirente_DTO;
-import model.Acquirente;
+import com.example.backendingsw.DTO.Acquirente_DTO;
+import com.example.backendingsw.Model.Acquirente;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-import repository.AcquirenteRepository;
+import com.example.backendingsw.Repository.AcquirenteRepository;
 import org.modelmapper.ModelMapper;
-import service.interfaces.I_Acquirente_Service;
+import com.example.backendingsw.Service.Interfaces.I_Acquirente_Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/acquirenteController") //Verificare
+@RequestMapping("/acquirenteController")
 public class AcquirenteController {
 
     @Autowired
-    private AcquirenteRepository acquirenteRepository;
+    @Qualifier("Impl_Acquirente_Service")
     private I_Acquirente_Service i_acquirente_service;
+    @Autowired
+    private AcquirenteRepository acquirenteRepository;
 
     @GetMapping("/login/{indirizzo_email}/{password}")
-    public Acquirente_DTO log_in(@PathVariable String username, @PathVariable String password){
-        Optional<Acquirente> acquirente= i_acquirente_service.login(username,password);
+    public Acquirente_DTO log_in(@PathVariable String indirizzo_email, @PathVariable String password){
+        System.out.println("ok");
+
+        Optional<Acquirente> acquirente= i_acquirente_service.login(indirizzo_email,password);
+
         if(acquirente.isPresent()) {
             Acquirente_DTO acquirente_dto =convertDto(acquirente.get());
             return acquirente_dto;

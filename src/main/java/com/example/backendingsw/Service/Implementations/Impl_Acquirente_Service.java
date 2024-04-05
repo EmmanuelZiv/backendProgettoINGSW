@@ -1,10 +1,10 @@
-package service.implementations;
+package com.example.backendingsw.Service.Implementations;
 
-import model.Acquirente;
+import com.example.backendingsw.Model.Acquirente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.AcquirenteRepository;
-import service.interfaces.I_Acquirente_Service;
+import com.example.backendingsw.Repository.AcquirenteRepository;
+import com.example.backendingsw.Service.Interfaces.I_Acquirente_Service;
 
 import java.util.Optional;
 

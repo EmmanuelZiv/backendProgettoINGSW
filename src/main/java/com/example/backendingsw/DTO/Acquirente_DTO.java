@@ -1,4 +1,4 @@
-package DTO;
+package com.example.backendingsw.DTO;
 
 
 import jakarta.persistence.Column;

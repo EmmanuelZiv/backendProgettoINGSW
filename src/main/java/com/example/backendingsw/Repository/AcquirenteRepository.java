@@ -1,7 +1,7 @@
-package repository;
+package com.example.backendingsw.Repository;
 
 import jakarta.transaction.Transactional;
-import model.Acquirente;
+import com.example.backendingsw.Model.Acquirente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +19,7 @@ public interface AcquirenteRepository extends JpaRepository<Acquirente,String> {
     Acquirente findByEmail(String email);
 
     @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = email AND password = password", nativeQuery = true)
-    public Optional<Acquirente> login(@Param("email") String username, @Param("password") String password);
+    public Optional<Acquirente> login(@Param("email") String indirizzo_email, @Param("password") String password);
 
     // Elimina un utente con una certa email
     @Transactional
