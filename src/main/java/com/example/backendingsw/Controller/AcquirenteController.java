@@ -31,9 +31,11 @@ public class AcquirenteController {
         Optional<Acquirente> acquirente= i_acquirente_service.login(indirizzo_email,password);
 
         if(acquirente.isPresent()) {
+            System.out.println("acquirente è presente");
             Acquirente_DTO acquirente_dto =convertDto(acquirente.get());
             return acquirente_dto;
         }
+        System.out.println("acquirente non è presente");
         return null;
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
