@@ -8,11 +8,14 @@ import com.example.backendingsw.Model.Venditore;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.backendingsw.Repository.UtenteRepository;
 import org.modelmapper.ModelMapper;
 import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,24 +30,28 @@ public class UtenteController {
     private UtenteRepository utenteRepository;
 
     @GetMapping("/loginAcquirente/{indirizzo_email}/{password}")
-    public Acquirente_DTO log_inAcquirente(@PathVariable String indirizzo_email, @PathVariable String password){
+    public Acquirente_DTO log_inAcquirente(@PathVariable String indirizzo_email, @PathVariable String password) throws ResponseStatusException{
         System.out.println("login acquirente con mail e password:" + indirizzo_email + password);
+        try {
+            Optional<Acquirente> acquirente = i_utente_service.loginAcquirente(indirizzo_email, password);
 
-        Optional<Acquirente> acquirente= i_utente_service.loginAcquirente(indirizzo_email,password);
-
-        if(acquirente.isPresent()) {
-            System.out.println("acquirente è presente");
-            Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
-            return acquirente_dto;
+            if (acquirente.isPresent()) {
+                System.out.println("acquirente è presente");
+                Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
+                return acquirente_dto;
+            }
+            System.out.println("acquirente non è presente");
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
-        System.out.println("acquirente non è presente");
         return null;
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
     @GetMapping("/loginVenditore/{indirizzo_email}/{password}")
-    public Venditore_DTO log_inVenditore(@PathVariable String indirizzo_email, @PathVariable String password){
+    public Venditore_DTO log_inVenditore(@PathVariable String indirizzo_email, @PathVariable String password) throws ResponseStatusException{
         System.out.println("login venditore con mail e password:" + indirizzo_email + password);
 
         try {
@@ -58,10 +65,11 @@ public class UtenteController {
             System.out.println("venditore non è presente");
         }catch (Exception e){
             e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
 
         return null;
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+
     }
 
     // GET: Ottieni tutti gli acquirenti
