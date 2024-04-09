@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface I_Asta_allinglese_Service {
     public List<Asta_allinglese> findByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione);
+    public List<Asta_allinglese> findByCondizioneOrderByIdDesc(String condizione);
+    public List<Asta_allinglese> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
 }

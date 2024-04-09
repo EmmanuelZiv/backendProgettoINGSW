@@ -1,11 +1,8 @@
 package com.example.backendingsw.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "asta_alribasso")
@@ -47,6 +44,9 @@ public class Asta_alribasso {
 
     @Column(name = "id_venditore")
     private String id_venditore; // considerando che id_venditore è una stringa
+
+    @OneToMany(mappedBy = "asta", cascade = CascadeType.ALL)
+    private Set<AsteCategorieAlRibasso> categorie;
 
     // Costruttore, getter e setter
 

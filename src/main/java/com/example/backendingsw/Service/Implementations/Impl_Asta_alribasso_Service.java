@@ -19,4 +19,8 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
     public List<Asta_alribasso> findByCondizioneOrderByIdDesc(String condizione){
         return asta_alribassoRepository.findByCondizioneOrderByIdDesc("aperta");
     }
+    @Override
+    public List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
+        return asta_alribassoRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+    }
 }

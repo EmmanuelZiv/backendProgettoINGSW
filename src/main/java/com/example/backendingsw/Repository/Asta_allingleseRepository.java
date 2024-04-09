@@ -1,14 +1,11 @@
 package com.example.backendingsw.Repository;
 
 import com.example.backendingsw.Model.Asta_allinglese;
-import com.example.backendingsw.Model.Venditore;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese, Long> {
@@ -18,6 +15,9 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
 
     List<Asta_allinglese> findByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione);
 
+    List<Asta_allinglese> findByCondizioneOrderByIdDesc(String condizione);
 
+    @Query("SELECT a FROM Asta_allinglese a JOIN AsteCategorieAllInglese ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria")
+    List<Asta_allinglese> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
 
 }

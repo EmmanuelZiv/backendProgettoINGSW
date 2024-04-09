@@ -1,6 +1,8 @@
 package com.example.backendingsw.Model;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name = "asta_allinglese")
@@ -41,6 +43,9 @@ public class Asta_allinglese {
 
     @Column(name = "id_venditore", nullable = false)
     private String idVenditore;
+
+    @OneToMany(mappedBy = "asta", cascade = CascadeType.ALL)
+    private Set<AsteCategorieAllInglese> categorie;
 
     public Asta_allinglese() {
         // Costruttore vuoto richiesto da JPA

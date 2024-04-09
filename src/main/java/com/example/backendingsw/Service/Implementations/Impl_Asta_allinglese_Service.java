@@ -21,6 +21,14 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     public List<Asta_allinglese> findByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione){
         return asta_allingleseRepository.findByCondizioneOrderByIntervalloTempoOfferteAsc("aperta");
     }
+    @Override
+    public List<Asta_allinglese> findByCondizioneOrderByIdDesc(String condizione){
+        return asta_allingleseRepository.findByCondizioneOrderByIdDesc("aperta");
+    }
+    @Override
+    public List<Asta_allinglese> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
+        return asta_allingleseRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+    }
 //    @Override
 //    public List<Object> getAste_allingleseScadenzaRecente(){
 //        return asta_allingleseRepository.getAste_allingleseScadenzaRecente();

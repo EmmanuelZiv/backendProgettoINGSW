@@ -31,7 +31,7 @@ public class Asta_inversa {
     private float prezzoAttuale;
 
     @Column(name = "dataDiScadenza")
-    private java.sql.Timestamp dataDiScadenza;
+    private String dataDiScadenza;
 
     @Column(name = "condizione")
     private String condizione;
@@ -45,7 +45,7 @@ public class Asta_inversa {
     }
 
     public Asta_inversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale,
-                        java.sql.Timestamp dataDiScadenza, String condizione, String id_acquirente) {
+                        String dataDiScadenza, String condizione, String id_acquirente) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.path_immagine = path_immagine;
@@ -106,11 +106,11 @@ public class Asta_inversa {
         this.prezzoAttuale = prezzoAttuale;
     }
 
-    public java.sql.Timestamp getDataDiScadenza() {
+    public String getDataDiScadenza() {
         return dataDiScadenza;
     }
 
-    public void setDataDiScadenza(java.sql.Timestamp dataDiScadenza) {
+    public void setDataDiScadenza(String dataDiScadenza) {
         this.dataDiScadenza = dataDiScadenza;
     }
 

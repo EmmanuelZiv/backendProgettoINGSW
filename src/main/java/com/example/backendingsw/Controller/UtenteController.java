@@ -15,8 +15,7 @@ import org.modelmapper.ModelMapper;
 import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -48,6 +47,11 @@ public class UtenteController {
         return null;
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
+    @GetMapping("/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
+    public ArrayList<String> findCategorieByIndirizzoEmailAcquirente(@PathVariable String indirizzo_email) {
+        ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailAcquirente(indirizzo_email);
+            return listaCategorie;
+    }
 
 
     @GetMapping("/loginVenditore/{indirizzo_email}/{password}")
@@ -71,11 +75,10 @@ public class UtenteController {
         return null;
 
     }
-
-    // GET: Ottieni tutti gli acquirenti
-    @GetMapping
-    public List<Acquirente> getAllAcquirenti() {
-        return utenteRepository.findAll();
+    @GetMapping("/findCategorieByIndirizzoEmailVenditore/{indirizzo_email}")
+    public ArrayList<String> findCategorieByIndirizzoEmailVenditore(@PathVariable String indirizzo_email) {
+        ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailVenditore(indirizzo_email);
+        return listaCategorie;
     }
 
     // POST: Aggiungi un nuovo acquirente
@@ -83,6 +86,10 @@ public class UtenteController {
     public Acquirente createAcquirente(@RequestBody Acquirente acquirente) {
         return utenteRepository.save(acquirente);
     }
+
+
+
+
 
     @Autowired
     private ModelMapper modelMapper;
@@ -110,7 +117,6 @@ public class UtenteController {
         venditore_dto = modelMapper.map(venditore, Venditore_DTO.class);
         return venditore_dto;
     }
-
     // Metodo per convertire un Venditore_DTO in un Venditore
     private Venditore convertVenditoreEntity(Venditore_DTO venditore_dto){
         modelMapper.getConfiguration()
