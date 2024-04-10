@@ -23,4 +23,13 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
     public List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
         return asta_alribassoRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
     }
+    @Override
+    public int acquistaAstaAlRibasso(Long idAstaAlRibasso, String indirizzo_email, float prezzoAcquisto){
+        try{
+            return asta_alribassoRepository.acquistaAstaAlRibasso(idAstaAlRibasso, indirizzo_email, prezzoAcquisto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore durante l'inserimento dell'asta al ribasso nel database.");
+        }
+    }
 }

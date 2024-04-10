@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +63,18 @@ public class Asta_alribassoController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
+    @GetMapping("/acquistaAstaAlRibasso/{idAstaAlRibasso}/{indirizzo_email}/{prezzoAcquisto}")
+    public int acquistaAstaAlRibasso(@PathVariable Long idAstaAlRibasso, @PathVariable String indirizzo_email, @PathVariable String prezzoAcquisto){
+        try {
+            float prezzo = Float.parseFloat(prezzoAcquisto) ;
+            int numeroRitorno = i_asta_alribasso_service.acquistaAstaAlRibasso(idAstaAlRibasso, indirizzo_email, prezzo);
+            return numeroRitorno;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
 
     @Autowired
     private ModelMapper modelMapper;
