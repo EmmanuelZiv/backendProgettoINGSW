@@ -32,4 +32,12 @@ public interface UtenteRepository extends JpaRepository<Acquirente, String> {
     @Query(value = "SELECT ca.nome FROM categorieVenditore ca WHERE ca.indirizzo_email = :indirizzo_email", nativeQuery = true)
     public ArrayList<String> findCategorieByIndirizzoEmailVenditore(@Param("indirizzo_email") String indirizzo_email);
 
+    @Query(value = "UPDATE acquirente SET nome = :nome, cognome = :cognome,bio=:bio, link=:link, areageografica=:areageografica WHERE indirizzo_email = :indirizzo_email", nativeQuery = true)
+    void updateAcquirente(@Param("nome") String nome, @Param("cognome") String cognome, @Param("bio") String bio, @Param("link") String link, @Param("areageografica") String areageografica, @Param("indirizzo_email") String indirizzo_email);
+
+    @Query(value = "UPDATE acquirente SET  password=:password WHERE indirizzo_email = :indirizzo_email", nativeQuery = true)
+    void updatePasswordAcquirente(@Param("password") String password,@Param("indirizzo_email") String indirizzo_email);
+
+
+
 }

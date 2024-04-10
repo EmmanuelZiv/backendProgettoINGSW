@@ -8,6 +8,7 @@ import com.example.backendingsw.Model.Venditore;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.backendingsw.Repository.UtenteRepository;
@@ -16,6 +17,7 @@ import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -79,6 +81,40 @@ public class UtenteController {
     public ArrayList<String> findCategorieByIndirizzoEmailVenditore(@PathVariable String indirizzo_email) {
         ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailVenditore(indirizzo_email);
         return listaCategorie;
+    }
+
+
+
+
+    @PutMapping("/updateAcquirente/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
+    public void updateAcquirente(@PathVariable String nome, @PathVariable String cognome,
+                                       @PathVariable String bio, @PathVariable String link,@PathVariable String areageografica,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Acquirente con nome: " + nome + "cognome:"+cognome);
+        try {
+            i_utente_service.updateAcquirente(nome,cognome,bio,link,areageografica,indirizzo_email);
+            System.out.println("Acquirente aggiornato con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PutMapping("/updatePasswordAcquirente/{password}/{indirizzo_email}")
+    public void updatePasswordAcquirente(@PathVariable String password,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Acquirente con password: " + password + " email:"+indirizzo_email);
+        try {
+            i_utente_service.updatePasswordAcquirente(password,indirizzo_email);
+            System.out.println("Password Acquirente aggiornata con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    // GET: Ottieni tutti gli acquirenti
+    @GetMapping
+    public List<Acquirente> getAllAcquirenti() {
+        return utenteRepository.findAll();
     }
 
     // POST: Aggiungi un nuovo acquirente

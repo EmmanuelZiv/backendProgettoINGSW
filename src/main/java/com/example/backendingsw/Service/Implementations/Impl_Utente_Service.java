@@ -43,4 +43,21 @@
         public ArrayList<String> findCategorieByIndirizzoEmailVenditore(String email){
             return utente_repository.findCategorieByIndirizzoEmailVenditore(email);
         }
+
+
+
+        public void updateAcquirente(String nome,String cognome,String bio,String link,String areageografica,String email){
+            System.out.println("impl_Acquirente_Service ha nome:"+nome + " cognome:"+ cognome + " bio:"+ bio +" link:"+link + " areageografica:"+areageografica + "email:" + email );
+            utente_repository.updateAcquirente(nome,cognome,bio,link,areageografica,email);
+
+        }
+
+
+        public void updatePasswordAcquirente(String password,String email){
+            System.out.println("impl_Acquirente_Service ha password:"+ password + "email:" + email );
+            utente_repository.updatePasswordAcquirente(password,email);
+
+        }
+
+
     }
