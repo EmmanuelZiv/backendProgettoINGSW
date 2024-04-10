@@ -6,6 +6,7 @@ import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service("Impl_Asta_allinglese_Service")
@@ -25,6 +26,14 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     @Override
     public List<Asta_allinglese> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
         return asta_allingleseRepository.findFirst5ByCategorieNomeAndCondizioneAperta(nomeCategoria);
+    }
+    @Override
+    public int partecipaAstaInglese(Long idAstaInglese, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato){
+        return asta_allingleseRepository.partecipaAstaInglese(idAstaInglese,indirizzo_email,offerta,tempo_offerta,stato);
+    }
+    @Override
+    public Asta_allinglese findAsta_allingleseById(Long idAstaInglese){
+        return asta_allingleseRepository.findAsta_allingleseById(idAstaInglese);
     }
 //    @Override
 //    public List<Object> getAste_allingleseScadenzaRecente(){

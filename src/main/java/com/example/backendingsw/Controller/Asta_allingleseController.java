@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +80,30 @@ public class Asta_allingleseController {
         }
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+    @GetMapping("/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
+    public int partecipaAstaInglese(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
+        try {
+            System.out.println("id : " + idAstaInglese + ", email: " + indirizzo_email + " ,offerta: " + offerta + " ,tempoofferta: " + tempo_offerta + " ,stato: " + stato);
+            float offertaF = Float.parseFloat(offerta);
+            Timestamp orario = Timestamp.valueOf(tempo_offerta);
+            int numeroRitorno = i_asta_allinglese_service.partecipaAstaInglese(idAstaInglese, indirizzo_email, offertaF, orario, stato);
+            return numeroRitorno;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    @GetMapping("/trovaAstaInglese/{idAstaInglese}")
+    public Asta_allinglese_DTO findAsta_allingleseById(@PathVariable  Long idAstaInglese){
+        try{
+            Asta_allinglese astaRecuperata = i_asta_allinglese_service.findAsta_allingleseById(idAstaInglese);
+            Asta_allinglese_DTO astaRecuperataDTO = convertAsta_allingleseDTO(astaRecuperata);
+            return astaRecuperataDTO;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Autowired
