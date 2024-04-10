@@ -81,6 +81,7 @@ public class UtenteController {
     public ArrayList<String> findCategorieByIndirizzoEmailVenditore(@PathVariable String indirizzo_email) {
         ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailVenditore(indirizzo_email);
         return listaCategorie;
+    }
 
 
 
