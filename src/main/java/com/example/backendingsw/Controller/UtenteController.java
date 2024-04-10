@@ -8,6 +8,7 @@ import com.example.backendingsw.Model.Venditore;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import com.example.backendingsw.Repository.UtenteRepository;
 import org.modelmapper.ModelMapper;
@@ -63,6 +64,35 @@ public class UtenteController {
         return null;
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
+
+
+
+
+
+    @PutMapping("/updateAcquirente/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
+    public void updateAcquirente(@PathVariable String nome, @PathVariable String cognome,
+                                       @PathVariable String bio, @PathVariable String link,@PathVariable String areageografica,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Acquirente con nome: " + nome + "cognome:"+cognome);
+        try {
+            i_utente_service.updateAcquirente(nome,cognome,bio,link,areageografica,indirizzo_email);
+            System.out.println("Acquirente aggiornato con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PutMapping("/updatePasswordAcquirente/{password}/{indirizzo_email}")
+    public void updatePasswordAcquirente(@PathVariable String password,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Acquirente con password: " + password + " email:"+indirizzo_email);
+        try {
+            i_utente_service.updatePasswordAcquirente(password,indirizzo_email);
+            System.out.println("Password Acquirente aggiornata con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     // GET: Ottieni tutti gli acquirenti
     @GetMapping
