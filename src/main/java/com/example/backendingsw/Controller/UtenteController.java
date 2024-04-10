@@ -9,11 +9,14 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.backendingsw.Repository.UtenteRepository;
 import org.modelmapper.ModelMapper;
 import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,24 +31,33 @@ public class UtenteController {
     private UtenteRepository utenteRepository;
 
     @GetMapping("/loginAcquirente/{indirizzo_email}/{password}")
-    public Acquirente_DTO log_inAcquirente(@PathVariable String indirizzo_email, @PathVariable String password){
+    public Acquirente_DTO log_inAcquirente(@PathVariable String indirizzo_email, @PathVariable String password) throws ResponseStatusException{
         System.out.println("login acquirente con mail e password:" + indirizzo_email + password);
+        try {
+            Optional<Acquirente> acquirente = i_utente_service.loginAcquirente(indirizzo_email, password);
 
-        Optional<Acquirente> acquirente= i_utente_service.loginAcquirente(indirizzo_email,password);
-
-        if(acquirente.isPresent()) {
-            System.out.println("acquirente è presente");
-            Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
-            return acquirente_dto;
+            if (acquirente.isPresent()) {
+                System.out.println("acquirente è presente");
+                Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
+                return acquirente_dto;
+            }
+            System.out.println("acquirente non è presente");
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
-        System.out.println("acquirente non è presente");
         return null;
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+    @GetMapping("/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
+    public ArrayList<String> findCategorieByIndirizzoEmailAcquirente(@PathVariable String indirizzo_email) {
+        ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailAcquirente(indirizzo_email);
+            return listaCategorie;
     }
 
 
     @GetMapping("/loginVenditore/{indirizzo_email}/{password}")
-    public Venditore_DTO log_inVenditore(@PathVariable String indirizzo_email, @PathVariable String password){
+    public Venditore_DTO log_inVenditore(@PathVariable String indirizzo_email, @PathVariable String password) throws ResponseStatusException{
         System.out.println("login venditore con mail e password:" + indirizzo_email + password);
 
         try {
@@ -59,12 +71,16 @@ public class UtenteController {
             System.out.println("venditore non è presente");
         }catch (Exception e){
             e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
 
         return null;
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
-    }
 
+    }
+    @GetMapping("/findCategorieByIndirizzoEmailVenditore/{indirizzo_email}")
+    public ArrayList<String> findCategorieByIndirizzoEmailVenditore(@PathVariable String indirizzo_email) {
+        ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailVenditore(indirizzo_email);
+        return listaCategorie;
 
 
 
@@ -106,6 +122,10 @@ public class UtenteController {
         return utenteRepository.save(acquirente);
     }
 
+
+
+
+
     @Autowired
     private ModelMapper modelMapper;
     private Acquirente convertAcquirenteEntity(Acquirente_DTO acquirente_dto){
@@ -132,7 +152,6 @@ public class UtenteController {
         venditore_dto = modelMapper.map(venditore, Venditore_DTO.class);
         return venditore_dto;
     }
-
     // Metodo per convertire un Venditore_DTO in un Venditore
     private Venditore convertVenditoreEntity(Venditore_DTO venditore_dto){
         modelMapper.getConfiguration()

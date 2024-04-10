@@ -8,6 +8,7 @@
     import com.example.backendingsw.Repository.UtenteRepository;
     import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
 
+    import java.util.ArrayList;
     import java.util.Optional;
 
     @Service("Impl_Utente_Service")
@@ -23,7 +24,10 @@
             System.out.println("email e password in impl_acquirente_Service" + email + password);
             return utente_repository.loginAcquirente(email, password);
         }
-
+        @Override
+        public ArrayList<String> findCategorieByIndirizzoEmailAcquirente(String email){
+            return utente_repository.findCategorieByIndirizzoEmailAcquirente(email);
+        }
         @Override
         public Optional<Venditore> loginVenditore(String email, String password){
             System.out.println("email e password in impl_venditore_Service" + email + password);
@@ -34,6 +38,10 @@
                 System.out.println("venditore non trovato");
             }
             return venditore;
+        }
+        @Override
+        public ArrayList<String> findCategorieByIndirizzoEmailVenditore(String email){
+            return utente_repository.findCategorieByIndirizzoEmailVenditore(email);
         }
 
 
