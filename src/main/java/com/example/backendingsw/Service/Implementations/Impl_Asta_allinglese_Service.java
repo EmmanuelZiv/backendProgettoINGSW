@@ -1,12 +1,14 @@
 package com.example.backendingsw.Service.Implementations;
 
 import com.example.backendingsw.Model.Asta_allinglese;
+import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Repository.Asta_allingleseRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("Impl_Asta_allinglese_Service")
@@ -46,6 +48,10 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     @Override
     public Integer eliminazioneAstaInPreferiti(Long idAstaInglese, String indirizzo_email){
         return asta_allingleseRepository.eliminazioneAstaInPreferiti(idAstaInglese,indirizzo_email);
+    }
+    @Override
+    public ArrayList<Asta_allinglese> getAsteInglesePreferite(String indirizzo_email){
+        return asta_allingleseRepository.getAsteInglesePreferite(indirizzo_email);
     }
 //    @Override
 //    public List<Object> getAste_allingleseScadenzaRecente(){

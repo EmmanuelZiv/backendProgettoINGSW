@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -42,4 +43,7 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
     @Transactional
     @Query (value = "DELETE FROM preferitiAcquirente WHERE id_asta=?1 AND indirizzo_email= ?2 AND tipo_asta= 'inglese'", nativeQuery = true)
     Integer eliminazioneAstaInPreferiti(Long idAstaInglese, String indirizzo_email);
+
+    @Query(value = "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ?1 AND pv.tipo_asta= 'inglese'", nativeQuery = true)
+    ArrayList<Asta_allinglese> getAsteInglesePreferite(String indirizzo_email);
 }

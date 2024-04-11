@@ -6,6 +6,7 @@ import com.example.backendingsw.Service.Interfaces.I_Asta_alribasso_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("Impl_Asta_alribasso_Service")
@@ -33,5 +34,21 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
     @Override
     public Asta_alribasso findAsta_alribassoById(Long idAstaRibasso){
         return asta_alribassoRepository.findAsta_alribassoById(idAstaRibasso);
+    }
+    @Override
+    public Integer verificaAstaAlRibassoInPreferiti(String indirizzo_email, Long idAstaRibasso){
+        return asta_alribassoRepository.verificaAstaAlRibassoInPreferiti(indirizzo_email,idAstaRibasso);
+    }
+    @Override
+    public Integer inserimentoAstaInPreferiti(Long idAstaRibasso, String indirizzo_email){
+        return asta_alribassoRepository.inserimentoAstaInPreferiti(idAstaRibasso,indirizzo_email);
+    }
+    @Override
+    public Integer eliminazioneAstaInPreferiti(Long idAstaRibasso, String indirizzo_email){
+        return asta_alribassoRepository.eliminazioneAstaInPreferiti(idAstaRibasso,indirizzo_email);
+    }
+    @Override
+    public ArrayList<Asta_alribasso> getAsteRibassoPreferite(String indirizzo_email){
+        return asta_alribassoRepository.getAsteRibassoPreferite(indirizzo_email);
     }
 }

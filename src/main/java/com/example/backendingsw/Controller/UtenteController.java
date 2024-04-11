@@ -1,10 +1,8 @@
 package com.example.backendingsw.Controller;
 
 
-import com.example.backendingsw.DTO.Acquirente_DTO;
-import com.example.backendingsw.DTO.Venditore_DTO;
-import com.example.backendingsw.Model.Acquirente;
-import com.example.backendingsw.Model.Venditore;
+import com.example.backendingsw.DTO.*;
+import com.example.backendingsw.Model.*;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -108,6 +106,8 @@ public class UtenteController {
             e.printStackTrace();
         }
     }
+
+
 
 
 

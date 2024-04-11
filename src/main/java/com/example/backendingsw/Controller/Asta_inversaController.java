@@ -7,10 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -79,7 +76,7 @@ public class Asta_inversaController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
-    @GetMapping("/partecipaAstaInversa/{idAstaInversa}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
+    @PostMapping("/partecipaAstaInversa/{idAstaInversa}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     public int partecipaAstaInversa(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
         try {
             System.out.println("id : " + idAstaInversa + ", email: " + indirizzo_email + " ,offerta: " + offerta + " ,tempoofferta: " + tempo_offerta + " ,stato: " + stato);
@@ -102,6 +99,61 @@ public class Asta_inversaController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping("/verificaAstaInversaInPreferiti/{indirizzo_email}/{idAstaInversa}")
+    public Integer verificaAstaInversaInPreferiti(@PathVariable String indirizzo_email,@PathVariable Long idAstaInversa){
+        try{
+            Integer verifica = i_asta_inversa_service.verificaAstaInversaInPreferiti(indirizzo_email, idAstaInversa);
+            System.out.println("valore di verifica" + verifica);
+            return verifica;
+        }catch (Exception e){
+            System.out.println("eccezione in verifica preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @PostMapping("/inserimentoAstaInPreferiti/{idAstaInversa}/{indirizzo_email}")
+    public Integer inserimentoAstaInPreferiti(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email){
+        try{
+            Integer inserimento = i_asta_inversa_service.inserimentoAstaInPreferiti(idAstaInversa,indirizzo_email);
+            System.out.println("valore di inserimento" + inserimento);
+            return inserimento;
+        }catch (Exception e){
+            System.out.println("eccezione in inserimento preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @DeleteMapping("/eliminazioneAstaInPreferiti/{idAstaInversa}/{indirizzo_email}")
+    public Integer eliminazioneAstaInPreferiti(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email){
+        try{
+            Integer rimozione = i_asta_inversa_service.eliminazioneAstaInPreferiti(idAstaInversa,indirizzo_email);
+            System.out.println("valore di rimozione" + rimozione);
+            return rimozione;
+        }catch (Exception e){
+            System.out.println("eccezione in rimozione preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @GetMapping("/getAsteInversaPreferite/{indirizzo_email}")
+    public ArrayList<Asta_inversa_DTO> getAste_inversaScadenzaRecente(@PathVariable String indirizzo_email){
+        List<Asta_inversa> list_asta_inversa = i_asta_inversa_service.getAsteInversaPreferite(indirizzo_email);
+
+        if (!list_asta_inversa.isEmpty()) {
+            ArrayList<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();
+            for (Asta_inversa asta : list_asta_inversa) {
+                Asta_inversa_DTO astaDTO = convertAsta_inversaDTO(asta);
+                listAsteInversaDTO.add(astaDTO);
+            }
+            return listAsteInversaDTO;
+        } else {
+            System.out.println("Non sono state trovate aste inversa");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @Autowired
     private ModelMapper modelMapper;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("Impl_Asta_inversa_Service")
@@ -35,5 +36,21 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
     @Override
     public Asta_inversa findAsta_inversaById(Long idAstaInversa){
         return asta_inversaRepository.findAsta_inversaById(idAstaInversa);
+    }
+    @Override
+    public Integer verificaAstaInversaInPreferiti(String indirizzo_email, Long idAstaInversa){
+        return asta_inversaRepository.verificaAstaInversaInPreferiti(indirizzo_email,idAstaInversa);
+    }
+    @Override
+    public Integer inserimentoAstaInPreferiti(Long idAstaInversa, String indirizzo_email){
+        return asta_inversaRepository.inserimentoAstaInPreferiti(idAstaInversa,indirizzo_email);
+    }
+    @Override
+    public Integer eliminazioneAstaInPreferiti(Long idAstaInversa, String indirizzo_email){
+        return asta_inversaRepository.eliminazioneAstaInPreferiti(idAstaInversa,indirizzo_email);
+    }
+    @Override
+    public ArrayList<Asta_inversa> getAsteInversaPreferite(String indirizzo_email){
+        return asta_inversaRepository.getAsteInversaPreferite(indirizzo_email);
     }
 }

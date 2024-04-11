@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +62,7 @@ public class Asta_alribassoController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @GetMapping("/acquistaAstaAlRibasso/{idAstaAlRibasso}/{indirizzo_email}/{prezzoAcquisto}")
+    @PostMapping("/acquistaAstaAlRibasso/{idAstaAlRibasso}/{indirizzo_email}/{prezzoAcquisto}")
     public int acquistaAstaAlRibasso(@PathVariable Long idAstaAlRibasso, @PathVariable String indirizzo_email, @PathVariable String prezzoAcquisto){
         try {
             float prezzo = Float.parseFloat(prezzoAcquisto) ;
@@ -88,6 +85,61 @@ public class Asta_alribassoController {
             return null;
         }
     }
+    @GetMapping("/verificaAstaAlRibassoInPreferiti/{indirizzo_email}/{idAstaRibasso}")
+    public Integer verificaAstaAlRibassoInPreferiti(@PathVariable String indirizzo_email,@PathVariable Long idAstaRibasso){
+        try{
+            Integer verifica = i_asta_alribasso_service.verificaAstaAlRibassoInPreferiti(indirizzo_email, idAstaRibasso);
+            System.out.println("valore di verifica" + verifica);
+            return verifica;
+        }catch (Exception e){
+            System.out.println("eccezione in verifica preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @PostMapping("/inserimentoAstaInPreferiti/{idAstaRibasso}/{indirizzo_email}")
+    public Integer inserimentoAstaInPreferiti(@PathVariable Long idAstaRibasso,@PathVariable String indirizzo_email){
+        try{
+            Integer inserimento = i_asta_alribasso_service.inserimentoAstaInPreferiti(idAstaRibasso,indirizzo_email);
+            System.out.println("valore di inserimento" + inserimento);
+            return inserimento;
+        }catch (Exception e){
+            System.out.println("eccezione in inserimento preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @DeleteMapping("/eliminazioneAstaInPreferiti/{idAstaRibasso}/{indirizzo_email}")
+    public Integer eliminazioneAstaInPreferiti(@PathVariable Long idAstaRibasso,@PathVariable String indirizzo_email){
+        try{
+            Integer rimozione = i_asta_alribasso_service.eliminazioneAstaInPreferiti(idAstaRibasso,indirizzo_email);
+            System.out.println("valore di rimozione" + rimozione);
+            return rimozione;
+        }catch (Exception e){
+            System.out.println("eccezione in rimozione preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @GetMapping("/getAsteRibassoPreferite/{indirizzo_email}")
+    public ArrayList<Asta_alribasso_DTO> getAsteRibassoPreferite(@PathVariable String indirizzo_email){
+
+        ArrayList<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.getAsteRibassoPreferite(indirizzo_email);
+
+        if (!list_asta_alribasso.isEmpty()) {
+            ArrayList<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
+            for (Asta_alribasso asta : list_asta_alribasso) {
+                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                listAsteAlribassoDTO.add(astaDTO);
+            }
+            return listAsteAlribassoDTO;
+        } else {
+            System.out.println("Non sono state trovate aste al ribasso");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
 
     @Autowired
     private ModelMapper modelMapper;
@@ -98,4 +150,5 @@ public class Asta_alribassoController {
         asta_alribasso_DTO = modelMapper.map(asta_alribasso, Asta_alribasso_DTO.class);
         return asta_alribasso_DTO;
     }
+
 }

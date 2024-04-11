@@ -1,7 +1,6 @@
     package com.example.backendingsw.Service.Interfaces;
 
-    import com.example.backendingsw.Model.Acquirente;
-    import com.example.backendingsw.Model.Venditore;
+    import com.example.backendingsw.Model.*;
     import org.springframework.data.jpa.repository.Query;
     import org.springframework.data.repository.query.Param;
 
@@ -12,11 +11,9 @@
         public Optional<Acquirente> loginAcquirente(String email, String password);
         public ArrayList<String> findCategorieByIndirizzoEmailAcquirente(String email);
         public Optional<Venditore> loginVenditore(String email, String password);
-
         public void updateAcquirente(String nome,String cognome,String bio,String link,String areageografica,String email);
-
         public void updatePasswordAcquirente(String password,String email);
-
-
         public ArrayList<String> findCategorieByIndirizzoEmailVenditore(String email);
+
+
     }
