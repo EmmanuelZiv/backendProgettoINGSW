@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +79,30 @@ public class Asta_inversaController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
-
+    @GetMapping("/partecipaAstaInversa/{idAstaInversa}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
+    public int partecipaAstaInversa(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
+        try {
+            System.out.println("id : " + idAstaInversa + ", email: " + indirizzo_email + " ,offerta: " + offerta + " ,tempoofferta: " + tempo_offerta + " ,stato: " + stato);
+            float offertaF = Float.parseFloat(offerta);
+            Timestamp orario = Timestamp.valueOf(tempo_offerta);
+            int numeroRitorno = i_asta_inversa_service.partecipaAstaInversa(idAstaInversa, indirizzo_email, offertaF, orario, stato);
+            return numeroRitorno;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    @GetMapping("/trovaAstaInversa/{idAstaInversa}")
+    public Asta_inversa_DTO findAsta_inversaById(@PathVariable  Long idAstaInversa){
+        try{
+            Asta_inversa astaRecuperata = i_asta_inversa_service.findAsta_inversaById(idAstaInversa);
+            Asta_inversa_DTO astaRecuperataDTO = convertAsta_inversaDTO(astaRecuperata);
+            return astaRecuperataDTO;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     @Autowired
     private ModelMapper modelMapper;
     private Asta_inversa_DTO convertAsta_inversaDTO(Asta_inversa asta_inversa){

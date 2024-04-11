@@ -28,6 +28,5 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
     @Query( value = "INSERT INTO partecipazioneAstaAllInglese (idAstaInglese, indirizzo_email, offerta, tempo_offerta, stato) VALUES (?1, ?2, ?3, ?4, ?5) ", nativeQuery = true)
     int partecipaAstaInglese(Long idAstaInglese, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato);
 
-    //@Query (value = "SELECT * FROM asta_allinglese WHERE id = :idAstaInglese " , nativeQuery = true)
     Asta_allinglese findAsta_allingleseById(Long idAstaInglese);
 }

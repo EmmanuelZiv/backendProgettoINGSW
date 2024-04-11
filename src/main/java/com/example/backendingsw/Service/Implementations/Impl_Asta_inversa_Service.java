@@ -7,6 +7,7 @@ import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service("Impl_Asta_inversa_Service")
@@ -26,5 +27,13 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
     @Override
     public List<Asta_inversa> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
         return asta_inversaRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+    }
+    @Override
+    public int partecipaAstaInversa(Long idAstaInversa, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato){
+        return asta_inversaRepository.partecipaAstaInversa(idAstaInversa,indirizzo_email,offerta,tempo_offerta,stato);
+    }
+    @Override
+    public Asta_inversa findAsta_inversaById(Long idAstaInversa){
+        return asta_inversaRepository.findAsta_inversaById(idAstaInversa);
     }
 }

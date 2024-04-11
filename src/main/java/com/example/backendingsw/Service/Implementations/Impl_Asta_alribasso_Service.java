@@ -1,8 +1,6 @@
 package com.example.backendingsw.Service.Implementations;
 
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
-import com.example.backendingsw.Repository.Asta_allingleseRepository;
 import com.example.backendingsw.Repository.Asta_alribassoRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_alribasso_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +29,9 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
             e.printStackTrace();
             throw new RuntimeException("Errore durante l'inserimento dell'asta al ribasso nel database.");
         }
+    }
+    @Override
+    public Asta_alribasso findAsta_alribassoById(Long idAstaRibasso){
+        return asta_alribassoRepository.findAsta_alribassoById(idAstaRibasso);
     }
 }

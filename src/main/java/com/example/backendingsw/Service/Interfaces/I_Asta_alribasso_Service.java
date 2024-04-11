@@ -9,4 +9,5 @@ public interface I_Asta_alribasso_Service {
     public List<Asta_alribasso> findByCondizioneOrderByIdDesc(String condizione);
     public List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
     public int acquistaAstaAlRibasso(Long idAstaAlRibasso, String indirizzo_email, float prezzoAcquisto);
+    public Asta_alribasso findAsta_alribassoById(Long idAstaRibasso);
 }

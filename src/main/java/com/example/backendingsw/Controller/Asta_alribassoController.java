@@ -1,6 +1,8 @@
 package com.example.backendingsw.Controller;
 
+import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_alribasso_DTO;
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Service.Interfaces.I_Asta_alribasso_Service;
 import org.modelmapper.ModelMapper;
@@ -73,7 +75,18 @@ public class Asta_alribassoController {
             e.printStackTrace();
             return 0;
         }
+    }
 
+    @GetMapping("/trovaAstaRibasso/{idAstaRibasso}")
+    public Asta_alribasso_DTO findAsta_alribassoById(@PathVariable Long idAstaRibasso){
+        try{
+            Asta_alribasso astaRecuperata = i_asta_alribasso_service.findAsta_alribassoById(idAstaRibasso);
+            Asta_alribasso_DTO astaRecuperataDTO = convertAsta_alribassoDTO(astaRecuperata);
+            return astaRecuperataDTO;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Autowired

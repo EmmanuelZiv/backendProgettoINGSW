@@ -23,4 +23,6 @@ public interface Asta_alribassoRepository extends JpaRepository<Asta_alribasso, 
     @Query( value = "INSERT INTO vincitoriAstaAlRibasso (idAstaRibasso, indirizzo_email, prezzoAcquisto) VALUES (?1, ?2, ?3)", nativeQuery = true)
     int acquistaAstaAlRibasso(Long idAstaAlRibasso, String indirizzo_email, float prezzoAcquisto);
 
+    Asta_alribasso findAsta_alribassoById(Long idAstaRibasso);
+
 }
