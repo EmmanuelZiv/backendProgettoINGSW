@@ -82,12 +82,12 @@ public class Asta_allingleseController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @GetMapping("/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
-    public int partecipaAstaInglese(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
+    public Integer partecipaAstaInglese(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
         try {
             System.out.println("id : " + idAstaInglese + ", email: " + indirizzo_email + " ,offerta: " + offerta + " ,tempoofferta: " + tempo_offerta + " ,stato: " + stato);
             float offertaF = Float.parseFloat(offerta);
             Timestamp orario = Timestamp.valueOf(tempo_offerta);
-            int numeroRitorno = i_asta_allinglese_service.partecipaAstaInglese(idAstaInglese, indirizzo_email, offertaF, orario, stato);
+            Integer numeroRitorno = i_asta_allinglese_service.partecipaAstaInglese(idAstaInglese, indirizzo_email, offertaF, orario, stato);
             return numeroRitorno;
         }catch (Exception e){
             e.printStackTrace();
@@ -103,6 +103,42 @@ public class Asta_allingleseController {
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+    @GetMapping("/verificaAstaIngleseInPreferiti/{indirizzo_email}/{idAstaInglese}")
+    public Integer verificaAstaIngleseInPreferiti(@PathVariable String indirizzo_email,@PathVariable Long idAstaInglese){
+        try{
+            Integer verifica = i_asta_allinglese_service.verificaAstaIngleseInPreferiti(indirizzo_email, idAstaInglese);
+            System.out.println("valore di verifica" + verifica);
+            return verifica;
+        }catch (Exception e){
+            System.out.println("eccezione in verifica preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @GetMapping("/inserimentoAstaInPreferiti/{idAstaInglese}/{indirizzo_email}")
+    public Integer inserimentoAstaInPreferiti(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email){
+        try{
+            Integer inserimento = i_asta_allinglese_service.inserimentoAstaInPreferiti(idAstaInglese,indirizzo_email);
+            System.out.println("valore di inserimento" + inserimento);
+            return inserimento;
+        }catch (Exception e){
+            System.out.println("eccezione in inserimento preferiti");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    @GetMapping("/eliminazioneAstaInPreferiti/{idAstaInglese}/{indirizzo_email}")
+    public Integer eliminazioneAstaInPreferiti(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email){
+        try{
+            Integer rimozione = i_asta_allinglese_service.eliminazioneAstaInPreferiti(idAstaInglese,indirizzo_email);
+            System.out.println("valore di rimozione" + rimozione);
+            return rimozione;
+        }catch (Exception e){
+            System.out.println("eccezione in rimozione preferiti");
+            e.printStackTrace();
+            return -1;
         }
     }
 

@@ -28,12 +28,24 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
         return asta_allingleseRepository.findFirst5ByCategorieNomeAndCondizioneAperta(nomeCategoria);
     }
     @Override
-    public int partecipaAstaInglese(Long idAstaInglese, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato){
+    public Integer partecipaAstaInglese(Long idAstaInglese, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato){
         return asta_allingleseRepository.partecipaAstaInglese(idAstaInglese,indirizzo_email,offerta,tempo_offerta,stato);
     }
     @Override
     public Asta_allinglese findAsta_allingleseById(Long idAstaInglese){
         return asta_allingleseRepository.findAsta_allingleseById(idAstaInglese);
+    }
+    @Override
+    public Integer verificaAstaIngleseInPreferiti(String indirizzo_email, Long idAstaInglese){
+        return asta_allingleseRepository.verificaAstaIngleseInPreferiti(indirizzo_email, idAstaInglese);
+    }
+    @Override
+    public Integer inserimentoAstaInPreferiti(Long idAstaInglese, String indirizzo_email){
+        return asta_allingleseRepository.inserimentoAstaInPreferiti(idAstaInglese,indirizzo_email);
+    }
+    @Override
+    public Integer eliminazioneAstaInPreferiti(Long idAstaInglese, String indirizzo_email){
+        return asta_allingleseRepository.eliminazioneAstaInPreferiti(idAstaInglese,indirizzo_email);
     }
 //    @Override
 //    public List<Object> getAste_allingleseScadenzaRecente(){
