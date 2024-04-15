@@ -17,5 +17,16 @@ public interface I_Social_Service {
 
     public void updateSocialAcquirente(String oldNome,String oldLink,String newNome,String newLink);
 
-    //public List<SocialVenditore> findSocialVenditore(String email);
+
+    //versione venditore
+
+    public List<SocialVenditore> findSocialVenditore(String email);
+
+    public Optional<SocialVenditore> insertSocialVenditore(String nome,String link,String indirizzo_email);
+
+    public void deleteSocialVenditore(String nome,String link,String indirizzo_email);
+
+    public void updateSocialVenditore(String oldNome,String oldLink,String newNome,String newLink);
+
+
 }

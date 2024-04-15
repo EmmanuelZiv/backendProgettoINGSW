@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="socialVenditore")
+@IdClass(SocialVenditoreID.class)
 public class SocialVenditore {
 
     @Id
@@ -36,9 +37,8 @@ public class SocialVenditore {
     }
 
     public void setVenditore(Venditore venditore) {
-        this.venditore = venditore;
+        this.venditore=venditore;
     }
-
 
     public void setNome(String nome) {
         this.nome = nome;

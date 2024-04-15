@@ -1,5 +1,6 @@
 package com.example.backendingsw.Service.Implementations;
 
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Repository.Asta_alribassoRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_alribasso_Service;
@@ -22,6 +23,16 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
     public List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
         return asta_alribassoRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
     }
+
+    @Override
+    public List<Asta_alribasso> findAsta_alribassoApertaByEmail(String indirizzo_email){
+        return asta_alribassoRepository.findAsta_alribassoApertaByEmail(indirizzo_email);
+    }
+    @Override
+    public List<Asta_alribasso> findAsta_alribassoChiusaByEmail(String indirizzo_email){
+        return asta_alribassoRepository.findAsta_alribassoChiusaByEmail(indirizzo_email);
+    }
+
     @Override
     public int acquistaAstaAlRibasso(Long idAstaAlRibasso, String indirizzo_email, float prezzoAcquisto){
         try{
