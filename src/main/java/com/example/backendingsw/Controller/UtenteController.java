@@ -112,16 +112,17 @@ public class UtenteController {
 
 
     // GET: Ottieni tutti gli acquirenti
-    @GetMapping
-    public List<Acquirente> getAllAcquirenti() {
-        return utenteRepository.findAll();
-    }
-
-    // POST: Aggiungi un nuovo acquirente
-    @PostMapping
-    public Acquirente createAcquirente(@RequestBody Acquirente acquirente) {
-        return utenteRepository.save(acquirente);
-    }
+    //auto creati da springboot, non usano le interfacce e non so se sia corretto
+//    @GetMapping
+//    public List<Acquirente> getAllAcquirenti() {
+//        return utenteRepository.findAll();
+//    }
+//
+//    // POST: Aggiungi un nuovo acquirente
+//    @PostMapping
+//    public Acquirente createAcquirente(@RequestBody Acquirente acquirente) {
+//        return utenteRepository.save(acquirente);
+//    }
 
 
 

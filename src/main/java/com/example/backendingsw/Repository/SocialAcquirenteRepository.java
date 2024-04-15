@@ -22,7 +22,7 @@ public interface SocialAcquirenteRepository extends JpaRepository<SocialAcquiren
     Optional<SocialAcquirente> insertSocialAcquirente(@Param("nome") String nome, @Param("link") String link, @Param("indirizzo_email") String indirizzo_email);
 
     @Query(value = "DELETE FROM socialAcquirente WHERE nome = :nome AND link = :link AND indirizzo_email = :indirizzo_email", nativeQuery = true)
-    public void deleteSocialAcquirente(@Param("nome") String nome, @Param("link") String link, @Param("indirizzo_email") String indirizzo_email);
+    void deleteSocialAcquirente(@Param("nome") String nome, @Param("link") String link, @Param("indirizzo_email") String indirizzo_email);
 
 
     @Query(value = "UPDATE socialAcquirente SET nome = :newNome, link = :newLink WHERE nome = :oldNome AND link = :oldLink", nativeQuery = true)
