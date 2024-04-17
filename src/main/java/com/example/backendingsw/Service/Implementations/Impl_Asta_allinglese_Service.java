@@ -84,5 +84,9 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     public Long getLastInsertedId(){
         return asta_allingleseRepository.getLastInsertedId();
     }
+    @Override
+    public String getEmailVincente(Long idAstaInglese){
+        return asta_allingleseRepository.getEmailVincente(idAstaInglese);
+    }
 
 }

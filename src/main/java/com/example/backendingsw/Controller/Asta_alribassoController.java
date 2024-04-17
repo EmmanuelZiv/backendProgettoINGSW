@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/asta_alribassoController")
@@ -44,25 +42,44 @@ public class Asta_alribassoController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @GetMapping("/getAste_alribassoNomeCategoria/{nomeCategoria}")
-    public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@PathVariable String nomeCategoria){
-        List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
-        System.out.println("Cerco ribasso per categoria : " + nomeCategoria);
+    @GetMapping("/getAste_alribassoNomeCategoria/{nomiCategorie}")
+    public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
+        System.out.println("Cerco ribasse per categorie: " + nomiCategorie);
+        Set<Asta_alribasso> asteUniche = new HashSet<>();
 
-        if (!list_asta_alribasso.isEmpty()) {
-            System.out.println("Trovate " + list_asta_alribasso.size() + "aste ribasso");
-            List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
-            for (Asta_alribasso asta : list_asta_alribasso) {
-                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
-                listAsteAlribassoDTO.add(astaDTO);
-            }
-            return listAsteAlribassoDTO;
-        } else {
-            System.out.println("Non sono state trovate aste al ribasso");
-            return new ArrayList<>();
+        for (String nomeCategoria : nomiCategorie) {
+            List<Asta_alribasso> astePerCategoria = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+            asteUniche.addAll(astePerCategoria);
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+        System.out.println("Cerco ribasse per categorie: " + nomiCategorie);
+        System.out.println("Trovate " + asteUniche.size() + " aste ribasse");
+
+        List<Asta_alribasso_DTO> listAsteAllingleseDTO = new ArrayList<>();
+        for (Asta_alribasso asta : asteUniche) {
+            Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
+            listAsteAllingleseDTO.add(astaDTO);
+        }
+
+        return listAsteAllingleseDTO;
+
+//        List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+//        System.out.println("Cerco ribasso per categoria : " + nomeCategoria);
+//
+//        if (!list_asta_alribasso.isEmpty()) {
+//            System.out.println("Trovate " + list_asta_alribasso.size() + "aste ribasso");
+//            List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
+//            for (Asta_alribasso asta : list_asta_alribasso) {
+//                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
+//                listAsteAlribassoDTO.add(astaDTO);
+//            }
+//            return listAsteAlribassoDTO;
+//        } else {
+//            System.out.println("Non sono state trovate aste al ribasso");
+//            return new ArrayList<>();
+//        }
+//
+//        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -186,7 +203,7 @@ public class Asta_alribassoController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
-    public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam("lista_categorie") ArrayList<String> lista_categorie){
+    public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in insertAstaInglese");
         try{
 

@@ -1,9 +1,7 @@
 package com.example.backendingsw.Controller;
 
-import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_alribasso_DTO;
 import com.example.backendingsw.DTO.Asta_inversa_DTO;
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
@@ -208,7 +206,7 @@ public class Asta_inversaController {
     }
 
     @PostMapping("/insertAstaInversa/{asta_inversa}/{lista_categorie}")
-    public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@RequestParam("lista_categorie") ArrayList<String> lista_categorie){
+    public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in inserta asta inversa");
         try{
             //Asta_inversa asta = convertAsta_inversa(asta_inversa_dto);
@@ -229,6 +227,22 @@ public class Asta_inversaController {
             System.out.println("eccezione in verifica preferiti");
             e.printStackTrace();
             return 0L;
+        }
+    }
+    @GetMapping("/getEmailVincente/{indirizzo_email}/{idAstaInversa}")
+    public Boolean getEmailVincente(@PathVariable String indirizzo_email,@PathVariable Long idAstaInversa){
+        System.out.println("entrato in getemail vincente con id e email: "+ idAstaInversa + ", " + indirizzo_email);
+        try{
+            String email_vincente = null;
+            email_vincente = i_asta_inversa_service.getEmailVincente(idAstaInversa);
+            if(email_vincente!=null){
+                System.out.println("email recuperata"+ email_vincente);
+                return email_vincente.equals(indirizzo_email);
+            }
+            return false;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
         }
     }
     @Autowired

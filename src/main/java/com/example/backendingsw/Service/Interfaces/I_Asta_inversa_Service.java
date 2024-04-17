@@ -25,4 +25,5 @@ public interface I_Asta_inversa_Service {
     //public Long insertAstaInversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente);
     public Integer insertCategorieAstaInversa(Long id_asta_inversa, String nomeCategoria);
     public Asta_inversa save(Asta_inversa asta);
+    public String getEmailVincente(Long idAstaInversa);
 }

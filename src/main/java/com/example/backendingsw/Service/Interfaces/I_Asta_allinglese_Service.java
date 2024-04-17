@@ -24,4 +24,5 @@ public interface I_Asta_allinglese_Service {
     public Integer insertCategorieAstaInglese(Long id_asta_allinglese, String nomeCategoria);
     public void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
     public Long getLastInsertedId();
+    public String getEmailVincente(Long idAstaInglese);
 }

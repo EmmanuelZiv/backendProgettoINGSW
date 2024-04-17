@@ -63,4 +63,7 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
     Integer insertCategorieAstaInversa(Long id_asta_inversa, String nomeCategoria);
 
     Asta_inversa save(Asta_inversa asta);
+
+    @Query(value = "SELECT indirizzo_email FROM partecipazioneAstaInversa WHERE idAstaInversa = ?1 ORDER BY offerta ASC LIMIT 1", nativeQuery = true)
+    String getEmailVincente(Long idAstaInversa);
 }

@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/asta_allingleseController")
@@ -62,23 +60,40 @@ public class Asta_allingleseController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @GetMapping("/getAste_allingleseNomeCategoria/{nomeCategoria}")
-    public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@PathVariable String nomeCategoria){
-        List<Asta_allinglese> list_asta_allinglese = i_asta_allinglese_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+    @GetMapping("/getAste_allingleseNomeCategoria/{nomiCategorie}")
+    public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
+        System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
+        Set<Asta_allinglese> asteUniche = new HashSet<>();
 
-        System.out.println("Cerco inglesi per categoria : " + nomeCategoria);
-        if (!list_asta_allinglese.isEmpty()) {
-            System.out.println("Trovate " + list_asta_allinglese.size() + "aste inglese");
-            List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
-            for (Asta_allinglese asta : list_asta_allinglese) {
-                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
-                listAsteAllingleseDTO.add(astaDTO);
-            }
-            return listAsteAllingleseDTO;
-        } else {
-            System.out.println("Non sono state trovate aste all'inglese");
-            return new ArrayList<>();
+        for (String nomeCategoria : nomiCategorie) {
+            List<Asta_allinglese> astePerCategoria = i_asta_allinglese_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+            asteUniche.addAll(astePerCategoria);
         }
+
+        System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
+        System.out.println("Trovate " + asteUniche.size() + " aste inglese");
+
+        List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
+        for (Asta_allinglese asta : asteUniche) {
+            Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
+            listAsteAllingleseDTO.add(astaDTO);
+        }
+
+        return listAsteAllingleseDTO;
+
+//        System.out.println("Cerco inglesi per categoria : " + nomeCategoria);
+//        if (!list_asta_allinglese.isEmpty()) {
+//            System.out.println("Trovate " + list_asta_allinglese.size() + "aste inglese");
+//            List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
+//            for (Asta_allinglese asta : list_asta_allinglese) {
+//                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
+//                listAsteAllingleseDTO.add(astaDTO);
+//            }
+//            return listAsteAllingleseDTO;
+//        } else {
+//            System.out.println("Non sono state trovate aste all'inglese");
+//            return new ArrayList<>();
+//        }
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
@@ -205,7 +220,7 @@ public class Asta_allingleseController {
         }
     }
     @PostMapping("/insertAstaInglese/{asta_inglese}/{lista_categorie}")
-    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam("lista_categorie") ArrayList<String> lista_categorie){
+    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in insertAstaInglese");
         try{
 
@@ -231,7 +246,22 @@ public class Asta_allingleseController {
             return 0L;
         }
     }
-
+    @GetMapping("/getEmailVincente/{indirizzo_email}/{idAstaInglese}")
+    public Boolean getEmailVincente(@PathVariable String indirizzo_email,@PathVariable Long idAstaInglese){
+        System.out.println("entrato in getemail vincente con id e email: "+ idAstaInglese + ", " + indirizzo_email);
+        try{
+            String email_vincente = null;
+            email_vincente = i_asta_allinglese_service.getEmailVincente(idAstaInglese);
+            if(email_vincente!=null){
+                System.out.println("email recuperata"+ email_vincente);
+                return email_vincente.equals(indirizzo_email);
+            }
+           return false;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
     @Autowired
     private ModelMapper modelMapper;
     // Metodo per convertire un Asta_allinglese in un Asta_allinglese_DTO

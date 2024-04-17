@@ -75,4 +75,8 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
         return asta_inversaRepository.save(asta);
     }
 
+    @Override
+    public String getEmailVincente(Long idAstaInversa){
+        return asta_inversaRepository.getEmailVincente(idAstaInversa);
+    }
 }

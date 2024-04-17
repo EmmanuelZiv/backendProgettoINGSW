@@ -71,4 +71,7 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
 
     @Query("SELECT MAX(id) FROM Asta_allinglese") // Se stai usando un ID auto-generato, altrimenti adatta questa query
     Long getLastInsertedId();
+
+    @Query(value = "SELECT indirizzo_email FROM partecipazioneAstaAllInglese WHERE idAstaInglese = ?1 ORDER BY offerta DESC LIMIT 1",nativeQuery = true)
+    String getEmailVincente(Long idAstaInglese);
 }
