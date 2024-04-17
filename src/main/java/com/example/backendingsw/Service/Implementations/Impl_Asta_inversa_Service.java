@@ -28,6 +28,17 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
     public List<Asta_inversa> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
         return asta_inversaRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
     }
+
+    @Override
+    public List<Asta_inversa> findAsta_inversaApertaByEmail(String indirizzo_email){
+        return asta_inversaRepository.findAsta_inversaApertaByEmail(indirizzo_email);
+    }
+
+    @Override
+    public List<Asta_inversa> findAsta_inversaChiusaByEmail(String indirizzo_email){
+        return asta_inversaRepository.findAsta_inversaChiusaByEmail(indirizzo_email);
+    }
+
     @Override
     public int partecipaAstaInversa(Long idAstaInversa, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato){
         return asta_inversaRepository.partecipaAstaInversa(idAstaInversa,indirizzo_email,offerta,tempo_offerta,stato);

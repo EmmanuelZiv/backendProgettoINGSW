@@ -82,6 +82,47 @@ public class Asta_allingleseController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
+
+
+    @GetMapping("/getAste_allingleseApertaByEmail/{indirizzo_email}")
+    public List<Asta_allinglese_DTO> getAsta_allingleseApertaByEmail(@PathVariable String indirizzo_email){
+        List<Asta_allinglese> list_asta_allinglese = i_asta_allinglese_service.findAsta_allIngleseApertaByEmail(indirizzo_email);
+
+        if (!list_asta_allinglese.isEmpty()) {
+            List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
+            for (Asta_allinglese asta : list_asta_allinglese) {
+                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                listAsteAllingleseDTO.add(astaDTO);
+            }
+            return listAsteAllingleseDTO;
+        } else {
+            System.out.println("Non sono state trovate aste all'inglese");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
+
+    @GetMapping("/getAste_allingleseChiusaByEmail/{indirizzo_email}")
+    public List<Asta_allinglese_DTO> getAsta_allingleseChiusaByEmail(@PathVariable String indirizzo_email){
+        List<Asta_allinglese> list_asta_allinglese = i_asta_allinglese_service.findAsta_allIngleseChiusaByEmail(indirizzo_email);
+
+        if (!list_asta_allinglese.isEmpty()) {
+            List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
+            for (Asta_allinglese asta : list_asta_allinglese) {
+                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                listAsteAllingleseDTO.add(astaDTO);
+            }
+            return listAsteAllingleseDTO;
+        } else {
+            System.out.println("Non sono state trovate aste all'inglese");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
     @PostMapping("/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     public Integer partecipaAstaInglese(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
         try {

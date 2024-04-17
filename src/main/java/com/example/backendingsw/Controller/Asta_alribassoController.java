@@ -65,6 +65,48 @@ public class Asta_alribassoController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
+
+
+    @GetMapping("/getAste_alribassoApertaByEmail/{indirizzo_email}")
+    public List<Asta_alribasso_DTO> getAsta_alribassoApertaByEmail(@PathVariable String indirizzo_email){
+        List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findAsta_alribassoApertaByEmail(indirizzo_email);
+
+        if (!list_asta_alribasso.isEmpty()) {
+            List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
+            for (Asta_alribasso asta : list_asta_alribasso) {
+                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                listAsteAlribassoDTO.add(astaDTO);
+            }
+            return listAsteAlribassoDTO;
+        } else {
+            System.out.println("Non sono state trovate aste al ribasso");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
+
+
+    @GetMapping("/getAste_alribassoChiusaByEmail/{indirizzo_email}")
+    public List<Asta_alribasso_DTO> getAsta_alribassoChiusaByEmail(@PathVariable String indirizzo_email){
+        List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findAsta_alribassoChiusaByEmail(indirizzo_email);
+
+        if (!list_asta_alribasso.isEmpty()) {
+            List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
+            for (Asta_alribasso asta : list_asta_alribasso) {
+                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                listAsteAlribassoDTO.add(astaDTO);
+            }
+            return listAsteAlribassoDTO;
+        } else {
+            System.out.println("Non sono state trovate aste al ribasso");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
     @PostMapping("/acquistaAstaAlRibasso/{idAstaAlRibasso}/{indirizzo_email}/{prezzoAcquisto}")
     public int acquistaAstaAlRibasso(@PathVariable Long idAstaAlRibasso, @PathVariable String indirizzo_email, @PathVariable String prezzoAcquisto){
         try {

@@ -29,6 +29,16 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     public List<Asta_allinglese> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
         return asta_allingleseRepository.findFirst5ByCategorieNomeAndCondizioneAperta(nomeCategoria);
     }
+
+    @Override
+    public List<Asta_allinglese> findAsta_allIngleseApertaByEmail(String indirizzo_email){
+        return asta_allingleseRepository.findAsta_allingleseApertaByEmail(indirizzo_email);
+    }
+    @Override
+    public List<Asta_allinglese> findAsta_allIngleseChiusaByEmail(String indirizzo_email){
+        return asta_allingleseRepository.findAsta_allingleseChiusaByEmail(indirizzo_email);
+    }
+
     @Override
     public Integer partecipaAstaInglese(Long idAstaInglese, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato){
         return asta_allingleseRepository.partecipaAstaInglese(idAstaInglese,indirizzo_email,offerta,tempo_offerta,stato);

@@ -5,6 +5,7 @@ import com.example.backendingsw.Model.Asta_alribasso;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,12 @@ public interface Asta_alribassoRepository extends JpaRepository<Asta_alribasso, 
 
     @Query("SELECT a FROM Asta_alribasso  a JOIN AsteCategorieAlRibasso ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria")
     List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
+
+    @Query("SELECT a FROM Asta_alribasso a WHERE a.condizione='aperta' AND a.id_venditore = :indirizzo_email")
+    public List<Asta_alribasso> findAsta_alribassoApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
+
+    @Query("SELECT a FROM Asta_alribasso a WHERE a.condizione='chiusa' AND a.id_venditore = :indirizzo_email")
+    public List<Asta_alribasso> findAsta_alribassoChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Modifying
     @Transactional

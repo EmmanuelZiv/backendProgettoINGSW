@@ -1,7 +1,9 @@
 package com.example.backendingsw.Controller;
 
+import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_alribasso_DTO;
 import com.example.backendingsw.DTO.Asta_inversa_DTO;
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
@@ -83,6 +85,48 @@ public class Asta_inversaController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
+
+
+    @GetMapping("/getAste_inversaApertaByEmail/{indirizzo_email}")
+    public List<Asta_inversa_DTO> getAsta_inversaApertaByEmail(@PathVariable String indirizzo_email){
+        List<Asta_inversa> list_asta_inversa = i_asta_inversa_service.findAsta_inversaApertaByEmail(indirizzo_email);
+
+        if (!list_asta_inversa.isEmpty()) {
+            List<Asta_inversa_DTO> listAsteinversaDTO = new ArrayList<>();
+            for (Asta_inversa asta : list_asta_inversa) {
+                Asta_inversa_DTO astaDTO = convertAsta_inversaDTO(asta);
+                listAsteinversaDTO.add(astaDTO);
+            }
+            return listAsteinversaDTO;
+        } else {
+            System.out.println("Non sono state trovate aste inverse");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
+
+    @GetMapping("/getAste_inversaChiusaByEmail/{indirizzo_email}")
+    public List<Asta_inversa_DTO> getAsta_inversaChiusaByEmail(@PathVariable String indirizzo_email){
+        List<Asta_inversa> list_asta_inversa = i_asta_inversa_service.findAsta_inversaChiusaByEmail(indirizzo_email);
+
+        if (!list_asta_inversa.isEmpty()) {
+            List<Asta_inversa_DTO> listAsteinversaDTO = new ArrayList<>();
+            for (Asta_inversa asta : list_asta_inversa) {
+                Asta_inversa_DTO astaDTO = convertAsta_inversaDTO(asta);
+                listAsteinversaDTO.add(astaDTO);
+            }
+            return listAsteinversaDTO;
+        } else {
+            System.out.println("Non sono state trovate aste inverse");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
+
     @PostMapping("/partecipaAstaInversa/{idAstaInversa}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     public int partecipaAstaInversa(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
         try {

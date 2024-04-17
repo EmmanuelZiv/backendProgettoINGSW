@@ -1,9 +1,11 @@
 package com.example.backendingsw.Repository;
 
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -18,6 +20,12 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
 
     @Query("SELECT a FROM Asta_inversa a JOIN AsteCategorieInversa ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria")
     List<Asta_inversa> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
+
+    @Query("SELECT a FROM Asta_inversa a WHERE a.condizione='aperta' AND a.id_acquirente = :indirizzo_email")
+    public List<Asta_inversa> findAsta_inversaApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
+
+    @Query("SELECT a FROM Asta_inversa a WHERE a.condizione='chiusa' AND a.id_acquirente = :indirizzo_email")
+    public List<Asta_inversa> findAsta_inversaChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Modifying
     @Transactional
