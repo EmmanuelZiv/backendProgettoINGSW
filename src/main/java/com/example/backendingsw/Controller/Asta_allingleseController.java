@@ -91,7 +91,7 @@ public class Asta_allingleseController {
         if (!list_asta_allinglese.isEmpty()) {
             List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
             for (Asta_allinglese asta : list_asta_allinglese) {
-                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAllingleseDTO.add(astaDTO);
             }
             return listAsteAllingleseDTO;
@@ -111,7 +111,7 @@ public class Asta_allingleseController {
         if (!list_asta_allinglese.isEmpty()) {
             List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
             for (Asta_allinglese asta : list_asta_allinglese) {
-                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAllingleseDTO.add(astaDTO);
             }
             return listAsteAllingleseDTO;
@@ -208,29 +208,6 @@ public class Asta_allingleseController {
     public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam("lista_categorie") ArrayList<String> lista_categorie){
         System.out.println("entrati in insertAstaInglese");
         try{
-//
-////            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-////            // Parsing della stringa in un oggetto Date
-////            Date parsedDate = dateFormat.parse(asta_inglese_dto.getIntervalloOfferteBase());
-////            // Creazione di un Timestamp dalla data
-////            Timestamp timestamp = new Timestamp(parsedDate.getTime());
-//            int minuti = Integer.parseInt(asta_inglese_dto.getIntervalloOfferteBase());
-//            //Duration intervalloTempo = Duration.ofMinutes(minuti);
-//            Duration intervallo = Duration.parse("PT" + asta_inglese_dto.getIntervalloOfferteBase() + "M");
-//
-//            Duration intervalloTempo = Duration.ofMinutes(minuti);
-//            String intervalloTempoOfferteString = "INTERVAL '" + intervalloTempo.toMinutes() + " minutes'";
-//
-//            Asta_allinglese asta = new Asta_allinglese(asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),
-//                    asta_inglese_dto.getPath_immagine(),asta_inglese_dto.getBaseAsta(),intervalloTempoOfferteString,
-//                    intervalloTempoOfferteString,asta_inglese_dto.getRialzoMin(),asta_inglese_dto.getPrezzoAttuale(),
-//                    asta_inglese_dto.getCondizione(),asta_inglese_dto.getId_venditore());
-//
-//            System.out.println("intervallo:" + asta.getIntervalloTempoOfferte());
-//            //Long id_asta = i_asta_inversa_service.insertAstaInversa(asta.getNome(),asta.getDescrizione(),asta.getPath_immagine(),asta.getPrezzoMax(),asta.getPrezzoAttuale(),asta.getDataDiScadenza(),asta.getCondizione(),asta.getId_acquirente());
-//            Asta_allinglese astaInserita = i_asta_allinglese_service.save(asta);
-//            Long id_asta = astaInserita.getId();
-//            System.out.println("inserita asta con id " + id_asta + " e nome " + asta.getNome());
 
             String intervalString = asta_inglese_dto.getIntervalloTempoOfferte() + " MINUTES'";
             byte[] img = null;

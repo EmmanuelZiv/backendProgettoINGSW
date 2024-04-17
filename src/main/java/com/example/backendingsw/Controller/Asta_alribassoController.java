@@ -74,7 +74,7 @@ public class Asta_alribassoController {
         if (!list_asta_alribasso.isEmpty()) {
             List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
             for (Asta_alribasso asta : list_asta_alribasso) {
-                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAlribassoDTO.add(astaDTO);
             }
             return listAsteAlribassoDTO;
@@ -95,7 +95,7 @@ public class Asta_alribassoController {
         if (!list_asta_alribasso.isEmpty()) {
             List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
             for (Asta_alribasso asta : list_asta_alribasso) {
-                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAlribassoDTO.add(astaDTO);
             }
             return listAsteAlribassoDTO;

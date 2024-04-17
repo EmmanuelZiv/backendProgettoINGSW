@@ -94,7 +94,7 @@ public class Asta_inversaController {
         if (!list_asta_inversa.isEmpty()) {
             List<Asta_inversa_DTO> listAsteinversaDTO = new ArrayList<>();
             for (Asta_inversa asta : list_asta_inversa) {
-                Asta_inversa_DTO astaDTO = convertAsta_inversaDTO(asta);
+                Asta_inversa_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteinversaDTO.add(astaDTO);
             }
             return listAsteinversaDTO;
@@ -114,7 +114,7 @@ public class Asta_inversaController {
         if (!list_asta_inversa.isEmpty()) {
             List<Asta_inversa_DTO> listAsteinversaDTO = new ArrayList<>();
             for (Asta_inversa asta : list_asta_inversa) {
-                Asta_inversa_DTO astaDTO = convertAsta_inversaDTO(asta);
+                Asta_inversa_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteinversaDTO.add(astaDTO);
             }
             return listAsteinversaDTO;
