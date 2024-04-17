@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class Asta_alribassoController {
         if (!list_asta_alribasso.isEmpty()) {
             List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
             for (Asta_alribasso asta : list_asta_alribasso) {
-                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAlribassoDTO.add(astaDTO);
             }
             return listAsteAlribassoDTO;
@@ -46,11 +47,13 @@ public class Asta_alribassoController {
     @GetMapping("/getAste_alribassoNomeCategoria/{nomeCategoria}")
     public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@PathVariable String nomeCategoria){
         List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+        System.out.println("Cerco ribasso per categoria : " + nomeCategoria);
 
         if (!list_asta_alribasso.isEmpty()) {
+            System.out.println("Trovate " + list_asta_alribasso.size() + "aste ribasso");
             List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
             for (Asta_alribasso asta : list_asta_alribasso) {
-                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAlribassoDTO.add(astaDTO);
             }
             return listAsteAlribassoDTO;
@@ -78,7 +81,7 @@ public class Asta_alribassoController {
     public Asta_alribasso_DTO findAsta_alribassoById(@PathVariable Long idAstaRibasso){
         try{
             Asta_alribasso astaRecuperata = i_asta_alribasso_service.findAsta_alribassoById(idAstaRibasso);
-            Asta_alribasso_DTO astaRecuperataDTO = convertAsta_alribassoDTO(astaRecuperata);
+            Asta_alribasso_DTO astaRecuperataDTO = convertiDaModelAaDto(astaRecuperata);
             return astaRecuperataDTO;
         }catch (Exception e){
             e.printStackTrace();
@@ -129,7 +132,7 @@ public class Asta_alribassoController {
         if (!list_asta_alribasso.isEmpty()) {
             ArrayList<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
             for (Asta_alribasso asta : list_asta_alribasso) {
-                Asta_alribasso_DTO astaDTO = convertAsta_alribassoDTO(asta);
+                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAlribassoDTO.add(astaDTO);
             }
             return listAsteAlribassoDTO;
@@ -140,6 +143,34 @@ public class Asta_alribassoController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
+    @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
+    public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam("lista_categorie") ArrayList<String> lista_categorie){
+        System.out.println("entrati in insertAstaInglese");
+        try{
+
+            String intervalString = asta_ribasso_dto.getIntervalloDecrementale() + " MINUTES'";
+            byte[] img = null;
+            if(asta_ribasso_dto.getPath_immagine()!=null) {
+                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagine());
+            }
+            i_asta_alribasso_service.insert(asta_ribasso_dto.getNome(), asta_ribasso_dto.getDescrizione(),img,asta_ribasso_dto.getPrezzoBase(),intervalString,
+                    asta_ribasso_dto.getDecrementoAutomaticoCifra(),asta_ribasso_dto.getPrezzoMin(),asta_ribasso_dto.getPrezzoAttuale(),asta_ribasso_dto.getCondizione(),asta_ribasso_dto.getId_venditore());
+
+            Long id_asta = i_asta_alribasso_service.getLastInsertedId();
+
+            if (lista_categorie != null && !lista_categorie.isEmpty()) {
+                for(String categoria:lista_categorie){
+                    Integer value = i_asta_alribasso_service.insertCategorieAstaRibasso(id_asta,categoria);
+                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id_asta);
+                }
+            }
+            return id_asta;
+        }catch (Exception e){
+            System.out.println("eccezione in verifica preferiti");
+            e.printStackTrace();
+            return 0L;
+        }
+    }
 
     @Autowired
     private ModelMapper modelMapper;
@@ -149,6 +180,34 @@ public class Asta_alribassoController {
         Asta_alribasso_DTO asta_alribasso_DTO = new Asta_alribasso_DTO();
         asta_alribasso_DTO = modelMapper.map(asta_alribasso, Asta_alribasso_DTO.class);
         return asta_alribasso_DTO;
+    }
+
+    private Asta_alribasso_DTO convertiDaModelAaDto(Asta_alribasso asta){
+        String img = null;
+        if(asta.getPath_immagine()!=null) {
+            img = convertByteArrayToBase64(asta.getPath_immagine());
+        }
+        Asta_alribasso_DTO astaDTO = new Asta_alribasso_DTO(asta.getId(),asta.getNome(), asta.getDescrizione(),img, asta.getPrezzoBase(),asta.getIntervalloDecrementale(),
+                asta.getIntervalloDecrementale(),asta.getDecrementoAutomaticoCifra(),asta.getPrezzoMin(),asta.getPrezzoAttuale(),asta.getCondizione(),asta.getId_venditore());
+        return astaDTO;
+    }
+    private Asta_alribasso convertiDaDtoAModel(Asta_alribasso_DTO astaDTO){
+        byte[] img = null;
+        if(astaDTO.getPath_immagine()!=null) {
+            img = convertBase64ToByteArray(astaDTO.getPath_immagine());
+        }
+        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNome(), astaDTO.getDescrizione(),img, astaDTO.getPrezzoBase(),astaDTO.getIntervalloDecrementale(),
+                astaDTO.getIntervalloDecrementale(),astaDTO.getDecrementoAutomaticoCifra(),astaDTO.getPrezzoMin(),astaDTO.getPrezzoAttuale(),astaDTO.getCondizione(),astaDTO.getId_venditore());
+        return asta;
+    }
+
+    public static String convertByteArrayToBase64(byte[] byteArray) {
+        return Base64.getEncoder().encodeToString(byteArray);
+    }
+    public static byte[] convertBase64ToByteArray(String base64String) {
+        String base64SenzaSpazi = base64String.replaceAll("\\s+", "");
+        // Decodifica la stringa Base64 in un array di byte
+        return Base64.getDecoder().decode(base64SenzaSpazi);
     }
 
 }

@@ -51,4 +51,18 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
     public ArrayList<Asta_alribasso> getAsteRibassoPreferite(String indirizzo_email){
         return asta_alribassoRepository.getAsteRibassoPreferite(indirizzo_email);
     }
+
+    @Override
+    public Integer insertCategorieAstaRibasso(Long id_asta_alribasso, String nomeCategoria){
+        return asta_alribassoRepository.insertCategorieAstaRibasso(id_asta_alribasso,nomeCategoria);
+    }
+    @Override
+    public void insert(String nome, String descrizione, byte[] path_immagine, float prezzoBase, String intervalloDecrementale,
+                       float decrementoAutomaticoCifra ,float prezzoMin, float prezzoAttuale, String condizione, String id_venditore){
+        asta_alribassoRepository.insert(nome, descrizione, path_immagine, prezzoBase, intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, id_venditore);
+    }
+    @Override
+    public Long getLastInsertedId(){
+        return asta_alribassoRepository.getLastInsertedId();
+    }
 }

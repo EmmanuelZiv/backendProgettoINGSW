@@ -44,4 +44,15 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
     @Query(value = "SELECT aa.* FROM preferitiVenditore pv JOIN asta_inversa aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'inversa'", nativeQuery = true)
     ArrayList<Asta_inversa> getAsteInversaPreferite(String indirizzo_email);
 
+//    @Modifying
+//    @Transactional
+//    @Query(value = "INSERT INTO asta_inversa (nome,descizione,path_immagine,prezzoMax,prezzoAttuale,dataDiScadenza,condizione,id_acquirente) VALUES (?1, ?2, ?3, ?4,?5,?6,?7,?8)", nativeQuery = true)
+//    Long insertAstaInversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente);
+//
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO AsteCategorieInversa (id_asta_inversa, nomeCategoria) VALUES (?1, ?2)",nativeQuery = true)
+    Integer insertCategorieAstaInversa(Long id_asta_inversa, String nomeCategoria);
+
+    Asta_inversa save(Asta_inversa asta);
 }

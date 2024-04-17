@@ -18,4 +18,8 @@ public interface I_Asta_allinglese_Service {
     public Integer inserimentoAstaInPreferiti(Long idAstaInglese, String indirizzo_email);
     public Integer eliminazioneAstaInPreferiti(Long idAstaInglese, String indirizzo_email);
     public ArrayList<Asta_allinglese> getAsteInglesePreferite(String indirizzo_email);
+    public Asta_allinglese save(Asta_allinglese astaAllinglese);
+    public Integer insertCategorieAstaInglese(Long id_asta_allinglese, String nomeCategoria);
+    public void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
+    public Long getLastInsertedId();
 }

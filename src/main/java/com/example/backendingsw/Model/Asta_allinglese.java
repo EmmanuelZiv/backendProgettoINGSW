@@ -19,9 +19,9 @@ public class Asta_allinglese {
     @Column(name = "descrizione", length = 250)
     private String descrizione;
 
-    @Lob
+
     @Column(name = "path_immagine")
-    private byte[] pathImmagine;
+    private byte[] path_immagine;
 
     @Column(name = "baseAsta", nullable = false)
     private float baseAsta;
@@ -51,10 +51,10 @@ public class Asta_allinglese {
         // Costruttore vuoto richiesto da JPA
     }
 
-    public Asta_allinglese(String nome, String descrizione, byte[] pathImmagine, float baseAsta, String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String idVenditore) {
+    public Asta_allinglese(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String idVenditore) {
         this.nome = nome;
         this.descrizione = descrizione;
-        this.pathImmagine = pathImmagine;
+        this.path_immagine = path_immagine;
         this.baseAsta = baseAsta;
         this.intervalloTempoOfferte = intervalloTempoOfferte;
         this.intervalloOfferteBase = intervalloOfferteBase;
@@ -89,12 +89,12 @@ public class Asta_allinglese {
         this.descrizione = descrizione;
     }
 
-    public byte[] getPathImmagine() {
-        return pathImmagine;
+    public byte[] getPath_immagine() {
+        return path_immagine;
     }
 
-    public void setPathImmagine(byte[] pathImmagine) {
-        this.pathImmagine = pathImmagine;
+    public void setPath_immagine(byte[] path_immagine) {
+        this.path_immagine = path_immagine;
     }
 
     public float getBaseAsta() {

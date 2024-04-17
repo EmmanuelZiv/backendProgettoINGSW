@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,8 @@ public class Asta_allingleseController {
         if (!list_asta_allinglese.isEmpty()) {
             List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
             for (Asta_allinglese asta : list_asta_allinglese) {
-                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                //Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAllingleseDTO.add(astaDTO);
             }
             return listAsteAllingleseDTO;
@@ -48,7 +50,7 @@ public class Asta_allingleseController {
         if (!list_asta_allinglese.isEmpty()) {
             List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
             for (Asta_allinglese asta : list_asta_allinglese) {
-                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAllingleseDTO.add(astaDTO);
             }
             return listAsteAllingleseDTO;
@@ -64,10 +66,12 @@ public class Asta_allingleseController {
     public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@PathVariable String nomeCategoria){
         List<Asta_allinglese> list_asta_allinglese = i_asta_allinglese_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
 
+        System.out.println("Cerco inglesi per categoria : " + nomeCategoria);
         if (!list_asta_allinglese.isEmpty()) {
+            System.out.println("Trovate " + list_asta_allinglese.size() + "aste inglese");
             List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
             for (Asta_allinglese asta : list_asta_allinglese) {
-                Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAllingleseDTO.add(astaDTO);
             }
             return listAsteAllingleseDTO;
@@ -95,7 +99,8 @@ public class Asta_allingleseController {
     public Asta_allinglese_DTO findAsta_allingleseById(@PathVariable  Long idAstaInglese){
         try{
             Asta_allinglese astaRecuperata = i_asta_allinglese_service.findAsta_allingleseById(idAstaInglese);
-            Asta_allinglese_DTO astaRecuperataDTO = convertAsta_allingleseDTO(astaRecuperata);
+            //Asta_allinglese_DTO astaRecuperataDTO = convertAsta_allingleseDTO(astaRecuperata);
+            Asta_allinglese_DTO astaRecuperataDTO = convertiDaModelAaDto(astaRecuperata);
             return astaRecuperataDTO;
         }catch (Exception e){
             e.printStackTrace();
@@ -145,7 +150,7 @@ public class Asta_allingleseController {
             if (!lista.isEmpty()) {
                 ArrayList<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
                 for (Asta_allinglese asta : lista) {
-                    Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
+                    Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                     listAsteAllingleseDTO.add(astaDTO);
                 }
                 return listAsteAllingleseDTO;
@@ -156,6 +161,56 @@ public class Asta_allingleseController {
         }catch (Exception e){
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+    @PostMapping("/insertAstaInglese/{asta_inglese}/{lista_categorie}")
+    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam("lista_categorie") ArrayList<String> lista_categorie){
+        System.out.println("entrati in insertAstaInglese");
+        try{
+//
+////            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+////            // Parsing della stringa in un oggetto Date
+////            Date parsedDate = dateFormat.parse(asta_inglese_dto.getIntervalloOfferteBase());
+////            // Creazione di un Timestamp dalla data
+////            Timestamp timestamp = new Timestamp(parsedDate.getTime());
+//            int minuti = Integer.parseInt(asta_inglese_dto.getIntervalloOfferteBase());
+//            //Duration intervalloTempo = Duration.ofMinutes(minuti);
+//            Duration intervallo = Duration.parse("PT" + asta_inglese_dto.getIntervalloOfferteBase() + "M");
+//
+//            Duration intervalloTempo = Duration.ofMinutes(minuti);
+//            String intervalloTempoOfferteString = "INTERVAL '" + intervalloTempo.toMinutes() + " minutes'";
+//
+//            Asta_allinglese asta = new Asta_allinglese(asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),
+//                    asta_inglese_dto.getPath_immagine(),asta_inglese_dto.getBaseAsta(),intervalloTempoOfferteString,
+//                    intervalloTempoOfferteString,asta_inglese_dto.getRialzoMin(),asta_inglese_dto.getPrezzoAttuale(),
+//                    asta_inglese_dto.getCondizione(),asta_inglese_dto.getId_venditore());
+//
+//            System.out.println("intervallo:" + asta.getIntervalloTempoOfferte());
+//            //Long id_asta = i_asta_inversa_service.insertAstaInversa(asta.getNome(),asta.getDescrizione(),asta.getPath_immagine(),asta.getPrezzoMax(),asta.getPrezzoAttuale(),asta.getDataDiScadenza(),asta.getCondizione(),asta.getId_acquirente());
+//            Asta_allinglese astaInserita = i_asta_allinglese_service.save(asta);
+//            Long id_asta = astaInserita.getId();
+//            System.out.println("inserita asta con id " + id_asta + " e nome " + asta.getNome());
+
+            String intervalString = asta_inglese_dto.getIntervalloTempoOfferte() + " MINUTES'";
+            byte[] img = null;
+            if(asta_inglese_dto.getPath_immagine()!=null && !asta_inglese_dto.getPath_immagine().isEmpty()) {
+                 img = convertBase64ToByteArray(asta_inglese_dto.getPath_immagine());
+            }
+            i_asta_allinglese_service.insert(asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),img,asta_inglese_dto.getBaseAsta(),intervalString
+            ,asta_inglese_dto.getRialzoMin(),asta_inglese_dto.getPrezzoAttuale(),asta_inglese_dto.getCondizione(),asta_inglese_dto.getId_venditore());
+
+            Long id_asta = i_asta_allinglese_service.getLastInsertedId();
+            if (lista_categorie != null && !lista_categorie.isEmpty()) {
+                for(String categoria:lista_categorie) {
+                    Integer value = i_asta_allinglese_service.insertCategorieAstaInglese(id_asta, categoria);
+                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id_asta);
+                }
+            }
+            return id_asta;
+        }catch (Exception e){
+            System.out.println("eccezione in inserimento aste inglesi");
+            e.printStackTrace();
+            return 0L;
         }
     }
 
@@ -169,5 +224,34 @@ public class Asta_allingleseController {
         asta_allinglese_DTO = modelMapper.map(asta_allinglese, Asta_allinglese_DTO.class);
         return asta_allinglese_DTO;
     }
+    private Asta_allinglese_DTO convertiDaModelAaDto(Asta_allinglese asta){
+        String img = null;
+        if(asta.getPath_immagine()!=null) {
+            img = convertByteArrayToBase64(asta.getPath_immagine());
+        }
+        Asta_allinglese_DTO astaDTO = new Asta_allinglese_DTO(asta.getId(),asta.getNome(), asta.getDescrizione(),img, asta.getBaseAsta(),asta.getIntervalloTempoOfferte(),
+                asta.getIntervalloOfferteBase(),asta.getRialzoMin(),asta.getPrezzoAttuale(),asta.getCondizione(),asta.getIdVenditore());
+        return astaDTO;
+    }
+    private Asta_allinglese convertiDaDtoAModel(Asta_allinglese_DTO astaDTO){
+        byte[] img = null;
+        if(astaDTO.getPath_immagine()!=null) {
+            img = convertBase64ToByteArray(astaDTO.getPath_immagine());
+        }
+        Asta_allinglese asta = new Asta_allinglese(astaDTO.getNome(), astaDTO.getDescrizione(),img, astaDTO.getBaseAsta(),astaDTO.getIntervalloTempoOfferte(),
+                astaDTO.getIntervalloOfferteBase(),astaDTO.getRialzoMin(),astaDTO.getPrezzoAttuale(),astaDTO.getCondizione(),astaDTO.getId_venditore());
+        return asta;
+    }
+
+    public static String convertByteArrayToBase64(byte[] byteArray) {
+        return Base64.getEncoder().encodeToString(byteArray);
+    }
+    public static byte[] convertBase64ToByteArray(String base64String) {
+        String base64SenzaSpazi = base64String.replaceAll("\\s+", "");
+        // Decodifica la stringa Base64 in un array di byte
+        return Base64.getDecoder().decode(base64SenzaSpazi);
+    }
+
+
 
 }

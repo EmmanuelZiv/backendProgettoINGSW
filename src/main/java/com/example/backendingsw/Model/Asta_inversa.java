@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "asta_inversa")
 public class Asta_inversa {
@@ -31,7 +33,7 @@ public class Asta_inversa {
     private float prezzoAttuale;
 
     @Column(name = "dataDiScadenza")
-    private String dataDiScadenza;
+    private Timestamp dataDiScadenza;
 
     @Column(name = "condizione")
     private String condizione;
@@ -45,7 +47,7 @@ public class Asta_inversa {
     }
 
     public Asta_inversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale,
-                        String dataDiScadenza, String condizione, String id_acquirente) {
+                        Timestamp dataDiScadenza, String condizione, String id_acquirente) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.path_immagine = path_immagine;
@@ -106,11 +108,11 @@ public class Asta_inversa {
         this.prezzoAttuale = prezzoAttuale;
     }
 
-    public String getDataDiScadenza() {
+    public Timestamp getDataDiScadenza() {
         return dataDiScadenza;
     }
 
-    public void setDataDiScadenza(String dataDiScadenza) {
+    public void setDataDiScadenza(Timestamp dataDiScadenza) {
         this.dataDiScadenza = dataDiScadenza;
     }
 

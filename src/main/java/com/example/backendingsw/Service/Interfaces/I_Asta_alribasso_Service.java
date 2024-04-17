@@ -18,4 +18,9 @@ public interface I_Asta_alribasso_Service {
     public Integer inserimentoAstaInPreferiti(Long idAstaRibasso, String indirizzo_email);
     public Integer eliminazioneAstaInPreferiti(Long idAstaRibasso, String indirizzo_email);
     public ArrayList<Asta_alribasso> getAsteRibassoPreferite(String indirizzo_email);
+
+    public Integer insertCategorieAstaRibasso(Long id_asta_alribasso, String nomeCategoria);
+    public void insert(String nome, String descrizione, byte[] path_immagine, float prezzoBase, String intervalloDecrementale,
+                       float decrementoAutomaticoCifra ,float prezzoMin, float prezzoAttuale, String condizione, String id_venditore);
+    public Long getLastInsertedId();
 }

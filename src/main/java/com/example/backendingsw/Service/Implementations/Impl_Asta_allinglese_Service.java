@@ -57,7 +57,22 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
 //    public List<Object> getAste_allingleseScadenzaRecente(){
 //        return asta_allingleseRepository.getAste_allingleseScadenzaRecente();
 //    }
+    @Override
+    public Asta_allinglese save(Asta_allinglese astaAllinglese){
+        return asta_allingleseRepository.save(astaAllinglese);
+    }
+    @Override
+    public Integer insertCategorieAstaInglese(Long id_asta_allinglese, String nomeCategoria){
+        return asta_allingleseRepository.insertCategorieAstaInglese(id_asta_allinglese,nomeCategoria);
+    }
+    @Override
+    public void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore){
+            asta_allingleseRepository.insert(nome,descrizione,path_immagine,baseAsta,intervalloTempoOfferte,rialzoMin,prezzoAttuale,condizione,id_venditore);
+    }
 
-
+    @Override
+    public Long getLastInsertedId(){
+        return asta_allingleseRepository.getLastInsertedId();
+    }
 
 }

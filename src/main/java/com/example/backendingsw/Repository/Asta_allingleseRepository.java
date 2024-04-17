@@ -46,4 +46,19 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
 
     @Query(value = "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ?1 AND pv.tipo_asta= 'inglese'", nativeQuery = true)
     ArrayList<Asta_allinglese> getAsteInglesePreferite(String indirizzo_email);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO AsteCategorieAllInglese (id_asta_allinglese , nomeCategoria) VALUES (?1, ?2)",nativeQuery = true)
+    Integer insertCategorieAstaInglese(Long id_asta_allinglese, String nomeCategoria);
+
+    Asta_allinglese save(Asta_allinglese astaAllinglese);
+
+    @Modifying
+    @Transactional
+    @Query(value ="INSERT INTO asta_allinglese (nome, descrizione, path_immagine, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, id_venditore) VALUES (?1,?2,?3,?4,CAST(?5 AS interval),?6,?7,?8,?9)", nativeQuery = true)
+    void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
+
+    @Query("SELECT MAX(id) FROM Asta_allinglese") // Se stai usando un ID auto-generato, altrimenti adatta questa query
+    Long getLastInsertedId();
 }

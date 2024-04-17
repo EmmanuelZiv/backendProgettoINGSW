@@ -1,6 +1,5 @@
 package com.example.backendingsw.Service.Implementations;
 
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Repository.Asta_inversaRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
@@ -53,4 +52,16 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
     public ArrayList<Asta_inversa> getAsteInversaPreferite(String indirizzo_email){
         return asta_inversaRepository.getAsteInversaPreferite(indirizzo_email);
     }
+//    @Override
+//    public Long insertAstaInversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente){
+//        return asta_inversaRepository.insertAstaInversa(nome,descrizione,path_immagine,prezzoMax,prezzoAttuale,dataDiScadenza,condizione,id_acquirente);
+//    }
+    @Override
+    public Integer insertCategorieAstaInversa(Long id_asta_inversa, String nomeCategoria){
+        return asta_inversaRepository.insertCategorieAstaInversa(id_asta_inversa,nomeCategoria);
+    }
+    public Asta_inversa save(Asta_inversa asta){
+        return asta_inversaRepository.save(asta);
+    }
+
 }

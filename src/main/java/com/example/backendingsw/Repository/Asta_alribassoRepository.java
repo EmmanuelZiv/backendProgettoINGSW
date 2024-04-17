@@ -42,4 +42,18 @@ public interface Asta_alribassoRepository extends JpaRepository<Asta_alribasso, 
     @Query(value = "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_alribasso aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'ribasso'", nativeQuery = true)
     ArrayList<Asta_alribasso> getAsteRibassoPreferite(String indirizzo_email);
 
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO AsteCategorieAlRibasso  (id_asta_alribasso  , nomeCategoria) VALUES (?1, ?2)",nativeQuery = true)
+    Integer insertCategorieAstaRibasso(Long id_asta_alribasso, String nomeCategoria);
+
+    @Modifying
+    @Transactional
+    @Query(value ="INSERT INTO asta_alribasso (nome, descrizione, path_immagine, prezzoBase, intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale,condizione, id_venditore) VALUES (?1,?2,?3,?4,CAST(?5 AS interval),?6,?7,?8,?9,?10)", nativeQuery = true)
+    void insert(String nome, String descrizione, byte[] path_immagine, float prezzoBase, String intervalloDecrementale, float decrementoAutomaticoCifra ,float prezzoMin, float prezzoAttuale, String condizione, String id_venditore);
+
+    @Query("SELECT MAX(id) FROM Asta_alribasso") // Se stai usando un ID auto-generato, altrimenti adatta questa query
+    Long getLastInsertedId();
+
 }
