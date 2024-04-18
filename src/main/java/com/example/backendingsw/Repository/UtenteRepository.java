@@ -16,7 +16,7 @@ public interface UtenteRepository extends JpaRepository<Acquirente, String> {
     // Questo metodo è fornito di default da JpaRepository, quindi non è necessario implementarlo manualmente.
     List<Acquirente> findAll();
 
-    Acquirente findByEmail(String email);
+
 
 
     @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = :indirizzo_email AND password = :password", nativeQuery = true)

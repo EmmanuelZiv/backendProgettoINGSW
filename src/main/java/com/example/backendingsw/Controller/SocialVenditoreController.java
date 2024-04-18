@@ -1,13 +1,7 @@
 package com.example.backendingsw.Controller;
 
-import com.example.backendingsw.DTO.SocialAcquirente_DTO;
 import com.example.backendingsw.DTO.SocialVenditore_DTO;
-import com.example.backendingsw.DTO.Venditore_DTO;
-import com.example.backendingsw.Model.Acquirente;
-import com.example.backendingsw.Model.SocialAcquirente;
-import com.example.backendingsw.Model.SocialAcquirenteID;
 import com.example.backendingsw.Model.SocialVenditore;
-import com.example.backendingsw.Repository.SocialAcquirenteRepository;
 import com.example.backendingsw.Repository.SocialVenditoreRepository;
 import com.example.backendingsw.Service.Interfaces.I_Social_Service;
 import org.modelmapper.ModelMapper;
@@ -131,7 +125,7 @@ public class SocialVenditoreController {
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         SocialVenditore_DTO socialVenditore_dto = new SocialVenditore_DTO();
         socialVenditore_dto = modelMapper.map(socialVenditore, SocialVenditore_DTO.class);
-        socialVenditore_dto.setIndirizzo_email(socialVenditore.getVenditore().getEmail());//?
+        socialVenditore_dto.setIndirizzo_email(socialVenditore.getVenditore().getIndirizzo_email());//?
 
         return socialVenditore_dto;
     }

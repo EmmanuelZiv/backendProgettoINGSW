@@ -1,29 +1,26 @@
 package com.example.backendingsw.DTO;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-
 public class Acquirente_DTO {
     private String nome;
     private String cognome;
-    private String email;
+    private String indirizzo_email;
     private String password;
     private String bio;
-    private String paese;
-    private String sitoweb;
+    private String areageografica;
+    private String link;
 
     public Acquirente_DTO(){
 
     }
-    public Acquirente_DTO(String nome, String cognome, String email, String password,String bio, String paese, String sitoweb) {
+    public Acquirente_DTO(String nome, String cognome, String indirizzo_email, String password, String bio, String areageografica, String link) {
         this.nome = nome;
         this.cognome = cognome;
-        this.email = email;
+        this.indirizzo_email = indirizzo_email;
         this.password = password;
         this.bio = bio;
-        this.paese = paese;
-        this.sitoweb = sitoweb;
+        this.areageografica = areageografica;
+        this.link = link;
     }
 
     public String getNome() {
@@ -42,12 +39,12 @@ public class Acquirente_DTO {
         this.cognome = cognome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getIndirizzo_email() {
+        return indirizzo_email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIndirizzo_email(String indirizzo_email) {
+        this.indirizzo_email = indirizzo_email;
     }
 
     public String getPassword() {
@@ -67,19 +64,19 @@ public class Acquirente_DTO {
         this.bio = bio;
     }
 
-    public String getPaese() {
-        return paese;
+    public String getAreageografica() {
+        return areageografica;
     }
 
-    public void setPaese(String paese) {
-        this.paese = paese;
+    public void setAreageografica(String areageografica) {
+        this.areageografica = areageografica;
     }
 
-    public String getSitoweb() {
-        return sitoweb;
+    public String getLink() {
+        return link;
     }
 
-    public void setSitoweb(String sitoweb) {
-        this.sitoweb = sitoweb;
+    public void setLink(String link) {
+        this.link = link;
     }
 }
