@@ -55,6 +55,17 @@
 
         }
 
+        @Override
+        public void updateVenditore(String nome,String cognome,String bio,String link,String areageografica,String email){
+            System.out.println("impl_Venditore_Service ha nome:"+nome + " cognome:"+ cognome + " bio:"+ bio +" link:"+link + " areageografica:"+areageografica + "email:" + email );
+            utente_repository.updateVenditore(nome,cognome,bio,link,areageografica,email);
 
+        }
+        @Override
+        public void updatePasswordVenditore(String password,String email){
+            System.out.println("impl_Venditore_Service ha password:"+ password + "email:" + email );
+            utente_repository.updatePasswordVenditore(password,email);
+
+        }
 
     }

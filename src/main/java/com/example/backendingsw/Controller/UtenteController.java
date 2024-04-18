@@ -109,6 +109,30 @@ public class UtenteController {
         }
     }
 
+    @PutMapping("/updateVenditore/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
+    public void updateVenditore(@PathVariable String nome, @PathVariable String cognome,
+                                 @PathVariable String bio, @PathVariable String link,@PathVariable String areageografica,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Venditore con nome: " + nome + "cognome:"+cognome);
+        try {
+            i_utente_service.updateVenditore(nome,cognome,bio,link,areageografica,indirizzo_email);
+            System.out.println("Venditore aggiornato con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PutMapping("/updatePasswordVenditore/{password}/{indirizzo_email}")
+    public void updatePasswordVenditore(@PathVariable String password,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Venditore con password: " + password + " email:"+indirizzo_email);
+        try {
+            i_utente_service.updatePasswordVenditore(password,indirizzo_email);
+            System.out.println("Password Venditore aggiornata con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
