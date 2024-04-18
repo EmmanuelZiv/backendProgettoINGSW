@@ -1,7 +1,9 @@
 package com.example.backendingsw.Controller;
 
+import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_alribasso_DTO;
 import com.example.backendingsw.DTO.Asta_inversa_DTO;
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
@@ -13,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.text.SimpleDateFormat;
 
 
@@ -64,24 +63,28 @@ public class Asta_inversaController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
-    @GetMapping("/getAste_inversaNomeCategoria/{nomeCategoria}")
-    public List<Asta_inversa_DTO> getAste_inversaNomeCategoria(@PathVariable String nomeCategoria){
-        List<Asta_inversa> list_asta_inversa = i_asta_inversa_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
-        System.out.println("Cerco inverse per categoria : " + nomeCategoria);
-        if (!list_asta_inversa.isEmpty()) {
-            System.out.println("Trovate " + list_asta_inversa.size() + "aste inversa");
-            List<Asta_inversa_DTO> listAsteinversaDTO = new ArrayList<>();
-            for (Asta_inversa asta : list_asta_inversa) {
-                Asta_inversa_DTO astaDTO = convertiDaModelAaDto(asta);
-                listAsteinversaDTO.add(astaDTO);
-            }
-            return listAsteinversaDTO;
-        } else {
-            System.out.println("Non sono state trovate aste inverse");
-            return new ArrayList<>();
+    @GetMapping("/getAste_inversaNomeCategoria/{nomiCategorie}")
+    public List<Asta_inversa_DTO> getAste_inversaNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
+        System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
+        Set<Asta_inversa> asteUniche = new HashSet<>();
+
+        for (String nomeCategoria : nomiCategorie) {
+            List<Asta_inversa> astePerCategoria = i_asta_inversa_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+            asteUniche.addAll(astePerCategoria);
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+        System.out.println("Cerco inverse per categorie: " + nomiCategorie);
+        System.out.println("Trovate " + asteUniche.size() + " aste inverse");
+
+        List<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();
+        for (Asta_inversa asta : asteUniche) {
+            Asta_inversa_DTO astaDTO = convertiDaModelAaDto(asta);
+            listAsteInversaDTO.add(astaDTO);
+        }
+
+        return listAsteInversaDTO;
+
+
     }
 
 
