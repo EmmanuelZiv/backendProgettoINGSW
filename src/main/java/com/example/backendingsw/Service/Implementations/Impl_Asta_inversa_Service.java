@@ -79,4 +79,20 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
     public String getEmailVincente(Long idAstaInversa){
         return asta_inversaRepository.getEmailVincente(idAstaInversa);
     }
+    @Override
+    public ArrayList<Asta_inversa> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento){
+        return asta_inversaRepository.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome, categorie, ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_inversa> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento){
+        return asta_inversaRepository.findByNomeAndCondizioneOrderByPrezzo(nome, ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_inversa> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento){
+        return asta_inversaRepository.findByCategorieAndCondizioneOrderByPrezzo(categorie, ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_inversa> findByCondizioneOrderByPrezzo(String ordinamento){
+        return asta_inversaRepository.findByCondizioneOrderByPrezzo(ordinamento);
+    }
 }

@@ -74,4 +74,13 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
 
     @Query(value = "SELECT indirizzo_email FROM partecipazioneAstaAllInglese WHERE idAstaInglese = ?1 ORDER BY offerta DESC LIMIT 1",nativeQuery = true)
     String getEmailVincente(Long idAstaInglese);
+
+    @Query(value = "SELECT DISTINCT a.* FROM asta_allinglese a LEFT JOIN AsteCategorieAllInglese c ON a.id = c.id_asta_allinglese WHERE LOWER(a.nome) LIKE LOWER(CONCAT('%', ?1, '%')) AND c.nomeCategoria IN ?2 AND a.condizione = 'aperta'", nativeQuery = true)
+    ArrayList<Asta_allinglese> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento);
+    @Query(value = "SELECT DISTINCT a.* FROM asta_allinglese a LEFT JOIN AsteCategorieAllInglese c ON a.id = c.id_asta_allinglese WHERE LOWER(a.nome) LIKE LOWER(CONCAT('%', ?1, '%'))  AND a.condizione = 'aperta'", nativeQuery = true)
+    ArrayList<Asta_allinglese> findByNomeAndCondizioneOrderByPrezzo(String nome,  String ordinamento);
+    @Query(value = "SELECT DISTINCT a.* FROM asta_allinglese a LEFT JOIN AsteCategorieAllInglese c ON a.id = c.id_asta_allinglese WHERE c.nomeCategoria IN ?1 AND a.condizione = 'aperta'", nativeQuery = true)
+    ArrayList<Asta_allinglese> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie,  String ordinamento);
+    @Query(value = "SELECT DISTINCT a.* FROM asta_allinglese a LEFT JOIN AsteCategorieAllInglese c ON a.id = c.id_asta_allinglese WHERE a.condizione = 'aperta'", nativeQuery = true)
+    ArrayList<Asta_allinglese> findByCondizioneOrderByPrezzo(String ordinamento);
 }

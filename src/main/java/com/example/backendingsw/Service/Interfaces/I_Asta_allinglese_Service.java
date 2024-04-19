@@ -25,4 +25,8 @@ public interface I_Asta_allinglese_Service {
     public void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
     public Long getLastInsertedId();
     public String getEmailVincente(Long idAstaInglese);
+    public ArrayList<Asta_allinglese> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento);
+    public ArrayList<Asta_allinglese> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento);
+    public ArrayList<Asta_allinglese> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento);
+    public ArrayList<Asta_allinglese> findByCondizioneOrderByPrezzo(String ordinamento);
 }

@@ -1,9 +1,7 @@
 package com.example.backendingsw.Controller;
 
-import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_alribasso_DTO;
 import com.example.backendingsw.DTO.Asta_inversa_DTO;
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
@@ -247,6 +245,37 @@ public class Asta_inversaController {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    public ArrayList<Asta_inversa_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
+        System.out.println("Cerco inversa per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
+        ArrayList<Asta_inversa> asteTrovate = new ArrayList<>();
+        if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_inversa_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);
+        }else if(nome!=null && !nome.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_inversa_service.findByNomeAndCondizioneOrderByPrezzo(nome,ordinamento);
+        }else if(nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_inversa_service.findByCategorieAndCondizioneOrderByPrezzo(nomiCategorie,ordinamento);
+        }else if(ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_inversa_service.findByCondizioneOrderByPrezzo(ordinamento);
+        }
+
+        if(ordinamento.equals("ASC")){
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale));
+        }else{
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale).reversed());
+        }
+        System.out.println("Trovate " + asteTrovate.size() + " aste inversa");
+
+        ArrayList<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();
+        for (Asta_inversa asta : asteTrovate) {
+            Asta_inversa_DTO astaDTO = convertiDaModelAaDto(asta);
+            listAsteInversaDTO.add(astaDTO);
+        }
+
+        return listAsteInversaDTO;
+
     }
     @Autowired
     private ModelMapper modelMapper;

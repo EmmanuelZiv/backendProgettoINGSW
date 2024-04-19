@@ -81,21 +81,6 @@ public class Asta_allingleseController {
 
         return listAsteAllingleseDTO;
 
-//        System.out.println("Cerco inglesi per categoria : " + nomeCategoria);
-//        if (!list_asta_allinglese.isEmpty()) {
-//            System.out.println("Trovate " + list_asta_allinglese.size() + "aste inglese");
-//            List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
-//            for (Asta_allinglese asta : list_asta_allinglese) {
-//                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
-//                listAsteAllingleseDTO.add(astaDTO);
-//            }
-//            return listAsteAllingleseDTO;
-//        } else {
-//            System.out.println("Non sono state trovate aste all'inglese");
-//            return new ArrayList<>();
-//        }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -262,6 +247,39 @@ public class Asta_allingleseController {
             return false;
         }
     }
+
+    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    public ArrayList<Asta_allinglese_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
+        System.out.println("Cerco inglesi per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
+        ArrayList<Asta_allinglese> asteTrovate = new ArrayList<>();
+        if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_allinglese_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);
+        }else if(nome!=null && !nome.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_allinglese_service.findByNomeAndCondizioneOrderByPrezzo(nome,ordinamento);
+        }else if(nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_allinglese_service.findByCategorieAndCondizioneOrderByPrezzo(nomiCategorie,ordinamento);
+        }else if(ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_allinglese_service.findByCondizioneOrderByPrezzo(ordinamento);
+        }
+
+        if(ordinamento.equals("ASC")){
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale));
+        }else{
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale).reversed());
+        }
+        System.out.println("Trovate " + asteTrovate.size() + " aste inglese");
+
+        ArrayList<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
+        for (Asta_allinglese asta : asteTrovate) {
+            Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
+            listAsteAllingleseDTO.add(astaDTO);
+        }
+
+        return listAsteAllingleseDTO;
+
+    }
+
+
     @Autowired
     private ModelMapper modelMapper;
     // Metodo per convertire un Asta_allinglese in un Asta_allinglese_DTO

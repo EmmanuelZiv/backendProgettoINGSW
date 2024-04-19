@@ -76,4 +76,20 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
     public Long getLastInsertedId(){
         return asta_alribassoRepository.getLastInsertedId();
     }
+    @Override
+    public ArrayList<Asta_alribasso> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento){
+        return asta_alribassoRepository.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome, categorie,ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_alribasso> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento){
+        return asta_alribassoRepository.findByNomeAndCondizioneOrderByPrezzo(nome,ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_alribasso> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento){
+        return asta_alribassoRepository.findByCategorieAndCondizioneOrderByPrezzo(categorie,ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_alribasso> findByCondizioneOrderByPrezzo(String ordinamento){
+        return asta_alribassoRepository.findByCondizioneOrderByPrezzo(ordinamento);
+    }
 }

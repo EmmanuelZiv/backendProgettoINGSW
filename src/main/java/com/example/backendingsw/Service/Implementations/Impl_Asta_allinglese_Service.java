@@ -88,5 +88,21 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     public String getEmailVincente(Long idAstaInglese){
         return asta_allingleseRepository.getEmailVincente(idAstaInglese);
     }
+    @Override
+    public ArrayList<Asta_allinglese> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento){
+        return asta_allingleseRepository.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome, categorie, ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_allinglese> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento){
+        return asta_allingleseRepository.findByNomeAndCondizioneOrderByPrezzo(nome,ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_allinglese> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento){
+        return asta_allingleseRepository.findByCategorieAndCondizioneOrderByPrezzo(categorie, ordinamento);
+    }
+    @Override
+    public ArrayList<Asta_allinglese> findByCondizioneOrderByPrezzo(String ordinamento){
+        return asta_allingleseRepository.findByCondizioneOrderByPrezzo(ordinamento);
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.example.backendingsw.Repository;
 
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -66,4 +65,13 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
 
     @Query(value = "SELECT indirizzo_email FROM partecipazioneAstaInversa WHERE idAstaInversa = ?1 ORDER BY offerta ASC LIMIT 1", nativeQuery = true)
     String getEmailVincente(Long idAstaInversa);
+
+    @Query(value = "SELECT DISTINCT a.* FROM asta_inversa  a LEFT JOIN AsteCategorieInversa  c ON a.id = c.id_asta_inversa  WHERE LOWER(a.nome) LIKE LOWER(CONCAT('%', ?1, '%')) AND c.nomeCategoria IN ?2 AND a.condizione = 'aperta' ", nativeQuery = true)
+    ArrayList<Asta_inversa> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento);
+    @Query(value = "SELECT DISTINCT a.* FROM asta_inversa  a LEFT JOIN AsteCategorieInversa  c ON a.id = c.id_asta_inversa  WHERE LOWER(a.nome) LIKE LOWER(CONCAT('%', ?1, '%'))  AND a.condizione = 'aperta' ", nativeQuery = true)
+    ArrayList<Asta_inversa> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento);
+    @Query(value = "SELECT DISTINCT a.* FROM asta_inversa  a LEFT JOIN AsteCategorieInversa  c ON a.id = c.id_asta_inversa  WHERE c.nomeCategoria IN ?1 AND a.condizione = 'aperta' ", nativeQuery = true)
+    ArrayList<Asta_inversa> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento);
+    @Query(value = "SELECT DISTINCT a.* FROM asta_inversa  a LEFT JOIN AsteCategorieInversa  c ON a.id = c.id_asta_inversa  WHERE a.condizione = 'aperta' ", nativeQuery = true)
+    ArrayList<Asta_inversa> findByCondizioneOrderByPrezzo(String ordinamento);
 }

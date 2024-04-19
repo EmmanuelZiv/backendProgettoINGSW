@@ -26,4 +26,8 @@ public interface I_Asta_alribasso_Service {
     public void insert(String nome, String descrizione, byte[] path_immagine, float prezzoBase, String intervalloDecrementale,
                        float decrementoAutomaticoCifra ,float prezzoMin, float prezzoAttuale, String condizione, String id_venditore);
     public Long getLastInsertedId();
+    public ArrayList<Asta_alribasso> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento);
+    public ArrayList<Asta_alribasso> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento);
+    public ArrayList<Asta_alribasso> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento);
+    public ArrayList<Asta_alribasso> findByCondizioneOrderByPrezzo(String ordinamento);
 }

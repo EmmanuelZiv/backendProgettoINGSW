@@ -26,4 +26,9 @@ public interface I_Asta_inversa_Service {
     public Integer insertCategorieAstaInversa(Long id_asta_inversa, String nomeCategoria);
     public Asta_inversa save(Asta_inversa asta);
     public String getEmailVincente(Long idAstaInversa);
+    public ArrayList<Asta_inversa> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento);
+    public ArrayList<Asta_inversa> findByNomeAndCondizioneOrderByPrezzo(String nome, String ordinamento);
+    public ArrayList<Asta_inversa> findByCategorieAndCondizioneOrderByPrezzo(ArrayList<String> categorie, String ordinamento);
+    public ArrayList<Asta_inversa> findByCondizioneOrderByPrezzo(String ordinamento);
+
 }

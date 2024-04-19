@@ -1,8 +1,6 @@
 package com.example.backendingsw.Controller;
 
-import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_alribasso_DTO;
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Service.Interfaces.I_Asta_alribasso_Service;
 import org.modelmapper.ModelMapper;
@@ -55,13 +53,13 @@ public class Asta_alribassoController {
         System.out.println("Cerco ribasse per categorie: " + nomiCategorie);
         System.out.println("Trovate " + asteUniche.size() + " aste ribasse");
 
-        List<Asta_alribasso_DTO> listAsteAllingleseDTO = new ArrayList<>();
+        List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
         for (Asta_alribasso asta : asteUniche) {
             Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
-            listAsteAllingleseDTO.add(astaDTO);
+            listAsteAlribassoDTO.add(astaDTO);
         }
 
-        return listAsteAllingleseDTO;
+        return listAsteAlribassoDTO;
 
 //        List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
 //        System.out.println("Cerco ribasso per categoria : " + nomeCategoria);
@@ -204,7 +202,7 @@ public class Asta_alribassoController {
     }
     @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
-        System.out.println("entrati in insertAstaInglese");
+        System.out.println("entrati in insertAstaRibasso");
         try{
 
             String intervalString = asta_ribasso_dto.getIntervalloDecrementale() + " MINUTES'";
@@ -229,6 +227,37 @@ public class Asta_alribassoController {
             e.printStackTrace();
             return 0L;
         }
+    }
+
+    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    public ArrayList<Asta_alribasso_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
+        System.out.println("Cerco ribasso per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
+        ArrayList<Asta_alribasso> asteTrovate = new ArrayList<>();
+        if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_alribasso_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);
+        }else if(nome!=null && !nome.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_alribasso_service.findByNomeAndCondizioneOrderByPrezzo(nome,ordinamento);
+        }else if(nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_alribasso_service.findByCategorieAndCondizioneOrderByPrezzo(nomiCategorie,ordinamento);
+        }else if(ordinamento != null && !ordinamento.isEmpty()){
+            asteTrovate = i_asta_alribasso_service.findByCondizioneOrderByPrezzo(ordinamento);
+        }
+
+        if(ordinamento.equals("ASC")){
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale));
+        }else{
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale).reversed());
+        }
+        System.out.println("Trovate " + asteTrovate.size() + " aste ribasso");
+
+        ArrayList<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
+        for (Asta_alribasso asta : asteTrovate) {
+            Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
+            listAsteAlribassoDTO.add(astaDTO);
+        }
+
+        return listAsteAlribassoDTO;
+
     }
 
     @Autowired
