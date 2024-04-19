@@ -13,6 +13,8 @@
         public Optional<Venditore> loginVenditore(String email, String password);
         public void updateAcquirente(String nome,String cognome,String bio,String link,String areageografica,String email);
         public void updatePasswordAcquirente(String password,String email);
+        public void updateVenditore(String nome,String cognome,String bio,String link,String areageografica,String email);
+        public void updatePasswordVenditore(String password,String email);
         public ArrayList<String> findCategorieByIndirizzoEmailVenditore(String email);
 
 

@@ -6,7 +6,6 @@ import com.example.backendingsw.Model.*;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.backendingsw.Repository.UtenteRepository;
@@ -15,7 +14,6 @@ import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,7 +34,9 @@ public class UtenteController {
 
             if (acquirente.isPresent()) {
                 System.out.println("acquirente è presente");
+                System.out.println("dati acquirente :"+ " nome:"+acquirente.get().getNome() + " cognome:"+ acquirente.get().getCognome() + " link:"+ acquirente.get().getLink() + " areageografica" + acquirente.get().getAreageografica());
                 Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
+                System.out.println("dati acquirente dto:"+ " nome:"+acquirente_dto.getNome() + " cognome:"+ acquirente_dto.getCognome() + " link:"+ acquirente_dto.getLink() + " areageografica"+ acquirente_dto.getAreageografica());
                 return acquirente_dto;
             }
             System.out.println("acquirente non è presente");
@@ -63,7 +63,9 @@ public class UtenteController {
             System.out.println("venditore no!");
             if(venditore.isPresent()) {
                 System.out.println("venditore è presente");
+                System.out.println("dati venditore :"+ " nome:"+venditore.get().getNome() + " cognome:"+ venditore.get().getCognome() + " link:"+ venditore.get().getLink() + " areageografica" + venditore.get().getAreageografica());
                 Venditore_DTO venditore_dto = convertVenditoreDto(venditore.get());
+                System.out.println("dati venditore dto:"+ " nome:"+venditore_dto.getNome() + " cognome:"+ venditore_dto.getCognome() + " link:"+ venditore_dto.getLink() + " areageografica" + venditore_dto.getAreageografica());
                 return venditore_dto;
             }
             System.out.println("venditore non è presente");
@@ -106,6 +108,30 @@ public class UtenteController {
             e.printStackTrace();
         }
     }
+
+    @PutMapping("/updateVenditore/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
+    public void updateVenditore(@PathVariable String nome, @PathVariable String cognome,
+                                 @PathVariable String bio, @PathVariable String link,@PathVariable String areageografica,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Venditore con nome: " + nome + "cognome:"+cognome);
+        try {
+            i_utente_service.updateVenditore(nome,cognome,bio,link,areageografica,indirizzo_email);
+            System.out.println("Venditore aggiornato con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PutMapping("/updatePasswordVenditore/{password}/{indirizzo_email}")
+    public void updatePasswordVenditore(@PathVariable String password,@PathVariable String indirizzo_email) {
+        System.out.println("Aggiornamento  Venditore con password: " + password + " email:"+indirizzo_email);
+        try {
+            i_utente_service.updatePasswordVenditore(password,indirizzo_email);
+            System.out.println("Password Venditore aggiornata con successo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 

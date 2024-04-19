@@ -16,7 +16,7 @@ public interface UtenteRepository extends JpaRepository<Acquirente, String> {
     // Questo metodo è fornito di default da JpaRepository, quindi non è necessario implementarlo manualmente.
     List<Acquirente> findAll();
 
-    Acquirente findByEmail(String email);
+
 
 
     @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = :indirizzo_email AND password = :password", nativeQuery = true)
@@ -36,6 +36,13 @@ public interface UtenteRepository extends JpaRepository<Acquirente, String> {
 
     @Query(value = "UPDATE acquirente SET  password=:password WHERE indirizzo_email = :indirizzo_email", nativeQuery = true)
     void updatePasswordAcquirente(@Param("password") String password,@Param("indirizzo_email") String indirizzo_email);
+
+
+    @Query(value = "UPDATE venditore SET nome = :nome, cognome = :cognome,bio=:bio, link=:link, areageografica=:areageografica WHERE indirizzo_email = :indirizzo_email", nativeQuery = true)
+    void updateVenditore(@Param("nome") String nome, @Param("cognome") String cognome, @Param("bio") String bio, @Param("link") String link, @Param("areageografica") String areageografica, @Param("indirizzo_email") String indirizzo_email);
+
+    @Query(value = "UPDATE venditore SET  password=:password WHERE indirizzo_email = :indirizzo_email", nativeQuery = true)
+    void updatePasswordVenditore(@Param("password") String password,@Param("indirizzo_email") String indirizzo_email);
 
 
 

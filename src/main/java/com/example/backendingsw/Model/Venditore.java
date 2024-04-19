@@ -14,27 +14,27 @@ public class Venditore {
     private String cognome;
     @Id
     @Column(name="indirizzo_email")
-    private String email;
+    private String indirizzo_email;
     @Column(name="password")
     private String password;
     @Column(name="bio")
     private String bio;
     @Column(name="areageografica")
-    private String paese;
+    private String areageografica;
     @Column(name="link")
-    private String sitoweb;
+    private String link;
 
     public Venditore(){
 
     }
-    public Venditore(String nome,String cognome,String email,String password,String bio,String paese,String sitoweb){
+    public Venditore(String nome, String cognome, String indirizzo_email, String password, String bio, String areageografica, String link){
         this.nome=nome;
         this.cognome=cognome;
-        this.email=email;
+        this.indirizzo_email = indirizzo_email;
         this.password=password;
         this.bio=bio;
-        this.paese=paese;
-        this.sitoweb=sitoweb;
+        this.areageografica = areageografica;
+        this.link = link;
     }
 
 
@@ -54,12 +54,12 @@ public class Venditore {
         this.cognome = cognome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getIndirizzo_email() {
+        return indirizzo_email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIndirizzo_email(String email) {
+        this.indirizzo_email = email;
     }
 
     public String getPassword() {
@@ -79,20 +79,20 @@ public class Venditore {
         this.bio = bio;
     }
 
-    public String getPaese() {
-        return paese;
+    public String getAreageografica() {
+        return areageografica;
     }
 
-    public void setPaese(String paese) {
-        this.paese = paese;
+    public void setAreageografica(String paese) {
+        this.areageografica = paese;
     }
 
-    public String getSitoweb() {
-        return sitoweb;
+    public String getLink() {
+        return link;
     }
 
-    public void setSitoweb(String sitoweb) {
-        this.sitoweb = sitoweb;
+    public void setLink(String sitoweb) {
+        this.link = sitoweb;
     }
 
 
