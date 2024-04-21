@@ -15,4 +15,9 @@ public interface VenditoreRepository extends JpaRepository<Venditore, String> {
     @Query(value = "SELECT * FROM venditore WHERE indirizzo_email = :indirizzo_email AND password = :password", nativeQuery = true)
     public Optional<Venditore> loginVenditore(@Param("indirizzo_email") String indirizzo_email, @Param("password") String password);
 
+    @Query(value = "SELECT * FROM venditore WHERE token = :token", nativeQuery = true)
+    Optional<Venditore> loginVenditoreConToken(@Param("token") String token);
+
+    @Query(value = "SELECT * FROM venditore WHERE indirizzo_email = ?1", nativeQuery = true)
+    Venditore getVenditoreByIndirizzo_email(String indirizzo_email);
 }

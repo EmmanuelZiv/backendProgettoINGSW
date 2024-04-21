@@ -30,7 +30,7 @@ dependencies {
 	implementation 'ch.qos.logback:logback-classic:1.4.14'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
-
+	implementation 'com.google.firebase:firebase-admin:7.2.0'
 }
 
 tasks.named('test') {

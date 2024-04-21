@@ -16,6 +16,12 @@
         public void updateVenditore(String nome,String cognome,String bio,String link,String areageografica,String email);
         public void updatePasswordVenditore(String password,String email);
         public ArrayList<String> findCategorieByIndirizzoEmailVenditore(String email);
-
-
+        public int createAndInsertToken(String token ,String indirizzo_email);
+        public int removeTokenFromAcquirente(String indirizzo_email);
+        public int createAndInsertTokenVenditore(String token , String indirizzo_email);
+        public int removeTokenFromVenditore(String indirizzo_email);
+        public Optional<Acquirente> loginAcquirenteConToken(@Param("token") String token);
+        public Optional<Venditore> loginVenditoreConToken(@Param("token") String token);
+        public Acquirente getAcquirenteByIndirizzo_email(String indirizzo_email);
+        public Venditore getVenditoreByIndirizzo_email(String indirizzo_email);
     }

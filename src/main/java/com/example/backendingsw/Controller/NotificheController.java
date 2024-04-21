@@ -1,10 +1,17 @@
 package com.example.backendingsw.Controller;
 
+
 import com.example.backendingsw.DTO.NotificheAcquirente_DTO;
 import com.example.backendingsw.DTO.NotificheVenditore_DTO;
 import com.example.backendingsw.Model.NotificheAcquirente;
 import com.example.backendingsw.Model.NotificheVenditore;
+import com.example.backendingsw.Notifications.NotificationRequest;
+import com.example.backendingsw.Repository.NotificheAcquirenteRepository;
 import com.example.backendingsw.Service.Interfaces.I_Notifiche_Service;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +27,8 @@ public class NotificheController {
     @Autowired
     @Qualifier("Impl_NotificheAcquirente_Service")
     private I_Notifiche_Service i_Notifiche_Service;
+    @Autowired
+    private NotificheAcquirenteRepository notificheAcquirenteRepository;
 
     @GetMapping("/getNotificheAcquirente/{id_acquirente}")
     public ArrayList<NotificheAcquirente_DTO> getNotificheAcquirente(@PathVariable String id_acquirente){
@@ -80,6 +89,84 @@ public class NotificheController {
             e.printStackTrace();
             return 0;
         }
+    }
+
+
+    @PostMapping("/sendNotification")
+    public void sendNotification(@RequestBody NotificationRequest request) {
+        // Costruisci il messaggio da inviare a FCM
+//        Message message = Message.builder()
+//                .putData("titolo", request.getTitolo())
+//                .putData("corpo", request.getCorpo())
+//                .setToken(request.getTokenDestinatario())
+//                .build();
+
+        Message fcmMessage = Message.builder()
+                .setNotification(Notification.builder()
+                        .setTitle(request.getTitolo())
+                        .setBody(request.getCorpo())
+                        .build())
+                .setToken(request.getTokenDestinatario())
+                .build();
+        // Invia il messaggio a FCM
+        try {
+            FirebaseMessaging.getInstance().send(fcmMessage);
+        } catch (FirebaseMessagingException e) {
+            // Gestisci eventuali errori
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/getNumeroNotificheAcquirente/{indirizzo_email}")
+    public int getNumeroNotificheAcquirente(@PathVariable String indirizzo_email){
+        System.out.println("entrato in getNumeroNotificheAcquirente");
+        try{
+            int numeroNotifiche = i_Notifiche_Service.getNumeroNotificheAcquirente(indirizzo_email);
+            if(numeroNotifiche>0){
+                System.out.println("ho recuperato " + numeroNotifiche + " notifiche per acquirente " + indirizzo_email + ".");
+            }else{
+                System.out.println("nessuna notifica recuperata per acquirente " + indirizzo_email + ".");
+            }
+            return numeroNotifiche;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    @GetMapping("/getNumeroNotificheVenditore/{indirizzo_email}")
+    public int getNumeroNotificheVenditore(@PathVariable String indirizzo_email){
+        System.out.println("entrato in getNumeroNotificheVenditore");
+        try{
+            int numeroNotifiche = i_Notifiche_Service.getNumeroNotificheVenditore(indirizzo_email);
+            if(numeroNotifiche>0){
+                System.out.println("ho recuperato " + numeroNotifiche + " notifiche per Venditore " + indirizzo_email + ".");
+            }else{
+                System.out.println("nessuna notifica recuperata per Venditore " + indirizzo_email + ".");
+            }
+            return numeroNotifiche;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int updateMandataAcquirente(Long id){
+        try {
+            int valore = i_Notifiche_Service.updateMandataAcquirente(id);
+            return valore;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public int updateMandataVenditore(Long id){
+        try {
+            int valore = i_Notifiche_Service.updateMandataVenditore(id);
+            return valore;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Autowired

@@ -3,6 +3,7 @@
     import com.example.backendingsw.Model.*;
     import com.example.backendingsw.Repository.VenditoreRepository;
     import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.data.repository.query.Param;
     import org.springframework.stereotype.Service;
     import com.example.backendingsw.Repository.UtenteRepository;
     import com.example.backendingsw.Service.Interfaces.I_Utente_Service;
@@ -65,7 +66,38 @@
         public void updatePasswordVenditore(String password,String email){
             System.out.println("impl_Venditore_Service ha password:"+ password + "email:" + email );
             utente_repository.updatePasswordVenditore(password,email);
-
+        }
+        @Override
+        public int createAndInsertToken(String token ,String indirizzo_email){
+            return utente_repository.createAndInsertTokenAcquirente(token, indirizzo_email);
+        }
+        @Override
+        public int removeTokenFromAcquirente(String indirizzo_email){
+            return utente_repository.removeTokenFromAcquirente(indirizzo_email);
+        }
+        @Override
+        public int createAndInsertTokenVenditore(String token , String indirizzo_email){
+            return utente_repository.createAndInsertTokenVenditore(token, indirizzo_email);
+        }
+        @Override
+        public int removeTokenFromVenditore(String indirizzo_email){
+            return utente_repository.removeTokenFromVenditore(indirizzo_email);
+        }
+        @Override
+        public Optional<Acquirente> loginAcquirenteConToken(@Param("token") String token){
+            return utente_repository.loginAcquirenteConToken(token);
+        }
+        @Override
+        public Optional<Venditore> loginVenditoreConToken(@Param("token") String token){
+            return venditoreRepository.loginVenditoreConToken(token);
         }
 
+        @Override
+        public Acquirente getAcquirenteByIndirizzo_email(String indirizzo_email){
+            return utente_repository.getAcquirenteByIndirizzo_email(indirizzo_email);
+        }
+        @Override
+        public Venditore getVenditoreByIndirizzo_email(String indirizzo_email){
+            return venditoreRepository.getVenditoreByIndirizzo_email(indirizzo_email);
+        }
     }

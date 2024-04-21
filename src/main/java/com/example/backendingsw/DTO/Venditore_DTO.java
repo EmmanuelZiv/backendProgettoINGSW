@@ -9,6 +9,7 @@ public class Venditore_DTO {
     private String bio;
     private String areageografica;
     private String link;
+    private String token;
 
     public Venditore_DTO(){
 
@@ -78,5 +79,12 @@ public class Venditore_DTO {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
     }
 }
