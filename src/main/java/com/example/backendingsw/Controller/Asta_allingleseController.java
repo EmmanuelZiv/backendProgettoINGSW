@@ -1,7 +1,9 @@
 package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.Asta_allinglese_DTO;
+import com.example.backendingsw.DTO.Asta_inversa_DTO;
 import com.example.backendingsw.Model.Asta_allinglese;
+import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -97,6 +99,26 @@ public class Asta_allingleseController {
             return listAsteAllingleseDTO;
         } else {
             System.out.println("Non sono state trovate aste all'inglese");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
+
+    @GetMapping("/getAsteInglesePartecipate/{indirizzo_email}")
+    public ArrayList<Asta_allinglese_DTO> getAste_inglesePartecipate(@PathVariable String indirizzo_email){
+        List<Asta_allinglese> list_asta_inglese = i_asta_allinglese_service.getAsteInglesiPartecipate(indirizzo_email);
+
+        if (!list_asta_inglese.isEmpty()) {
+            ArrayList<Asta_allinglese_DTO> listAsteInglesiDTO = new ArrayList<>();
+            for (Asta_allinglese asta : list_asta_inglese) {
+                Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
+                listAsteInglesiDTO.add(astaDTO);
+            }
+            return listAsteInglesiDTO;
+        } else {
+            System.out.println("Non sono state trovate aste inversa");
             return new ArrayList<>();
         }
 

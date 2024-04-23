@@ -1,5 +1,9 @@
 package com.example.backendingsw;
 
+import com.example.backendingsw.Notifications.NotificationListenerService;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +16,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"com.example.backendingsw.Model", "com.example.backendingsw.Repository"})
@@ -28,7 +38,9 @@ public class BackendIngswApplication {
 	public static void main(String[] args) {
 		try {
 			SpringApplication.run(BackendIngswApplication.class, args);
+			System.out.println(BackendIngswApplication.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 			logger.info("Applicazione backend avviata con successo.");
+
 		} catch (Exception e) {
 			logger.error("Errore durante l'avvio dell'applicazione: {}", e.getMessage());
 			// Puoi gestire ulteriori azioni in caso di errore di connessione al database
@@ -52,4 +64,10 @@ public class BackendIngswApplication {
 			return "localhost";
 		}
 	}
+
+	@Bean
+	public NotificationListenerService notificationListenerService() {
+		return new NotificationListenerService(); // Se necessario, inizializza il servizio con le dipendenze necessarie
+	}
+
 }

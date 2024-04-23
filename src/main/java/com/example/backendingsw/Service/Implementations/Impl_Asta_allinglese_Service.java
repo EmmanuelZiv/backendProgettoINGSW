@@ -63,6 +63,13 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
     public ArrayList<Asta_allinglese> getAsteInglesePreferite(String indirizzo_email){
         return asta_allingleseRepository.getAsteInglesePreferite(indirizzo_email);
     }
+
+    @Override
+    public ArrayList<Asta_allinglese> getAsteInglesiPartecipate(String indirizzo_email){
+        return asta_allingleseRepository.getAsteInglesiPartecipate(indirizzo_email);
+    }
+
+
 //    @Override
 //    public List<Object> getAste_allingleseScadenzaRecente(){
 //        return asta_allingleseRepository.getAste_allingleseScadenzaRecente();

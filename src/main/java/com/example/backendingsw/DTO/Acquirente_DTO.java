@@ -1,6 +1,8 @@
 package com.example.backendingsw.DTO;
 
 
+import jakarta.persistence.Column;
+
 public class Acquirente_DTO {
     private String nome;
     private String cognome;
@@ -9,6 +11,7 @@ public class Acquirente_DTO {
     private String bio;
     private String areageografica;
     private String link;
+    private String token;
 
     public Acquirente_DTO(){
 
@@ -78,5 +81,11 @@ public class Acquirente_DTO {
 
     public void setLink(String link) {
         this.link = link;
+    }
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
     }
 }

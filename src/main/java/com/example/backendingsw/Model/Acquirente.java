@@ -23,6 +23,8 @@ public class Acquirente {
     private String areageografica;
     @Column(name="link")
     private String link;
+    @Column(name="token")
+    private String token;
 
     public Acquirente(){
 
@@ -94,7 +96,13 @@ public class Acquirente {
     public void setLink(String sitoweb) {
         this.link = sitoweb;
     }
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 
 }

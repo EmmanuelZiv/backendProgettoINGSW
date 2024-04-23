@@ -11,5 +11,8 @@ public interface I_Notifiche_Service {
 
     public void deleteNotificheAcquirente(Long id);
     public void deleteNotificheVenditore(Long id);
-
+    public int updateMandataAcquirente(Long id);
+    public int updateMandataVenditore(Long id);
+    public int getNumeroNotificheAcquirente(String id_acquirente);
+    public int getNumeroNotificheVenditore(String id_venditore);
 }

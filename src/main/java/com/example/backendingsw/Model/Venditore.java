@@ -23,6 +23,8 @@ public class Venditore {
     private String areageografica;
     @Column(name="link")
     private String link;
+    @Column(name="token")
+    private String token;
 
     public Venditore(){
 
@@ -95,6 +97,12 @@ public class Venditore {
         this.link = sitoweb;
     }
 
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 }

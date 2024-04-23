@@ -35,4 +35,20 @@ public class Impl_Notifiche_Service implements I_Notifiche_Service {
     public void deleteNotificheVenditore(Long id){
         notificheVenditoreRepository.deleteNotificheVenditore(id);
     }
+    @Override
+    public int updateMandataAcquirente(Long id){
+        return notificheAcquirenteRepository.updateMandataAcquirente(id);
+    }
+    @Override
+    public int updateMandataVenditore(Long id){
+        return notificheVenditoreRepository.updateMandataVenditore(id);
+    }
+    @Override
+    public int getNumeroNotificheAcquirente(String id_acquirente){
+        return notificheAcquirenteRepository.getNumeroNotificheAcquirente(id_acquirente);
+    }
+    @Override
+    public int getNumeroNotificheVenditore(String id_venditore){
+        return notificheVenditoreRepository.getNumeroNotificheVenditore(id_venditore);
+    }
 }

@@ -29,4 +29,9 @@ public interface VenditoreRepository extends JpaRepository<Venditore, String> {
     @Transactional
     @Query(value = "INSERT INTO categorieVenditore (nome , indirizzo_email) VALUES (?1, ?2)",nativeQuery = true)
     Integer insertCategorieVenditore(String nome, String indirizzo_email);
+    @Query(value = "SELECT * FROM venditore WHERE token = :token", nativeQuery = true)
+    Optional<Venditore> loginVenditoreConToken(@Param("token") String token);
+
+    @Query(value = "SELECT * FROM venditore WHERE indirizzo_email = ?1", nativeQuery = true)
+    Venditore getVenditoreByIndirizzo_email(String indirizzo_email);
 }
