@@ -206,6 +206,26 @@ public class Asta_inversaController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
+
+    @GetMapping("/getAsteInversaPartecipate/{indirizzo_email}")
+    public ArrayList<Asta_inversa_DTO> getAste_inversaPartecipate(@PathVariable String indirizzo_email){
+        List<Asta_inversa> list_asta_inversa = i_asta_inversa_service.getAsteInversePartecipate(indirizzo_email);
+
+        if (!list_asta_inversa.isEmpty()) {
+            ArrayList<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();
+            for (Asta_inversa asta : list_asta_inversa) {
+                Asta_inversa_DTO astaDTO = convertiDaModelAaDto(asta);
+                listAsteInversaDTO.add(astaDTO);
+            }
+            return listAsteInversaDTO;
+        } else {
+            System.out.println("Non sono state trovate aste inversa");
+            return new ArrayList<>();
+        }
+
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
     @PostMapping("/insertAstaInversa/{asta_inversa}/{lista_categorie}")
     public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in inserta asta inversa");

@@ -1,5 +1,6 @@
 package com.example.backendingsw.Repository;
 
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,6 +31,10 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
     @Transactional
     @Query( value = "INSERT INTO partecipazioneAstaInversa (idAstaInversa , indirizzo_email, offerta, tempo_offerta, stato) VALUES (?1, ?2, ?3, ?4, ?5) ", nativeQuery = true)
     int partecipaAstaInversa(Long idAstaInversa, String indirizzo_email, float offerta, Timestamp tempo_offerta, String stato);
+
+
+    @Query(value = "SELECT a.* FROM partecipazioneAstaInversa p JOIN asta_inversa a ON p.idAstaInversa = a.id WHERE p.indirizzo_email= ?1", nativeQuery = true)
+    ArrayList<Asta_inversa> getAsteInversePartecipate(String indirizzo_email);
 
 
     Asta_inversa findAsta_inversaById(Long idAstaInversa);

@@ -1,5 +1,6 @@
 package com.example.backendingsw.Service.Interfaces;
 
+import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,7 @@ public interface I_Asta_inversa_Service {
     public Integer eliminazioneAstaInPreferiti(Long idAstaInversa, String indirizzo_email);
     public ArrayList<Asta_inversa> getAsteInversaPreferite(String indirizzo_email);
     //public Long insertAstaInversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente);
+    public ArrayList<Asta_inversa> getAsteInversePartecipate(String indirizzo_email);
     public Integer insertCategorieAstaInversa(Long id_asta_inversa, String nomeCategoria);
     public Asta_inversa save(Asta_inversa asta);
     public String getEmailVincente(Long idAstaInversa);
