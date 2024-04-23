@@ -2,6 +2,7 @@ package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.SocialAcquirente_DTO;
 import com.example.backendingsw.Model.SocialAcquirente;
+import com.example.backendingsw.Model.SocialVenditore;
 import com.example.backendingsw.Repository.SocialAcquirenteRepository;
 import com.example.backendingsw.Service.Interfaces.I_Social_Service;
 import org.modelmapper.ModelMapper;
@@ -53,8 +54,25 @@ public class SocialAcquirenteController {
             }
         }
 
+        @PostMapping("/socialAcquirenteController/insertSocialAcquirenteRegistrazione/{listaSocialDTO}")
+        public void insertSocialAcquirenteRegistrazione(@RequestBody ArrayList<SocialAcquirente_DTO> listaSocialDTO){
+            System.out.println("Siamo in insert Social acquirente registrazione nel backend" );
+            try{
+                for(SocialAcquirente_DTO socialDTO:listaSocialDTO){
+                    SocialAcquirente social =convertSocialAcquirenteEntity(socialDTO);
+                    Optional<SocialAcquirente> socialInserito=i_social_service.insertSocialAcquirente(social.getNome(), social.getLink(), social.getAcquirente().getIndirizzo_email());
+                    if (socialInserito.isPresent()) {
+                        System.out.println("Social inserito è presente");
 
-
+                    } else {
+                        System.out.println("Social non inserito");
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return ;
+        }
 
 
         @PostMapping("/insertSocialAcquirente/{nome}/{link}/{indirizzo_email}")

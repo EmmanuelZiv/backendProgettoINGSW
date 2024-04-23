@@ -77,7 +77,25 @@ public class SocialVenditoreController {
 
     }
 
+    @PostMapping("/socialVenditoreController/insertSocialVenditoreRegistrazione/{listaSocialDTO}")
+    public void insertSocialVenditoreRegistrazione(@RequestBody ArrayList<SocialVenditore_DTO> listaSocialDTO){
+        System.out.println("Siamo in insert Social acquirente registrazione nel backend" );
+        try{
+            for(SocialVenditore_DTO socialDTO:listaSocialDTO){
+                SocialVenditore social =convertSocialVenditoreEntity(socialDTO);
+                Optional<SocialVenditore> socialInserito=i_social_service.insertSocialVenditore(social.getNome(), social.getLink(), social.getVenditore().getIndirizzo_email());
+                if (socialInserito.isPresent()) {
+                    System.out.println("Social inserito è presente");
 
+                } else {
+                    System.out.println("Social non inserito");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ;
+    }
     @DeleteMapping("/deleteSocialVenditore/{nome}/{link}/{indirizzo_email}")
     public void deleteSocialVenditore(@PathVariable String nome, @PathVariable String link,@PathVariable String indirizzo_email) {
         System.out.println("Cancellazione Social Venditore con nome: " + nome + " e link: " + link);

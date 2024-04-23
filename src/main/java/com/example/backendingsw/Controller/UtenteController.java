@@ -188,4 +188,100 @@ public class UtenteController {
         venditore = modelMapper.map(venditore_dto, Venditore.class);
         return venditore;
     }
+
+
+    @GetMapping("/registrazioneAcquirenteDoppio/{indirizzo_email}")
+    public Acquirente_DTO ricerca_inAcquirente(@PathVariable String indirizzo_email) throws ResponseStatusException{
+        System.out.println("ricerac acquirente con mail" + indirizzo_email );
+        try {
+            Optional<Acquirente> acquirente = i_utente_service.ricercaAcquirente(indirizzo_email);
+
+            if (acquirente.isPresent()) {
+                System.out.println("acquirente è presente");
+                Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
+                return acquirente_dto;
+            }
+            System.out.println("acquirente non è presente");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
+    }
+
+    @GetMapping("/registrazioneVenditoreDoppio/{indirizzo_email}/")
+    public Venditore_DTO ricerca_inVenditore(@PathVariable String indirizzo_email) throws ResponseStatusException{
+        System.out.println("ricerca venditore con mail :" + indirizzo_email );
+
+        try {
+            Optional<Venditore> venditore = i_utente_service.ricercaVenditore(indirizzo_email);
+            System.out.println("venditore no!");
+            if(venditore.isPresent()) {
+                System.out.println("venditore è presente");
+                Venditore_DTO venditore_dto = convertVenditoreDto(venditore.get());
+                return venditore_dto;
+            }
+            System.out.println("venditore non è presente");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    @PostMapping("/insertVenditore/{venditore}")
+    public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
+        System.out.println("entrati in insertVenditore");
+        try{
+            i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getAreageografica(),venditore_dto.getLink());
+            return 1L;
+        }catch (Exception e){
+            System.out.println("eccezione in inserimento venditore");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @PostMapping("/insertAcquirente/{acquirente}")
+    public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto){
+        System.out.println("entrati in insertAcquirente");
+        try{
+            i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getAreageografica(),acquirente_dto.getLink());
+            return 1L;
+        }catch (Exception e){
+            System.out.println("eccezione in inserimento acquirente");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @PostMapping("utenteController/saveCategorieAcquirente/{email}/{lista_categorie}")
+    public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
+        System.out.println("entrati salva categoria acquirente");
+        try{
+                for(String categoria:lista_categorie) {
+                    i_utente_service.insertCategorieAcquirente(indirizzo_email, categoria);
+                    System.out.println("inserita categoria " + categoria );
+                }
+            return ;
+        }catch (Exception e){
+            System.out.println("eccezione ");
+            e.printStackTrace();
+        }
+    }
+
+    @PostMapping("utenteController/saveCategorieVenditore/{email}/{lista_categorie}")
+    public void saveCategorieVenditore(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
+        System.out.println("entrati salva categoria Venditore");
+        try{
+            for(String categoria:lista_categorie) {
+                i_utente_service.insertCategorieVenditore(indirizzo_email, categoria);
+                System.out.println("inserita categoria " + categoria );
+            }
+            return ;
+        }catch (Exception e){
+            System.out.println("eccezione ");
+            e.printStackTrace();
+        }
+    }
 }

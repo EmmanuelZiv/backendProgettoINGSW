@@ -56,16 +56,47 @@
         }
 
         @Override
-        public void updateVenditore(String nome,String cognome,String bio,String link,String areageografica,String email){
-            System.out.println("impl_Venditore_Service ha nome:"+nome + " cognome:"+ cognome + " bio:"+ bio +" link:"+link + " areageografica:"+areageografica + "email:" + email );
-            utente_repository.updateVenditore(nome,cognome,bio,link,areageografica,email);
-
+        public void updateVenditore(String nome,String cognome,String bio,String link,String areageografica,String email) {
+            System.out.println("impl_Venditore_Service ha nome:" + nome + " cognome:" + cognome + " bio:" + bio + " link:" + link + " areageografica:" + areageografica + "email:" + email);
+            utente_repository.updateVenditore(nome, cognome, bio, link, areageografica, email);
         }
+        @Override
+        public Optional<Acquirente> ricercaAcquirente(String email){
+            System.out.println("email  in impl_acquirente_Service" + email );
+            return utente_repository.ricercaAcquirente(email);
+        }
+
+        
         @Override
         public void updatePasswordVenditore(String password,String email){
             System.out.println("impl_Venditore_Service ha password:"+ password + "email:" + email );
             utente_repository.updatePasswordVenditore(password,email);
-
         }
-
+        @Override
+        public Optional<Venditore> ricercaVenditore(String email){
+            System.out.println("email  in impl_venditore_Service" + email);
+            Optional<Venditore> venditore = venditoreRepository.ricercaVenditore(email);
+            if(venditore.isPresent()){
+                System.out.println("venditore trovato in impl utente");
+            }else{
+                System.out.println("venditore non trovato");
+            }
+            return venditore;
+        }
+        @Override
+        public void insertAcquirente(String nome,String cognome,String email,String password,String bio,String link,String areageografica){
+            utente_repository.insertAcquirente(nome,cognome,email,password,bio,link,areageografica);
+        }
+        @Override
+        public void insertVenditore(String nome,String cognome,String email,String password,String bio,String link,String areageografica){
+            venditoreRepository.insertVenditore(nome,cognome,email,password,bio,link,areageografica);
+        }
+        @Override
+        public void insertCategorieAcquirente(String indirizzo_email, String nome){
+            utente_repository.insertCategorieAcquirente(nome,indirizzo_email);
+        }
+        @Override
+        public void insertCategorieVenditore(String indirizzo_email, String nome){
+             venditoreRepository.insertCategorieVenditore(nome,indirizzo_email);
+        }
     }
