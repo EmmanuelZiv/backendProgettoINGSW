@@ -54,9 +54,9 @@ public class SocialAcquirenteController {
             }
         }
 
-        @PostMapping("/socialAcquirenteController/insertSocialAcquirenteRegistrazione/{listaSocialDTO}")
+        @PostMapping("/insertSocialAcquirenteRegistrazione/{listaSocialDTO}")
         public void insertSocialAcquirenteRegistrazione(@RequestBody ArrayList<SocialAcquirente_DTO> listaSocialDTO){
-            System.out.println("Siamo in insert Social acquirente registrazione nel backend" );
+            System.out.println("Siamo in insert Social acquirente registrazione nel backend " + listaSocialDTO.size());
             try{
                 for(SocialAcquirente_DTO socialDTO:listaSocialDTO){
                     SocialAcquirente social =convertSocialAcquirenteEntity(socialDTO);

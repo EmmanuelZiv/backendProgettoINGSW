@@ -421,7 +421,7 @@ public class UtenteController {
     public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
         System.out.println("entrati in insertVenditore");
         try{
-            i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getAreageografica(),venditore_dto.getLink());
+            i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getLink(),venditore_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
             System.out.println("eccezione in inserimento venditore");
@@ -434,7 +434,8 @@ public class UtenteController {
     public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto){
         System.out.println("entrati in insertAcquirente");
         try{
-            i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getAreageografica(),acquirente_dto.getLink());
+            System.out.println("valori di acquirente da inserire: " + acquirente_dto.getBio() + acquirente_dto.getAreageografica() + acquirente_dto.getLink());
+            i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getLink(),acquirente_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
             System.out.println("eccezione in inserimento acquirente");
@@ -442,7 +443,7 @@ public class UtenteController {
             return null;
         }
     }
-    @PostMapping("utenteController/saveCategorieAcquirente/{email}/{lista_categorie}")
+    @PostMapping("/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati salva categoria acquirente");
         try{
@@ -457,7 +458,7 @@ public class UtenteController {
         }
     }
 
-    @PostMapping("utenteController/saveCategorieVenditore/{email}/{lista_categorie}")
+    @PostMapping("/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieVenditore(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati salva categoria Venditore");
         try{
