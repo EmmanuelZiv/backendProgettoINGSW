@@ -70,8 +70,8 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
 
     @Modifying
     @Transactional
-    @Query(value ="INSERT INTO asta_allinglese (nome, descrizione, path_immagine, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, id_venditore) VALUES (?1,?2,?3,?4,CAST(?5 AS interval),?6,?7,?8,?9)", nativeQuery = true)
-    void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
+    @Query(value ="INSERT INTO asta_allinglese (id,nome, descrizione, path_immagine, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, id_venditore) VALUES (?1,?2,?3,?4,?5,CAST(?6 AS interval),?7,?8,?9,?10)", nativeQuery = true)
+    void insert(Long id,String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
 
     @Query("SELECT MAX(id) FROM Asta_allinglese") // Se stai usando un ID auto-generato, altrimenti adatta questa query
     Long getLastInsertedId();

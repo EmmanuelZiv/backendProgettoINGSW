@@ -4,6 +4,7 @@ import com.example.backendingsw.DTO.Asta_allinglese_DTO;
 import com.example.backendingsw.DTO.Asta_inversa_DTO;
 import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
+import com.example.backendingsw.Repository.Asta_allingleseRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -21,6 +22,8 @@ public class Asta_allingleseController {
     @Autowired
     @Qualifier("Impl_Asta_allinglese_Service")
     private I_Asta_allinglese_Service i_asta_allinglese_service;
+    @Autowired
+    private Asta_allingleseRepository asta_allingleseRepository;
 
 
     @GetMapping("/getAste_allingleseScadenzaRecente")
@@ -226,6 +229,7 @@ public class Asta_allingleseController {
             return new ArrayList<>();
         }
     }
+
     @PostMapping("/insertAstaInglese/{asta_inglese}/{lista_categorie}")
     public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in insertAstaInglese");
@@ -236,24 +240,27 @@ public class Asta_allingleseController {
             if(asta_inglese_dto.getPath_immagine()!=null && !asta_inglese_dto.getPath_immagine().isEmpty()) {
                  img = convertBase64ToByteArray(asta_inglese_dto.getPath_immagine());
             }
-            i_asta_allinglese_service.insert(asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),img,asta_inglese_dto.getBaseAsta(),intervalString
+            Long id = asta_allingleseRepository.getLastInsertedId() + 1;
+            System.out.println("inserisco asta con id : " + id);
+            i_asta_allinglese_service.insert(id,asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),img,asta_inglese_dto.getBaseAsta(),intervalString
             ,asta_inglese_dto.getRialzoMin(),asta_inglese_dto.getPrezzoAttuale(),asta_inglese_dto.getCondizione(),asta_inglese_dto.getId_venditore());
 
-            Long id_asta = i_asta_allinglese_service.getLastInsertedId();
             if (lista_categorie != null && !lista_categorie.isEmpty()) {
                 for(String categoria:lista_categorie) {
-                    Integer value = i_asta_allinglese_service.insertCategorieAstaInglese(id_asta, categoria);
-                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id_asta);
+                    Integer value = i_asta_allinglese_service.insertCategorieAstaInglese(id, categoria);
+                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id);
                 }
             }
-            return id_asta;
+            return id;
         }catch (Exception e){
             System.out.println("eccezione in inserimento aste inglesi");
             e.printStackTrace();
             return 0L;
         }
     }
+
     @GetMapping("/getEmailVincente/{indirizzo_email}/{idAstaInglese}")
+
     public Boolean getEmailVincente(@PathVariable String indirizzo_email,@PathVariable Long idAstaInglese){
         System.out.println("entrato in getemail vincente con id e email: "+ idAstaInglese + ", " + indirizzo_email);
         try{

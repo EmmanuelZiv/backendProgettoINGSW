@@ -23,7 +23,7 @@ public interface I_Asta_allinglese_Service {
     public ArrayList<Asta_allinglese> getAsteInglesiPartecipate(String indirizzo_email);
     public Asta_allinglese save(Asta_allinglese astaAllinglese);
     public Integer insertCategorieAstaInglese(Long id_asta_allinglese, String nomeCategoria);
-    public void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
+    public void insert(Long id,String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore);
     public Long getLastInsertedId();
     public String getEmailVincente(Long idAstaInglese);
     public ArrayList<Asta_allinglese> findByNomeAndCategorieAndCondizioneOrderByPrezzo(String nome, ArrayList<String> categorie, String ordinamento);

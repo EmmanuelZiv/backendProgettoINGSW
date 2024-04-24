@@ -83,8 +83,8 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
         return asta_allingleseRepository.insertCategorieAstaInglese(id_asta_allinglese,nomeCategoria);
     }
     @Override
-    public void insert(String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore){
-            asta_allingleseRepository.insert(nome,descrizione,path_immagine,baseAsta,intervalloTempoOfferte,rialzoMin,prezzoAttuale,condizione,id_venditore);
+    public void insert(Long id, String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, float rialzoMin ,float prezzoAttuale, String condizione, String id_venditore){
+            asta_allingleseRepository.insert(id,nome,descrizione,path_immagine,baseAsta,intervalloTempoOfferte,rialzoMin,prezzoAttuale,condizione,id_venditore);
     }
 
     @Override
