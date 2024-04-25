@@ -234,13 +234,17 @@ public class Asta_allingleseController {
     public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in insertAstaInglese");
         try{
+            Long lastInsertedId = asta_allingleseRepository.getLastInsertedId();
+            Long id = (lastInsertedId != null) ? lastInsertedId + 1 : 1L; // Gestisce il caso in cui lastInsertedId è null
+            System.out.println("inserisco asta con id : " + id);
 
             String intervalString = asta_inglese_dto.getIntervalloTempoOfferte() + " MINUTES'";
             byte[] img = null;
             if(asta_inglese_dto.getPath_immagine()!=null && !asta_inglese_dto.getPath_immagine().isEmpty()) {
                  img = convertBase64ToByteArray(asta_inglese_dto.getPath_immagine());
             }
-            Long id = asta_allingleseRepository.getLastInsertedId() + 1;
+
+            //Long id = asta_allingleseRepository.getLastInsertedId() + 1;
             System.out.println("inserisco asta con id : " + id);
             i_asta_allinglese_service.insert(id,asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),img,asta_inglese_dto.getBaseAsta(),intervalString
             ,asta_inglese_dto.getRialzoMin(),asta_inglese_dto.getPrezzoAttuale(),asta_inglese_dto.getCondizione(),asta_inglese_dto.getId_venditore());
