@@ -109,12 +109,11 @@ public class UtenteController {
     }
 
 
-    @PutMapping("/updateAcquirente/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
-    public void updateAcquirente(@PathVariable String nome, @PathVariable String cognome,
-                                       @PathVariable String bio, @PathVariable String link,@PathVariable String areageografica,@PathVariable String indirizzo_email) {
-        System.out.println("Aggiornamento  Acquirente con nome: " + nome + "cognome:"+cognome);
+    @PutMapping("/updateAcquirente/{acquirente}")
+    public void updateAcquirente(@RequestBody Acquirente_DTO acquirente_dto) {
+        System.out.println("Aggiornamento  Acquirente con nome: " + acquirente_dto.getNome() + "cognome:"+acquirente_dto.getCognome());
         try {
-            i_utente_service.updateAcquirente(nome,cognome,bio,link,areageografica,indirizzo_email);
+            i_utente_service.updateAcquirente(acquirente_dto.getNome(),acquirente_dto.getCognome(), acquirente_dto.getBio(), acquirente_dto.getLink(), acquirente_dto.getAreageografica(), acquirente_dto.getIndirizzo_email());
             System.out.println("Acquirente aggiornato con successo");
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,12 +131,11 @@ public class UtenteController {
         }
     }
 
-    @PutMapping("/updateVenditore/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
-    public void updateVenditore(@PathVariable String nome, @PathVariable String cognome,
-                                 @PathVariable String bio, @PathVariable String link,@PathVariable String areageografica,@PathVariable String indirizzo_email) {
-        System.out.println("Aggiornamento  Venditore con nome: " + nome + "cognome:"+cognome);
+    @PutMapping("/updateVenditore/{venditore}")
+    public void updateVenditore(@RequestBody Venditore_DTO venditore_dto) {
+        System.out.println("Aggiornamento  Venditore con nome: " + venditore_dto.getNome() + "cognome:"+venditore_dto.getCognome());
         try {
-            i_utente_service.updateVenditore(nome,cognome,bio,link,areageografica,indirizzo_email);
+            i_utente_service.updateVenditore(venditore_dto.getNome(), venditore_dto.getCognome(), venditore_dto.getBio(), venditore_dto.getLink(), venditore_dto.getAreageografica(), venditore_dto.getIndirizzo_email());
             System.out.println("Venditore aggiornato con successo");
         } catch (Exception e) {
             e.printStackTrace();
