@@ -213,7 +213,7 @@ public class Asta_allingleseController {
     }
 
     @PostMapping("/insertAstaInglese/{asta_inglese}/{lista_categorie}")
-    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @PathVariable(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
+    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
             Long lastInsertedId = asta_allingleseRepository.getLastInsertedId();
             Long id = (lastInsertedId != null) ? lastInsertedId + 1 : 1L; // Gestisce il caso in cui lastInsertedId è null
