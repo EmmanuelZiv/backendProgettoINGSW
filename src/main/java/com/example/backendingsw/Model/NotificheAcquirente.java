@@ -30,25 +30,25 @@ public class NotificheAcquirente {
     }
 
     // Getter e setter
-    public Long getId() {
+    public Long getIdNotificaAcquirente() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setIdNotificaAcquirente(Long id) {
         this.id = id;
     }
-    public String getTitolo() {
+    public String getTitoloNotificaAcquirente() {
         return titolo;
     }
 
-    public void setTitolo(String titolo) {
+    public void setTitoloNotificaAcquirente(String titolo) {
         this.titolo = titolo;
     }
-    public String getCommento() {
+    public String getCommentoNotificaAcquirente() {
         return commento;
     }
 
-    public void setCommento(String commento) {
+    public void setCommentoNotificaAcquirente(String commento) {
         this.commento = commento;
     }
     public String getId_acquirente() {
