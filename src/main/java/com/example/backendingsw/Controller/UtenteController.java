@@ -59,7 +59,6 @@ public class UtenteController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
 
         return null;
@@ -186,7 +185,6 @@ public class UtenteController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
         return null;
     }
@@ -204,7 +202,6 @@ public class UtenteController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
 
         return null;
@@ -222,7 +219,6 @@ public class UtenteController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
         return null;
     }
@@ -236,7 +232,6 @@ public class UtenteController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
 
         return null;
