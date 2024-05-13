@@ -30,9 +30,6 @@
         @Override
         public Optional<Venditore> loginVenditore(String email, String password){
             Optional<Venditore> venditore = venditoreRepository.loginVenditore(email, password);
-            if(venditore.isPresent()){
-            }else{
-            }
             return venditore;
         }
         @Override
@@ -67,9 +64,6 @@
         @Override
         public Optional<Venditore> ricercaVenditore(String email){
             Optional<Venditore> venditore = venditoreRepository.ricercaVenditore(email);
-            if(venditore.isPresent()){
-            }else{
-            }
             return venditore;
         }
         @Override
