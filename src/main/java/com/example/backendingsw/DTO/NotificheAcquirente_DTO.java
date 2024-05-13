@@ -18,29 +18,29 @@ public class NotificheAcquirente_DTO {
     }
 
     // Getter e setter per id
-    public Long getIdNotificaAcquirenteDTO() {
+    public Long getId() {
         return id;
     }
 
-    public void setIdNotificaAcquirenteDTO(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     // Getter e setter per titolo
-    public String getTitoloNotificaAcquirenteDTO() {
+    public String getTitolo() {
         return titolo;
     }
 
-    public void setTitoloNotificaAcquirenteDTO(String titolo) {
+    public void setTitolo(String titolo) {
         this.titolo = titolo;
     }
 
     // Getter e setter per commento
-    public String getCommentoNotificaAcquirenteDTO() {
+    public String getCommento() {
         return commento;
     }
 
-    public void setCommentoNotificaAcquirenteDTO(String commento) {
+    public void setCommento(String commento) {
         this.commento = commento;
     }
 
