@@ -3,8 +3,6 @@ package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.*;
 import com.example.backendingsw.Model.*;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.TopicManagementResponse;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -72,7 +70,7 @@ public class UtenteController {
 
 
     @PutMapping("/updateAcquirente/{acquirente}")
-    public void updateAcquirente(@RequestBody Acquirente_DTO acquirente_dto) {
+    public void updateAcquirente(@RequestBody Acquirente_DTO acquirente_dto,@PathVariable(value = "acquirente") Acquirente_DTO acquirente) {
         try {
             i_utente_service.updateAcquirente(acquirente_dto.getNome(),acquirente_dto.getCognome(), acquirente_dto.getBio(), acquirente_dto.getLink(), acquirente_dto.getAreageografica(), acquirente_dto.getIndirizzo_email());
         } catch (Exception e) {
@@ -90,7 +88,7 @@ public class UtenteController {
     }
 
     @PutMapping("/updateVenditore/{venditore}")
-    public void updateVenditore(@RequestBody Venditore_DTO venditore_dto) {
+    public void updateVenditore(@RequestBody Venditore_DTO venditore_dto,@PathVariable(value = "venditore") Venditore_DTO venditore  ) {
         try {
             i_utente_service.updateVenditore(venditore_dto.getNome(), venditore_dto.getCognome(), venditore_dto.getBio(), venditore_dto.getLink(), venditore_dto.getAreageografica(), venditore_dto.getIndirizzo_email());
         } catch (Exception e) {
@@ -306,7 +304,7 @@ public class UtenteController {
     }
 
     @PostMapping("/insertVenditore/{venditore}")
-    public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
+    public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto,@PathVariable(value ="venditore")Venditore_DTO venditore){
         try{
             i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getLink(),venditore_dto.getAreageografica());
             return 1L;
@@ -317,7 +315,7 @@ public class UtenteController {
     }
 
     @PostMapping("/insertAcquirente/{acquirente}")
-    public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto){
+    public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto,@PathVariable(value ="acquirente")Acquirente_DTO acquirente){
         try{
             i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getLink(),acquirente_dto.getAreageografica());
             return 1L;
@@ -327,7 +325,7 @@ public class UtenteController {
         }
     }
     @PostMapping("/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
-    public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
+    public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@PathVariable(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
                 for(String categoria:lista_categorie) {
                     i_utente_service.insertCategorieAcquirente(indirizzo_email, categoria);
@@ -339,7 +337,7 @@ public class UtenteController {
     }
 
     @PostMapping("/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
-    public void saveCategorieVenditore(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
+    public void saveCategorieVenditore(@PathVariable String indirizzo_email,@PathVariable(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
             for(String categoria:lista_categorie) {
                 i_utente_service.insertCategorieVenditore(indirizzo_email, categoria);
