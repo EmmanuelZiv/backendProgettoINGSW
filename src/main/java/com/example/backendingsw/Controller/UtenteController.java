@@ -69,7 +69,7 @@ public class UtenteController {
     }
 
 
-    @PutMapping("/updateAcquirente")
+    @PutMapping("/updateAcquirente/{acquirente}")
     public void updateAcquirente(@RequestBody Acquirente_DTO acquirente_dto) {
         try {
             i_utente_service.updateAcquirente(acquirente_dto.getNome(),acquirente_dto.getCognome(), acquirente_dto.getBio(), acquirente_dto.getLink(), acquirente_dto.getAreageografica(), acquirente_dto.getIndirizzo_email());
@@ -87,7 +87,7 @@ public class UtenteController {
         }
     }
 
-    @PutMapping("/updateVenditore")
+    @PutMapping("/updateVenditore/{venditore}")
     public void updateVenditore(@RequestBody Venditore_DTO venditore_dto) {
         try {
             i_utente_service.updateVenditore(venditore_dto.getNomeDTO(), venditore_dto.getCognomeDTO(), venditore_dto.getBioDTO(), venditore_dto.getLinkDTO(), venditore_dto.getAreageograficaDTO(), venditore_dto.getIndirizzo_emailDTO());
@@ -303,7 +303,7 @@ public class UtenteController {
 
     }
 
-    @PostMapping("/insertVenditore")
+    @PostMapping("/insertVenditore/{venditore}")
     public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
         try{
             i_utente_service.insertVenditore(venditore_dto.getNomeDTO(), venditore_dto.getCognomeDTO(),venditore_dto.getIndirizzo_emailDTO(),venditore_dto.getPasswordDTO(),venditore_dto.getBioDTO(),venditore_dto.getLinkDTO(),venditore_dto.getAreageograficaDTO());
@@ -314,7 +314,7 @@ public class UtenteController {
         }
     }
 
-    @PostMapping("/insertAcquirente")
+    @PostMapping("/insertAcquirente/{acquirente}")
     public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto){
         try{
             i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getLink(),acquirente_dto.getAreageografica());
@@ -324,7 +324,7 @@ public class UtenteController {
             return null;
         }
     }
-    @PostMapping("/saveCategorieAcquirente")
+    @PostMapping("/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
                 for(String categoria:lista_categorie) {
@@ -336,7 +336,7 @@ public class UtenteController {
         }
     }
 
-    @PostMapping("/saveCategorieVenditore")
+    @PostMapping("/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieVenditore(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
             for(String categoria:lista_categorie) {
