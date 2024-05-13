@@ -1,7 +1,9 @@
 package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.Asta_allinglese_DTO;
+import com.example.backendingsw.DTO.Asta_inversa_DTO;
 import com.example.backendingsw.Model.Asta_allinglese;
+import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Repository.Asta_allingleseRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.modelmapper.ModelMapper;
@@ -271,9 +273,9 @@ public class Asta_allingleseController {
         if(ordinamento!=null) {
 
             if (ordinamento.equals("ASC")) {
-                Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttualeInglese));
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale));
             } else {
-                Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttualeInglese).reversed());
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale).reversed());
             }
         }
         ArrayList<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
@@ -299,11 +301,11 @@ public class Asta_allingleseController {
     }
     private Asta_allinglese_DTO convertiDaModelAaDto(Asta_allinglese asta){
         String img = null;
-        if(asta.getPath_immagineInglese()!=null) {
-            img = convertByteArrayToBase64(asta.getPath_immagineInglese());
+        if(asta.getPath_immagine()!=null) {
+            img = convertByteArrayToBase64(asta.getPath_immagine());
         }
-        Asta_allinglese_DTO astaDTO = new Asta_allinglese_DTO(asta.getIdInglese(),asta.getNomeInglese(), asta.getDescrizioneInglese(),img, asta.getBaseAstaInglese(),asta.getIntervalloTempoOfferteInglese(),
-                asta.getIntervalloOfferteBaseInglese(),asta.getRialzoMinInglese(),asta.getPrezzoAttualeInglese(),asta.getCondizioneInglese(),asta.getIdVenditoreInglese());
+        Asta_allinglese_DTO astaDTO = new Asta_allinglese_DTO(asta.getId(),asta.getNome(), asta.getDescrizione(),img, asta.getBaseAsta(),asta.getIntervalloTempoOfferte(),
+                asta.getIntervalloOfferteBase(),asta.getRialzoMin(),asta.getPrezzoAttuale(),asta.getCondizione(),asta.getIdVenditore());
         return astaDTO;
     }
     private Asta_allinglese convertiDaDtoAModel(Asta_allinglese_DTO astaDTO){
