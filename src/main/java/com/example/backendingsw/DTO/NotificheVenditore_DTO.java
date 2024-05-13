@@ -10,11 +10,11 @@ public class NotificheVenditore_DTO {
     public NotificheVenditore_DTO() {
     }
 
-    public NotificheVenditore_DTO(Long id, String titolo, String commento, String id_venditore) {
-        this.id = id;
-        this.titolo = titolo;
-        this.commento = commento;
-        this.id_venditore = id_venditore;
+    public NotificheVenditore_DTO(Long idNotifica, String titoloV, String commentoV, String idV) {
+        this.id = idNotifica;
+        this.titolo = titoloV;
+        this.commento = commentoV;
+        this.id_venditore = idV;
     }
 
     // Getter e setter per id
@@ -22,8 +22,8 @@ public class NotificheVenditore_DTO {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long idNotifica) {
+        id = idNotifica;
     }
 
     // Getter e setter per titolo
@@ -31,8 +31,8 @@ public class NotificheVenditore_DTO {
         return titolo;
     }
 
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
+    public void setTitolo(String titoloV) {
+        titolo = titoloV;
     }
 
     // Getter e setter per commento
@@ -40,8 +40,8 @@ public class NotificheVenditore_DTO {
         return commento;
     }
 
-    public void setCommento(String commento) {
-        this.commento = commento;
+    public void setCommento(String commentoV) {
+        commento = commentoV;
     }
 
     // Getter e setter per idVenditore
@@ -49,7 +49,7 @@ public class NotificheVenditore_DTO {
         return id_venditore;
     }
 
-    public void setId_venditore(String id_venditore) {
-        this.id_venditore = id_venditore;
+    public void setId_venditore(String idV) {
+        id_venditore = idV;
     }
 }

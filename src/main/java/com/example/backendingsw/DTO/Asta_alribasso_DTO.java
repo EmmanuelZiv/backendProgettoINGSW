@@ -34,111 +34,111 @@ public class Asta_alribasso_DTO {
 
 
     // Metodi getter e setter per id
-    public Long getId() {
+    public Long getIdDTO() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setIdDTO(Long id) {
         this.id = id;
     }
 
     // Metodi getter e setter per nome, descrizione, path_immagine, prezzoBase, intervalloDecrementale, intervalloBase, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, id_venditore (omessi per brevità)
     // Getter e setter per nome
-    public String getNome() {
+    public String getNomeDTO() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNomeDTO(String nome) {
         this.nome = nome;
     }
 
     // Getter e setter per descrizione
-    public String getDescrizione() {
+    public String getDescrizioneDTO() {
         return descrizione;
     }
 
-    public void setDescrizione(String descrizione) {
+    public void setDescrizioneDTO(String descrizione) {
         this.descrizione = descrizione;
     }
 
     // Getter e setter per path_immagine
-    public String getPath_immagine() {
+    public String getPath_immagineDTO() {
         return path_immagine;
     }
 
-    public void setPath_immagine(String path_immagine) {
+    public void setPath_immagineDTO(String path_immagine) {
         this.path_immagine = path_immagine;
     }
 
     // Getter e setter per prezzoBase
-    public float getPrezzoBase() {
+    public float getPrezzoBaseDTO() {
         return prezzoBase;
     }
 
-    public void setPrezzoBase(float prezzoBase) {
+    public void setPrezzoBaseDTO(float prezzoBase) {
         this.prezzoBase = prezzoBase;
     }
 
     // Getter e setter per intervalloDecrementale
-    public String getIntervalloDecrementale() {
+    public String getIntervalloDecrementaleDTO() {
         return intervalloDecrementale;
     }
 
-    public void setIntervalloDecrementale(String intervalloDecrementale) {
+    public void setIntervalloDecrementaleDTO(String intervalloDecrementale) {
         this.intervalloDecrementale = intervalloDecrementale;
     }
 
     // Getter e setter per intervalloBase
-    public String getIntervalloBase() {
+    public String getIntervalloBaseDTO() {
         return intervalloBase;
     }
 
-    public void setIntervalloBase(String intervalloBase) {
+    public void setIntervalloBaseDTO(String intervalloBase) {
         this.intervalloBase = intervalloBase;
     }
 
     // Getter e setter per decrementoAutomaticoCifra
-    public float getDecrementoAutomaticoCifra() {
+    public float getDecrementoAutomaticoCifraDTO() {
         return decrementoAutomaticoCifra;
     }
 
-    public void setDecrementoAutomaticoCifra(float decrementoAutomaticoCifra) {
+    public void setDecrementoAutomaticoCifraDTO(float decrementoAutomaticoCifra) {
         this.decrementoAutomaticoCifra = decrementoAutomaticoCifra;
     }
 
     // Getter e setter per prezzoMin
-    public float getPrezzoMin() {
+    public float getPrezzoMinDTO() {
         return prezzoMin;
     }
 
-    public void setPrezzoMin(float prezzoMin) {
+    public void setPrezzoMinDTO(float prezzoMin) {
         this.prezzoMin = prezzoMin;
     }
 
     // Getter e setter per prezzoAttuale
-    public float getPrezzoAttuale() {
+    public float getPrezzoAttualeDTO() {
         return prezzoAttuale;
     }
 
-    public void setPrezzoAttuale(float prezzoAttuale) {
+    public void setPrezzoAttualeDTO(float prezzoAttuale) {
         this.prezzoAttuale = prezzoAttuale;
     }
 
     // Getter e setter per condizione
-    public String getCondizione() {
+    public String getCondizioneDTO() {
         return condizione;
     }
 
-    public void setCondizione(String condizione) {
+    public void setCondizioneDTO(String condizione) {
         this.condizione = condizione;
     }
 
     // Getter e setter per id_venditore
-    public String getId_venditore() {
+    public String getId_venditoreDTO() {
         return id_venditore;
     }
 
-    public void setId_venditore(String id_venditore) {
+    public void setId_venditoreDTO(String id_venditore) {
         this.id_venditore = id_venditore;
     }
 }

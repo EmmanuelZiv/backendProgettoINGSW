@@ -65,91 +65,89 @@ public class Asta_allinglese {
     }
 
     // Getters and setters
-    public Long getId() {
+    public Long getIdInglese() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setIdInglese(Long id) {
         this.id = id;
     }
 
-    public String getNome() {
+    public String getNomeInglese() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNomeInglese(String nome) {
         this.nome = nome;
     }
 
-    public String getDescrizione() {
+    public String getDescrizioneInglese() {
         return descrizione;
     }
 
-    public void setDescrizione(String descrizione) {
+    public void setDescrizioneInglese(String descrizione) {
         this.descrizione = descrizione;
     }
 
-    public byte[] getPath_immagine() {
+    public byte[] getPath_immagineInglese() {
         return path_immagine;
     }
 
-    public void setPath_immagine(byte[] path_immagine) {
+    public void setPath_immagineInglese(byte[] path_immagine) {
         this.path_immagine = path_immagine;
     }
 
-    public float getBaseAsta() {
+    public float getBaseAstaInglese() {
         return baseAsta;
     }
 
-    public void setBaseAsta(float baseAsta) {
-        this.baseAsta = baseAsta;
-    }
+    public void setBaseAstaInglese(float baseAsta) {this.baseAsta = baseAsta;}
 
-    public String getIntervalloTempoOfferte() {
+    public String getIntervalloTempoOfferteInglese() {
         return intervalloTempoOfferte;
     }
 
-    public void setIntervalloTempoOfferte(String intervalloTempoOfferte) {
+    public void setIntervalloTempoOfferteInglese(String intervalloTempoOfferte) {
         this.intervalloTempoOfferte = intervalloTempoOfferte;
     }
 
-    public String getIntervalloOfferteBase() {
+    public String getIntervalloOfferteBaseInglese() {
         return intervalloOfferteBase;
     }
 
-    public void setIntervalloOfferteBase(String intervalloOfferteBase) {
+    public void setIntervalloOfferteBaseInglese(String intervalloOfferteBase) {
         this.intervalloOfferteBase = intervalloOfferteBase;
     }
 
-    public float getRialzoMin() {
+    public float getRialzoMinInglese() {
         return rialzoMin;
     }
 
-    public void setRialzoMin(float rialzoMin) {
+    public void setRialzoMinInglese(float rialzoMin) {
         this.rialzoMin = rialzoMin;
     }
 
-    public float getPrezzoAttuale() {
+    public float getPrezzoAttualeInglese() {
         return prezzoAttuale;
     }
 
-    public void setPrezzoAttuale(float prezzoAttuale) {
+    public void setPrezzoAttualeInglese(float prezzoAttuale) {
         this.prezzoAttuale = prezzoAttuale;
     }
 
-    public String getCondizione() {
+    public String getCondizioneInglese() {
         return condizione;
     }
 
-    public void setCondizione(String condizione) {
+    public void setCondizioneInglese(String condizione) {
         this.condizione = condizione;
     }
 
-    public String getIdVenditore() {
+    public String getIdVenditoreInglese() {
         return idVenditore;
     }
 
-    public void setIdVenditore(String idVenditore) {
+    public void setIdVenditoreInglese(String idVenditore) {
         this.idVenditore = idVenditore;
     }
 }

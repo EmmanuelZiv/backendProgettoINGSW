@@ -7,8 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -33,25 +31,18 @@ public class Asta_alribassoController {
             }
             return listAsteAlribassoDTO;
         } else {
-            System.out.println("Non sono state trovate aste al ribasso");
             return new ArrayList<>();
         }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @GetMapping("/getAste_alribassoNomeCategoria/{nomiCategorie}")
     public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
-        System.out.println("Cerco ribasse per categorie: " + nomiCategorie);
         Set<Asta_alribasso> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
             List<Asta_alribasso> astePerCategoria = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
             asteUniche.addAll(astePerCategoria);
         }
-
-        System.out.println("Cerco ribasse per categorie: " + nomiCategorie);
-        System.out.println("Trovate " + asteUniche.size() + " aste ribasse");
 
         List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
         for (Asta_alribasso asta : asteUniche) {
@@ -60,24 +51,6 @@ public class Asta_alribassoController {
         }
 
         return listAsteAlribassoDTO;
-
-//        List<Asta_alribasso> list_asta_alribasso = i_asta_alribasso_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
-//        System.out.println("Cerco ribasso per categoria : " + nomeCategoria);
-//
-//        if (!list_asta_alribasso.isEmpty()) {
-//            System.out.println("Trovate " + list_asta_alribasso.size() + "aste ribasso");
-//            List<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
-//            for (Asta_alribasso asta : list_asta_alribasso) {
-//                Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
-//                listAsteAlribassoDTO.add(astaDTO);
-//            }
-//            return listAsteAlribassoDTO;
-//        } else {
-//            System.out.println("Non sono state trovate aste al ribasso");
-//            return new ArrayList<>();
-//        }
-//
-//        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -94,11 +67,9 @@ public class Asta_alribassoController {
             }
             return listAsteAlribassoDTO;
         } else {
-            System.out.println("Non sono state trovate aste al ribasso");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -115,11 +86,9 @@ public class Asta_alribassoController {
             }
             return listAsteAlribassoDTO;
         } else {
-            System.out.println("Non sono state trovate aste al ribasso");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @PostMapping("/acquistaAstaAlRibasso/{idAstaAlRibasso}/{indirizzo_email}/{prezzoAcquisto}")
@@ -149,10 +118,8 @@ public class Asta_alribassoController {
     public Integer verificaAstaAlRibassoInPreferiti(@PathVariable String indirizzo_email,@PathVariable Long idAstaRibasso){
         try{
             Integer verifica = i_asta_alribasso_service.verificaAstaAlRibassoInPreferiti(indirizzo_email, idAstaRibasso);
-            System.out.println("valore di verifica" + verifica);
             return verifica;
         }catch (Exception e){
-            System.out.println("eccezione in verifica preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -161,10 +128,8 @@ public class Asta_alribassoController {
     public Integer inserimentoAstaInPreferiti(@PathVariable Long idAstaRibasso,@PathVariable String indirizzo_email){
         try{
             Integer inserimento = i_asta_alribasso_service.inserimentoAstaInPreferiti(idAstaRibasso,indirizzo_email);
-            System.out.println("valore di inserimento" + inserimento);
             return inserimento;
         }catch (Exception e){
-            System.out.println("eccezione in inserimento preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -173,10 +138,8 @@ public class Asta_alribassoController {
     public Integer eliminazioneAstaInPreferiti(@PathVariable Long idAstaRibasso,@PathVariable String indirizzo_email){
         try{
             Integer rimozione = i_asta_alribasso_service.eliminazioneAstaInPreferiti(idAstaRibasso,indirizzo_email);
-            System.out.println("valore di rimozione" + rimozione);
             return rimozione;
         }catch (Exception e){
-            System.out.println("eccezione in rimozione preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -194,36 +157,31 @@ public class Asta_alribassoController {
             }
             return listAsteAlribassoDTO;
         } else {
-            System.out.println("Non sono state trovate aste al ribasso");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
-        System.out.println("entrati in insertAstaRibasso");
         try{
 
-            String intervalString = asta_ribasso_dto.getIntervalloDecrementale() + " MINUTES'";
+            String intervalString = asta_ribasso_dto.getIntervalloDecrementaleDTO() + " MINUTES'";
             byte[] img = null;
-            if(asta_ribasso_dto.getPath_immagine()!=null) {
-                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagine());
+            if(asta_ribasso_dto.getPath_immagineDTO()!=null) {
+                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagineDTO());
             }
-            i_asta_alribasso_service.insert(asta_ribasso_dto.getNome(), asta_ribasso_dto.getDescrizione(),img,asta_ribasso_dto.getPrezzoBase(),intervalString,
-                    asta_ribasso_dto.getDecrementoAutomaticoCifra(),asta_ribasso_dto.getPrezzoMin(),asta_ribasso_dto.getPrezzoAttuale(),asta_ribasso_dto.getCondizione(),asta_ribasso_dto.getId_venditore());
+            i_asta_alribasso_service.insert(asta_ribasso_dto.getNomeDTO(), asta_ribasso_dto.getDescrizioneDTO(),img,asta_ribasso_dto.getPrezzoBaseDTO(),intervalString,
+                    asta_ribasso_dto.getDecrementoAutomaticoCifraDTO(),asta_ribasso_dto.getPrezzoMinDTO(),asta_ribasso_dto.getPrezzoAttualeDTO(),asta_ribasso_dto.getCondizioneDTO(),asta_ribasso_dto.getId_venditoreDTO());
 
             Long id_asta = i_asta_alribasso_service.getLastInsertedId();
 
             if (lista_categorie != null && !lista_categorie.isEmpty()) {
                 for(String categoria:lista_categorie){
                     Integer value = i_asta_alribasso_service.insertCategorieAstaRibasso(id_asta,categoria);
-                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id_asta);
                 }
             }
             return id_asta;
         }catch (Exception e){
-            System.out.println("eccezione in verifica preferiti");
             e.printStackTrace();
             return 0L;
         }
@@ -231,7 +189,6 @@ public class Asta_alribassoController {
 
     @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
     public ArrayList<Asta_alribasso_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
-        System.out.println("Cerco ribasso per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
         ArrayList<Asta_alribasso> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
             asteTrovate = i_asta_alribasso_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);
@@ -243,12 +200,13 @@ public class Asta_alribassoController {
             asteTrovate = i_asta_alribasso_service.findByCondizioneOrderByPrezzo(ordinamento);
         }
 
-        if(ordinamento.equals("ASC")){
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale));
-        }else{
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale).reversed());
+        if(ordinamento!=null) {
+            if (ordinamento.equals("ASC")) {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale));
+            } else {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale).reversed());
+            }
         }
-        System.out.println("Trovate " + asteTrovate.size() + " aste ribasso");
 
         ArrayList<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
         for (Asta_alribasso asta : asteTrovate) {
@@ -281,11 +239,11 @@ public class Asta_alribassoController {
     }
     private Asta_alribasso convertiDaDtoAModel(Asta_alribasso_DTO astaDTO){
         byte[] img = null;
-        if(astaDTO.getPath_immagine()!=null) {
-            img = convertBase64ToByteArray(astaDTO.getPath_immagine());
+        if(astaDTO.getPath_immagineDTO()!=null) {
+            img = convertBase64ToByteArray(astaDTO.getPath_immagineDTO());
         }
-        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNome(), astaDTO.getDescrizione(),img, astaDTO.getPrezzoBase(),astaDTO.getIntervalloDecrementale(),
-                astaDTO.getIntervalloDecrementale(),astaDTO.getDecrementoAutomaticoCifra(),astaDTO.getPrezzoMin(),astaDTO.getPrezzoAttuale(),astaDTO.getCondizione(),astaDTO.getId_venditore());
+        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNomeDTO(), astaDTO.getDescrizioneDTO(),img, astaDTO.getPrezzoBaseDTO(),astaDTO.getIntervalloDecrementaleDTO(),
+                astaDTO.getIntervalloDecrementaleDTO(),astaDTO.getDecrementoAutomaticoCifraDTO(),astaDTO.getPrezzoMinDTO(),astaDTO.getPrezzoAttualeDTO(),astaDTO.getCondizioneDTO(),astaDTO.getId_venditoreDTO());
         return asta;
     }
 

@@ -1,5 +1,6 @@
 package com.example.backendingsw.Controller;
 
+import com.example.backendingsw.DTO.SocialAcquirente_DTO;
 import com.example.backendingsw.DTO.SocialVenditore_DTO;
 import com.example.backendingsw.Model.SocialVenditore;
 import com.example.backendingsw.Repository.SocialVenditoreRepository;

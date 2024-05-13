@@ -1,6 +1,7 @@
 package com.example.backendingsw.Service.Implementations;
 
 import com.example.backendingsw.Model.Asta_allinglese;
+import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Repository.Asta_allingleseRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ public class Impl_Asta_allinglese_Service implements I_Asta_allinglese_Service {
 
     @Override
     public List<Asta_allinglese> findByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione){
-        return asta_allingleseRepository.findFirst15ByCondizioneOrderByIntervalloTempoOfferteAsc("aperta");
+        return asta_allingleseRepository.findFirst5ByCondizioneOrderByIntervalloTempoOfferteAsc("aperta");
     }
     @Override
     public List<Asta_allinglese> findByCondizioneOrderByIdDesc(String condizione){
-        return asta_allingleseRepository.findFirst15ByCondizioneOrderByIdDesc("aperta");
+        return asta_allingleseRepository.findFirst5ByCondizioneOrderByIdDesc("aperta");
     }
     @Override
     public List<Asta_allinglese> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
