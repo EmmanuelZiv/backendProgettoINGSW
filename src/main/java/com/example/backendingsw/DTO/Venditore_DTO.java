@@ -14,14 +14,14 @@ public class Venditore_DTO {
     public Venditore_DTO(){
 
     }
-    public Venditore_DTO(String nome, String cognome, String indirizzo_email, String password, String bio, String areageografica, String link) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.indirizzo_email = indirizzo_email;
+    public Venditore_DTO(String nomeV, String cognomeV, String email, String password, String descrizione, String paese, String linkV) {
+        this.nome = nomeV;
+        this.cognome = cognomeV;
+        this.indirizzo_email = email;
         this.password = password;
-        this.bio = bio;
-        this.areageografica = areageografica;
-        this.link = link;
+        this.bio = descrizione;
+        this.areageografica = paese;
+        this.link = linkV;
     }
 
     public String getNome() {
