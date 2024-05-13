@@ -92,16 +92,10 @@ public class NotificationListenerService {
                         String corpoAcquirente = rsAcquirente.getString("commento");
                         corpoAcquirente = corpoAcquirente != null ? corpoAcquirente : "";
                         String tokenAcquirente = rsAcquirente.getString("token");
-                        System.out.println("notifica acquirente con id,titolo,token: " + idNotificaAcquirente + titoloAcquirente + tokenAcquirente);
 
                         // Costruisci un oggetto NotificationRequest per gli acquirenti
                         NotificationRequest notificationRequestAcquirente = new NotificationRequest(titoloAcquirente, corpoAcquirente, tokenAcquirente);
                         int valore = notificheController.updateMandataAcquirente(idNotificaAcquirente);
-                        if(valore==1){
-                            System.out.println("notifica acquirente settata a mandata");
-                        }else{
-                            System.out.println("Errore nel settare la notifica acquirente a mandata");
-                        }
                         // Chiamata al metodo sendNotification di NotificheController con l'oggetto NotificationRequest per gli acquirentii 
                         if(tokenAcquirente!=null) {
                             notificheController.sendNotification(notificationRequestAcquirente);
@@ -117,20 +111,13 @@ public class NotificationListenerService {
                         // Recupera i dettagli della notifica per i venditori
                         Long idNotificaVenditore = rsVenditore.getLong("id");
                         String titoloVenditore = rsVenditore.getString("titolo");
-                        System.out.println("notifica venditore con titolo: " + titoloVenditore);
                         String corpoVenditore = rsVenditore.getString("commento");
                         corpoVenditore = corpoVenditore != null ? corpoVenditore : "";
                         String tokenVenditore = rsVenditore.getString("token");
-                        System.out.println("notifica venditore con id,titolo,token: " + idNotificaVenditore + titoloVenditore + tokenVenditore);
 
                         // Costruisci un oggetto NotificationRequest per i venditori
                         NotificationRequest notificationRequestVenditore = new NotificationRequest(titoloVenditore, corpoVenditore, tokenVenditore);
                         int valore = notificheController.updateMandataVenditore(idNotificaVenditore);
-                        if(valore==1){
-                            System.out.println("notifica venditore settata a mandata");
-                        }else{
-                            System.out.println("Errore nel settare la notifica venditore a mandata");
-                        }
 
                         // Chiamata al metodo sendNotification di NotificheController con l'oggetto NotificationRequest per i venditori
                         if(tokenVenditore!=null) {
