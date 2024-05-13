@@ -35,7 +35,7 @@ public class Asta_alribassoController {
         }
     }
 
-    @GetMapping("/getAste_alribassoNomeCategoria/{nomiCategorie}")
+    @GetMapping("/getAste_alribassoNomeCategoria")
     public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         Set<Asta_alribasso> asteUniche = new HashSet<>();
 
@@ -161,7 +161,7 @@ public class Asta_alribassoController {
         }
 
     }
-    @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
+    @PostMapping("/insertAstaRibasso")
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
 
@@ -187,7 +187,7 @@ public class Asta_alribassoController {
         }
     }
 
-    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    @GetMapping("/getAstePerRicerca")
     public ArrayList<Asta_alribasso_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         ArrayList<Asta_alribasso> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
