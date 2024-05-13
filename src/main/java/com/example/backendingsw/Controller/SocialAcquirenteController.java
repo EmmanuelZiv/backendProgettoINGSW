@@ -2,7 +2,6 @@ package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.SocialAcquirente_DTO;
 import com.example.backendingsw.Model.SocialAcquirente;
-import com.example.backendingsw.Model.SocialVenditore;
 import com.example.backendingsw.Repository.SocialAcquirenteRepository;
 import com.example.backendingsw.Service.Interfaces.I_Social_Service;
 import org.modelmapper.ModelMapper;
@@ -60,7 +59,7 @@ public class SocialAcquirenteController {
             try{
                 for(SocialAcquirente_DTO socialDTO:listaSocialDTO){
                     SocialAcquirente social =convertSocialAcquirenteEntity(socialDTO);
-                    Optional<SocialAcquirente> socialInserito=i_social_service.insertSocialAcquirente(social.getNome(), social.getLink(), social.getAcquirente().getIndirizzo_email());
+                    Optional<SocialAcquirente> socialInserito=i_social_service.insertSocialAcquirente(social.getNome(), social.getLink(), social.getAcquirente().getIndirizzo_emailAcquirente());
                     if (socialInserito.isPresent()) {
                         System.out.println("Social inserito è presente");
 
@@ -143,7 +142,7 @@ public class SocialAcquirenteController {
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         SocialAcquirente_DTO socialAcquirente_dto = new SocialAcquirente_DTO();
         socialAcquirente_dto = modelMapper.map(socialAcquirente, SocialAcquirente_DTO.class);
-        socialAcquirente_dto.setIndirizzo_email(socialAcquirente.getAcquirente().getIndirizzo_email());//?
+        socialAcquirente_dto.setIndirizzo_email(socialAcquirente.getAcquirente().getIndirizzo_emailAcquirente());//?
 
         return socialAcquirente_dto;
     }
