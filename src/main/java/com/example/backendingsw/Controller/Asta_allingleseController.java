@@ -61,7 +61,7 @@ public class Asta_allingleseController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @GetMapping("/getAste_allingleseNomeCategoria/{nomiCategorie}")
+    @GetMapping("/getAste_allingleseNomeCategoria")
     public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         Set<Asta_allinglese> asteUniche = new HashSet<>();
 
