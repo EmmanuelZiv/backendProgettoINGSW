@@ -270,14 +270,12 @@ public class Asta_allingleseController {
             asteTrovate = i_asta_allinglese_service.findByCondizioneOrderByPrezzo(ordinamento);
         }
 
-        if(ordinamento!=null) {
-
-            if (ordinamento.equals("ASC")) {
-                Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale));
-            } else {
-                Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale).reversed());
-            }
+        if(ordinamento.equals("ASC")){
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale));
+        }else{
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale).reversed());
         }
+
         ArrayList<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
         for (Asta_allinglese asta : asteTrovate) {
             Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
