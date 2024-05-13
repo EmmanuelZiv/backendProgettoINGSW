@@ -1,6 +1,5 @@
 package com.example.backendingsw.Service.Implementations;
 
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Repository.Asta_inversaRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
@@ -19,11 +18,11 @@ public class Impl_Asta_inversa_Service implements I_Asta_inversa_Service {
 
     @Override
     public List<Asta_inversa> findByCondizioneOrderByDataDiScadenzaAsc(String condizione){
-        return asta_inversaRepository.findByCondizioneOrderByDataDiScadenzaAsc("aperta");
+        return asta_inversaRepository.findFirst15ByCondizioneOrderByDataDiScadenzaAsc("aperta");
     }
     @Override
     public List<Asta_inversa> findByCondizioneOrderByIdDesc(String condizione){
-        return asta_inversaRepository.findByCondizioneOrderByIdDesc("aperta");
+        return asta_inversaRepository.findFirst15ByCondizioneOrderByIdDesc("aperta");
     }
     @Override
     public List<Asta_inversa> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){

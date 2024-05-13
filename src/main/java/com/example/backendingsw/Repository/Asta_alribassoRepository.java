@@ -14,16 +14,16 @@ import java.util.List;
 @Repository
 public interface Asta_alribassoRepository extends JpaRepository<Asta_alribasso, Long> {
 
-    List<Asta_alribasso> findByCondizioneOrderByIdDesc(String condizione);
+    List<Asta_alribasso> findFirst15ByCondizioneOrderByIdDesc(String condizione);
 
-    @Query("SELECT a FROM Asta_alribasso  a JOIN AsteCategorieAlRibasso ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria")
+    @Query("SELECT a FROM Asta_alribasso a JOIN AsteCategorieAlRibasso ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria ORDER BY a.id LIMIT 15")
     List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
 
     @Query("SELECT a FROM Asta_alribasso a WHERE a.condizione='aperta' AND a.id_venditore = :indirizzo_email")
-    public List<Asta_alribasso> findAsta_alribassoApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
+    List<Asta_alribasso> findAsta_alribassoApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Query("SELECT a FROM Asta_alribasso a WHERE a.condizione='chiusa' AND a.id_venditore = :indirizzo_email")
-    public List<Asta_alribasso> findAsta_alribassoChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
+    List<Asta_alribasso> findAsta_alribassoChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Modifying
     @Transactional
