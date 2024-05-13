@@ -7,8 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -167,13 +165,13 @@ public class Asta_alribassoController {
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @PathVariable(value = "lista_categorie", required = false) ArrayList<String> lista_categorie,@PathVariable(value = "asta_ribasso") Asta_alribasso_DTO asta_ribasso   ){
         try{
 
-            String intervalString = asta_ribasso_dto.getIntervalloDecrementale() + " MINUTES'";
+            String intervalString = asta_ribasso_dto.getIntervalloDecrementaleDTO() + " MINUTES'";
             byte[] img = null;
-            if(asta_ribasso_dto.getPath_immagine()!=null) {
-                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagine());
+            if(asta_ribasso_dto.getPath_immagineDTO()!=null) {
+                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagineDTO());
             }
-            i_asta_alribasso_service.insert(asta_ribasso_dto.getNome(), asta_ribasso_dto.getDescrizione(),img,asta_ribasso_dto.getPrezzoBase(),intervalString,
-                    asta_ribasso_dto.getDecrementoAutomaticoCifra(),asta_ribasso_dto.getPrezzoMin(),asta_ribasso_dto.getPrezzoAttuale(),asta_ribasso_dto.getCondizione(),asta_ribasso_dto.getId_venditore());
+            i_asta_alribasso_service.insert(asta_ribasso_dto.getNomeDTO(), asta_ribasso_dto.getDescrizioneDTO(),img,asta_ribasso_dto.getPrezzoBaseDTO(),intervalString,
+                    asta_ribasso_dto.getDecrementoAutomaticoCifraDTO(),asta_ribasso_dto.getPrezzoMinDTO(),asta_ribasso_dto.getPrezzoAttualeDTO(),asta_ribasso_dto.getCondizioneDTO(),asta_ribasso_dto.getId_venditoreDTO());
 
             Long id_asta = i_asta_alribasso_service.getLastInsertedId();
 
@@ -241,11 +239,11 @@ public class Asta_alribassoController {
     }
     private Asta_alribasso convertiDaDtoAModel(Asta_alribasso_DTO astaDTO){
         byte[] img = null;
-        if(astaDTO.getPath_immagine()!=null) {
-            img = convertBase64ToByteArray(astaDTO.getPath_immagine());
+        if(astaDTO.getPath_immagineDTO()!=null) {
+            img = convertBase64ToByteArray(astaDTO.getPath_immagineDTO());
         }
-        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNome(), astaDTO.getDescrizione(),img, astaDTO.getPrezzoBase(),astaDTO.getIntervalloDecrementale(),
-                astaDTO.getIntervalloDecrementale(),astaDTO.getDecrementoAutomaticoCifra(),astaDTO.getPrezzoMin(),astaDTO.getPrezzoAttuale(),astaDTO.getCondizione(),astaDTO.getId_venditore());
+        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNomeDTO(), astaDTO.getDescrizioneDTO(),img, astaDTO.getPrezzoBaseDTO(),astaDTO.getIntervalloDecrementaleDTO(),
+                astaDTO.getIntervalloDecrementaleDTO(),astaDTO.getDecrementoAutomaticoCifraDTO(),astaDTO.getPrezzoMinDTO(),astaDTO.getPrezzoAttualeDTO(),astaDTO.getCondizioneDTO(),astaDTO.getId_venditoreDTO());
         return asta;
     }
 
