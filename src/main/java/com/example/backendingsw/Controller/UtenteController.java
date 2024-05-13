@@ -3,6 +3,8 @@ package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.*;
 import com.example.backendingsw.Model.*;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.TopicManagementResponse;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,7 +45,7 @@ public class UtenteController {
     @GetMapping("/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
     public ArrayList<String> findCategorieByIndirizzoEmailAcquirente(@PathVariable String indirizzo_email) {
         ArrayList<String> listaCategorie = i_utente_service.findCategorieByIndirizzoEmailAcquirente(indirizzo_email);
-            return listaCategorie;
+        return listaCategorie;
     }
 
 
@@ -90,7 +92,7 @@ public class UtenteController {
     @PutMapping("/updateVenditore/{venditore}")
     public void updateVenditore(@RequestBody Venditore_DTO venditore_dto) {
         try {
-            i_utente_service.updateVenditore(venditore_dto.getNomeDTO(), venditore_dto.getCognomeDTO(), venditore_dto.getBioDTO(), venditore_dto.getLinkDTO(), venditore_dto.getAreageograficaDTO(), venditore_dto.getIndirizzo_emailDTO());
+            i_utente_service.updateVenditore(venditore_dto.getNome(), venditore_dto.getCognome(), venditore_dto.getBio(), venditore_dto.getLink(), venditore_dto.getAreageografica(), venditore_dto.getIndirizzo_email());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -306,7 +308,7 @@ public class UtenteController {
     @PostMapping("/insertVenditore/{venditore}")
     public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
         try{
-            i_utente_service.insertVenditore(venditore_dto.getNomeDTO(), venditore_dto.getCognomeDTO(),venditore_dto.getIndirizzo_emailDTO(),venditore_dto.getPasswordDTO(),venditore_dto.getBioDTO(),venditore_dto.getLinkDTO(),venditore_dto.getAreageograficaDTO());
+            i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getLink(),venditore_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
             e.printStackTrace();
@@ -327,9 +329,9 @@ public class UtenteController {
     @PostMapping("/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
-                for(String categoria:lista_categorie) {
-                    i_utente_service.insertCategorieAcquirente(indirizzo_email, categoria);
-                }
+            for(String categoria:lista_categorie) {
+                i_utente_service.insertCategorieAcquirente(indirizzo_email, categoria);
+            }
             return ;
         }catch (Exception e){
             e.printStackTrace();

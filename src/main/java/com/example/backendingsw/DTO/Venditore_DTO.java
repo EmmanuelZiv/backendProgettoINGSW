@@ -14,77 +14,77 @@ public class Venditore_DTO {
     public Venditore_DTO(){
 
     }
-    public Venditore_DTO(String nomeV, String cognomeV, String email, String password, String descrizione, String paese, String linkV) {
-        this.nome = nomeV;
-        this.cognome = cognomeV;
-        this.indirizzo_email = email;
+    public Venditore_DTO(String nome, String cognome, String indirizzo_email, String password, String bio, String areageografica, String link) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.indirizzo_email = indirizzo_email;
         this.password = password;
-        this.bio = descrizione;
-        this.areageografica = paese;
-        this.link = linkV;
+        this.bio = bio;
+        this.areageografica = areageografica;
+        this.link = link;
     }
 
-    public String getNomeDTO() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNomeDTO(String nomeV) {
-        nome = nomeV;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getCognomeDTO() {
+    public String getCognome() {
         return cognome;
     }
 
-    public void setCognomeDTO(String cognomeV) {
-        cognome = cognomeV;
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
     }
 
-    public String getIndirizzo_emailDTO() {
+    public String getIndirizzo_email() {
         return indirizzo_email;
     }
 
-    public void setIndirizzo_emailDTO(String email) {
-        indirizzo_email = email;
+    public void setIndirizzo_email(String indirizzo_email) {
+        this.indirizzo_email = indirizzo_email;
     }
 
-    public String getPasswordDTO() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPasswordDTO(String passwordV) {
-        this.password = passwordV;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
-    public String getBioDTO() {
+    public String getBio() {
         return bio;
     }
 
-    public void setBioDTO(String descrizione) {
-        bio = descrizione;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
-    public String getAreageograficaDTO() {
+    public String getAreageografica() {
         return areageografica;
     }
 
-    public void setAreageograficaDTO(String paese) {
-        areageografica = paese;
+    public void setAreageografica(String areageografica) {
+        this.areageografica = areageografica;
     }
 
-    public String getLinkDTO() {
+    public String getLink() {
         return link;
     }
 
-    public void setLinkDTO(String linkV) {
-        link = linkV;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public String getToken() {
         return token;
     }
-    public void setToken(String tokenv) {
-        token = tokenv;
+    public void setToken(String token) {
+        this.token = token;
     }
 }
