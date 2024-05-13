@@ -40,67 +40,67 @@ public class Acquirente {
     }
 
 
-    public String getNomeAcquirente() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNomeAcquirente(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public String getCognomeAcquirente() {
+    public String getCognome() {
         return cognome;
     }
 
-    public void setCognomeAcquirente(String cognome) {
+    public void setCognome(String cognome) {
         this.cognome = cognome;
     }
 
-    public String getIndirizzo_emailAcquirente() {
+    public String getIndirizzo_email() {
         return indirizzo_email;
     }
 
-    public void setIndirizzo_emailAcquirente(String email) {
+    public void setIndirizzo_email(String email) {
         this.indirizzo_email = email;
     }
 
-    public String getPasswordAcquirente() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPasswordAcquirente(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
 
-    public String getBioAcquirente() {
+    public String getBio() {
         return bio;
     }
 
-    public void setBioAcquirente(String bio) {
+    public void setBio(String bio) {
         this.bio = bio;
     }
 
-    public String getAreageograficaAcquirente() {
+    public String getAreageografica() {
         return areageografica;
     }
 
-    public void setAreageograficaAcquirente(String paese) {
+    public void setAreageografica(String paese) {
         this.areageografica = paese;
     }
 
-    public String getLinkAcquirente() {
+    public String getLink() {
         return link;
     }
 
-    public void setLinkAcquirente(String sitoweb) {
+    public void setLink(String sitoweb) {
         this.link = sitoweb;
     }
-    public String getTokenAcquirente() {
+    public String getToken() {
         return token;
     }
 
-    public void setTokenAcquirente(String token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
