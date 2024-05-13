@@ -35,8 +35,6 @@ public class Asta_alribassoController {
         } else {
             return new ArrayList<>();
         }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @GetMapping("/getAste_alribassoNomeCategoria/{nomiCategorie}")
@@ -74,7 +72,6 @@ public class Asta_alribassoController {
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -165,7 +162,6 @@ public class Asta_alribassoController {
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
