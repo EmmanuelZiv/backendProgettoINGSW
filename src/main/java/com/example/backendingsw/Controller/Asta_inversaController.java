@@ -250,10 +250,13 @@ public class Asta_inversaController {
             asteTrovate = i_asta_inversa_service.findByCondizioneOrderByPrezzo(ordinamento);
         }
 
-        if(ordinamento.equals("ASC")){
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale));
-        }else{
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale).reversed());
+
+        if(ordinamento!=null) {
+            if (ordinamento.equals("ASC")) {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale));
+            } else {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale).reversed());
+            }
         }
 
         ArrayList<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();

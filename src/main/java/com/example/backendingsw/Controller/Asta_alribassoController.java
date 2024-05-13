@@ -202,11 +202,14 @@ public class Asta_alribassoController {
             asteTrovate = i_asta_alribasso_service.findByCondizioneOrderByPrezzo(ordinamento);
         }
 
-        if(ordinamento.equals("ASC")){
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale));
-        }else{
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale).reversed());
+        if(ordinamento!=null) {
+            if (ordinamento.equals("ASC")) {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale));
+            } else {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_alribasso::getPrezzoAttuale).reversed());
+            }
         }
+
         ArrayList<Asta_alribasso_DTO> listAsteAlribassoDTO = new ArrayList<>();
         for (Asta_alribasso asta : asteTrovate) {
             Asta_alribasso_DTO astaDTO = convertiDaModelAaDto(asta);
