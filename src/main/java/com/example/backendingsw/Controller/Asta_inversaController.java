@@ -61,7 +61,7 @@ public class Asta_inversaController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
-    @GetMapping("/getAste_inversaNomeCategoria")
+    @GetMapping("/getAste_inversaNomeCategoria/{nomiCategorie}")
     public List<Asta_inversa_DTO> getAste_inversaNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
         Set<Asta_inversa> asteUniche = new HashSet<>();
@@ -226,7 +226,7 @@ public class Asta_inversaController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @PostMapping("/insertAstaInversa")
+    @PostMapping("/insertAstaInversa/{asta_inversa}/{lista_categorie}")
     public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in inserta asta inversa");
         try{
@@ -267,7 +267,7 @@ public class Asta_inversaController {
         }
     }
 
-    @GetMapping("/getAstePerRicerca")
+    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
     public ArrayList<Asta_inversa_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         System.out.println("Cerco inversa per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
         ArrayList<Asta_inversa> asteTrovate = new ArrayList<>();

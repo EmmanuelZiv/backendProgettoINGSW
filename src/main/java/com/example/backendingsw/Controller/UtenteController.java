@@ -109,7 +109,7 @@ public class UtenteController {
     }
 
 
-    @PutMapping("/updateAcquirente")
+    @PutMapping("/updateAcquirente/{acquirente}")
     public void updateAcquirente(@RequestBody Acquirente_DTO acquirente_dto) {
         System.out.println("Aggiornamento  Acquirente con nome: " + acquirente_dto.getNome() + "cognome:"+acquirente_dto.getCognome());
         try {
@@ -131,7 +131,7 @@ public class UtenteController {
         }
     }
 
-    @PutMapping("/updateVenditore")
+    @PutMapping("/updateVenditore/{venditore}")
     public void updateVenditore(@RequestBody Venditore_DTO venditore_dto) {
         System.out.println("Aggiornamento  Venditore con nome: " + venditore_dto.getNome() + "cognome:"+venditore_dto.getCognome());
         try {
@@ -415,7 +415,7 @@ public class UtenteController {
 
     }
 
-    @PostMapping("/insertVenditore")
+    @PostMapping("/insertVenditore/{venditore}")
     public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
         System.out.println("entrati in insertVenditore");
         try{
@@ -428,7 +428,7 @@ public class UtenteController {
         }
     }
 
-    @PostMapping("/insertAcquirente")
+    @PostMapping("/insertAcquirente/{acquirente}")
     public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto){
         System.out.println("entrati in insertAcquirente");
         try{
@@ -441,7 +441,7 @@ public class UtenteController {
             return null;
         }
     }
-    @PostMapping("/saveCategorieAcquirente")
+    @PostMapping("/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati salva categoria acquirente");
         try{
@@ -456,7 +456,7 @@ public class UtenteController {
         }
     }
 
-    @PostMapping("/saveCategorieVenditore")
+    @PostMapping("/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieVenditore(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati salva categoria Venditore");
         try{

@@ -77,7 +77,7 @@ public class SocialVenditoreController {
 
     }
 
-    @PostMapping("/insertSocialVenditoreRegistrazione")
+    @PostMapping("/insertSocialVenditoreRegistrazione/{listaSocialDTO}")
     public void insertSocialVenditoreRegistrazione(@RequestBody ArrayList<SocialVenditore_DTO> listaSocialDTO){
         System.out.println("Siamo in insert Social acquirente registrazione nel backend" );
         try{

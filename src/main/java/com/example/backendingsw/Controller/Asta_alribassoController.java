@@ -40,7 +40,7 @@ public class Asta_alribassoController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @GetMapping("/getAste_alribassoNomeCategoria")
+    @GetMapping("/getAste_alribassoNomeCategoria/{nomiCategorie}")
     public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         System.out.println("Cerco ribasse per categorie: " + nomiCategorie);
         Set<Asta_alribasso> asteUniche = new HashSet<>();
@@ -200,7 +200,7 @@ public class Asta_alribassoController {
 
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
-    @PostMapping("/insertAstaRibasso")
+    @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         System.out.println("entrati in insertAstaRibasso");
         try{
@@ -229,7 +229,7 @@ public class Asta_alribassoController {
         }
     }
 
-    @GetMapping("/getAstePerRicerca")
+    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
     public ArrayList<Asta_alribasso_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         System.out.println("Cerco ribasso per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
         ArrayList<Asta_alribasso> asteTrovate = new ArrayList<>();
