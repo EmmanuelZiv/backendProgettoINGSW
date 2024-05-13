@@ -37,11 +37,8 @@ public class Asta_inversaController {
             }
             return listAsteInversaDTO;
         } else {
-            System.out.println("Non sono state trovate aste inversa");
             return new ArrayList<>();
         }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @GetMapping("/getAste_inversaNuove")
     public List<Asta_inversa_DTO> getAste_inversaScadenzaNuove(){
@@ -55,24 +52,17 @@ public class Asta_inversaController {
             }
             return listAsteInversaDTO;
         } else {
-            System.out.println("Non sono state trovate aste inversa");
             return new ArrayList<>();
         }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @GetMapping("/getAste_inversaNomeCategoria/{nomiCategorie}")
     public List<Asta_inversa_DTO> getAste_inversaNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
-        System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
         Set<Asta_inversa> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
             List<Asta_inversa> astePerCategoria = i_asta_inversa_service.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
             asteUniche.addAll(astePerCategoria);
         }
-
-        System.out.println("Cerco inverse per categorie: " + nomiCategorie);
-        System.out.println("Trovate " + asteUniche.size() + " aste inverse");
 
         List<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();
         for (Asta_inversa asta : asteUniche) {
@@ -98,11 +88,8 @@ public class Asta_inversaController {
             }
             return listAsteinversaDTO;
         } else {
-            System.out.println("Non sono state trovate aste inverse");
             return new ArrayList<>();
         }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -118,18 +105,14 @@ public class Asta_inversaController {
             }
             return listAsteinversaDTO;
         } else {
-            System.out.println("Non sono state trovate aste inverse");
             return new ArrayList<>();
         }
-
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
     @PostMapping("/partecipaAstaInversa/{idAstaInversa}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     public int partecipaAstaInversa(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
         try {
-            System.out.println("id : " + idAstaInversa + ", email: " + indirizzo_email + " ,offerta: " + offerta + " ,tempoofferta: " + tempo_offerta + " ,stato: " + stato);
             float offertaF = Float.parseFloat(offerta);
             Timestamp orario = Timestamp.valueOf(tempo_offerta);
             int numeroRitorno = i_asta_inversa_service.partecipaAstaInversa(idAstaInversa, indirizzo_email, offertaF, orario, stato);
@@ -155,10 +138,8 @@ public class Asta_inversaController {
     public Integer verificaAstaInversaInPreferiti(@PathVariable String indirizzo_email,@PathVariable Long idAstaInversa){
         try{
             Integer verifica = i_asta_inversa_service.verificaAstaInversaInPreferiti(indirizzo_email, idAstaInversa);
-            System.out.println("valore di verifica" + verifica);
             return verifica;
         }catch (Exception e){
-            System.out.println("eccezione in verifica preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -167,10 +148,8 @@ public class Asta_inversaController {
     public Integer inserimentoAstaInPreferiti(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email){
         try{
             Integer inserimento = i_asta_inversa_service.inserimentoAstaInPreferiti(idAstaInversa,indirizzo_email);
-            System.out.println("valore di inserimento" + inserimento);
             return inserimento;
         }catch (Exception e){
-            System.out.println("eccezione in inserimento preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -179,10 +158,8 @@ public class Asta_inversaController {
     public Integer eliminazioneAstaInPreferiti(@PathVariable Long idAstaInversa,@PathVariable String indirizzo_email){
         try{
             Integer rimozione = i_asta_inversa_service.eliminazioneAstaInPreferiti(idAstaInversa,indirizzo_email);
-            System.out.println("valore di rimozione" + rimozione);
             return rimozione;
         }catch (Exception e){
-            System.out.println("eccezione in rimozione preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -199,7 +176,6 @@ public class Asta_inversaController {
             }
             return listAsteInversaDTO;
         } else {
-            System.out.println("Non sono state trovate aste inversa");
             return new ArrayList<>();
         }
 
@@ -219,7 +195,6 @@ public class Asta_inversaController {
             }
             return listAsteInversaDTO;
         } else {
-            System.out.println("Non sono state trovate aste inversa");
             return new ArrayList<>();
         }
 
@@ -228,7 +203,6 @@ public class Asta_inversaController {
 
     @PostMapping("/insertAstaInversa/{asta_inversa}/{lista_categorie}")
     public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
-        System.out.println("entrati in inserta asta inversa");
         try{
             //Asta_inversa asta = convertAsta_inversa(asta_inversa_dto);
 
@@ -236,16 +210,13 @@ public class Asta_inversaController {
             //Long id_asta = i_asta_inversa_service.insertAstaInversa(asta.getNome(),asta.getDescrizione(),asta.getPath_immagine(),asta.getPrezzoMax(),asta.getPrezzoAttuale(),asta.getDataDiScadenza(),asta.getCondizione(),asta.getId_acquirente());
             Asta_inversa astaInserita = i_asta_inversa_service.save(asta);
             Long id_asta = astaInserita.getId();
-            System.out.println("inserita asta con id " + id_asta + " e nome " + asta.getNome());
             if (lista_categorie != null && !lista_categorie.isEmpty()) {
                 for(String categoria:lista_categorie) {
                     Integer value = i_asta_inversa_service.insertCategorieAstaInversa(id_asta, categoria);
-                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id_asta);
                 }
             }
             return id_asta;
         }catch (Exception e){
-            System.out.println("eccezione in verifica preferiti");
             e.printStackTrace();
             return 0L;
         }
@@ -257,7 +228,6 @@ public class Asta_inversaController {
             String email_vincente = null;
             email_vincente = i_asta_inversa_service.getEmailVincente(idAstaInversa);
             if(email_vincente!=null){
-                System.out.println("email recuperata"+ email_vincente);
                 return email_vincente.equals(indirizzo_email);
             }
             return false;
@@ -269,7 +239,6 @@ public class Asta_inversaController {
 
     @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
     public ArrayList<Asta_inversa_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
-        System.out.println("Cerco inversa per categorie: " + nomiCategorie + "nome : " + nome + ",ordinamento: " + ordinamento);
         ArrayList<Asta_inversa> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
             asteTrovate = i_asta_inversa_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);
@@ -281,12 +250,14 @@ public class Asta_inversaController {
             asteTrovate = i_asta_inversa_service.findByCondizioneOrderByPrezzo(ordinamento);
         }
 
-        if(ordinamento.equals("ASC")){
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale));
-        }else{
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale).reversed());
+
+        if(ordinamento!=null) {
+            if (ordinamento.equals("ASC")) {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale));
+            } else {
+                Collections.sort(asteTrovate, Comparator.comparing(Asta_inversa::getPrezzoAttuale).reversed());
+            }
         }
-        System.out.println("Trovate " + asteTrovate.size() + " aste inversa");
 
         ArrayList<Asta_inversa_DTO> listAsteInversaDTO = new ArrayList<>();
         for (Asta_inversa asta : asteTrovate) {
