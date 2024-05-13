@@ -1,5 +1,6 @@
 package com.example.backendingsw.Controller;
 
+import com.example.backendingsw.DTO.SocialAcquirente_DTO;
 import com.example.backendingsw.DTO.SocialVenditore_DTO;
 import com.example.backendingsw.Model.SocialVenditore;
 import com.example.backendingsw.Repository.SocialVenditoreRepository;
@@ -78,7 +79,7 @@ public class SocialVenditoreController {
     }
 
     @PostMapping("/insertSocialVenditoreRegistrazione/{listaSocialDTO}")
-    public void insertSocialVenditoreRegistrazione(@RequestBody ArrayList<SocialVenditore_DTO> listaSocialDTO){
+    public void insertSocialVenditoreRegistrazione(@RequestBody ArrayList<SocialVenditore_DTO> listaSocialDTO,@PathVariable(value ="listaSocialDTO") ArrayList<SocialVenditore_DTO> listaSocial  ){
         System.out.println("Siamo in insert Social acquirente registrazione nel backend" );
         try{
             for(SocialVenditore_DTO socialDTO:listaSocialDTO){
