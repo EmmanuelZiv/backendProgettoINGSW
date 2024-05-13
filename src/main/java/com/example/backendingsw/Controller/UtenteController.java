@@ -29,34 +29,18 @@ public class UtenteController {
 
     @GetMapping("/loginAcquirente/{indirizzo_email}/{password}")
     public Acquirente_DTO log_inAcquirente(@PathVariable String indirizzo_email, @PathVariable String password) throws ResponseStatusException{
-        System.out.println("login acquirente con mail e password:" + indirizzo_email + password);
         try {
             Optional<Acquirente> acquirente = i_utente_service.loginAcquirente(indirizzo_email, password);
 
             if (acquirente.isPresent()) {
-                System.out.println("acquirente è presente");
-                System.out.println("dati acquirente :"+ " nome:"+acquirente.get().getNome() + " cognome:"+ acquirente.get().getCognome() + " link:"+ acquirente.get().getLink() + " areageografica" + acquirente.get().getAreageografica());
-
-//                String token = UUID.randomUUID().toString();
-//                // Salva il token nel campo token del modello Acquirente
-//                acquirente.get().setToken(token);
-//                // Salva le modifiche nel repository
-//                utenteRepository.save(acquirente.get());
-//                System.out.println("il token dell'acquirente " + acquirente.get().getNome() + " è: " + token);
-
                 Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
-                System.out.println("dati acquirente dto:"+ " nome:"+acquirente_dto.getNome() + " cognome:"+ acquirente_dto.getCognome() + " link:"+ acquirente_dto.getLink() + " areageografica"+ acquirente_dto.getAreageografica());
-                //acquirente_dto.setToken(token);
-                //System.out.println("il token dell'acquirenteDTO " + acquirente.get().getNome() + " è: " + token);
                 return acquirente_dto;
             }
-            System.out.println("acquirente non è presente");
         }catch (Exception e){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
         return null;
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
     @GetMapping("/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
     public ArrayList<String> findCategorieByIndirizzoEmailAcquirente(@PathVariable String indirizzo_email) {
@@ -67,33 +51,12 @@ public class UtenteController {
 
     @GetMapping("/loginVenditore/{indirizzo_email}/{password}")
     public Venditore_DTO log_inVenditore(@PathVariable String indirizzo_email, @PathVariable String password) throws ResponseStatusException{
-        System.out.println("login venditore con mail e password:" + indirizzo_email + password);
-
         try {
             Optional<Venditore> venditore = i_utente_service.loginVenditore(indirizzo_email, password);
-            System.out.println("venditore no!");
             if(venditore.isPresent()) {
-                System.out.println("venditore è presente");
-                System.out.println("dati venditore :"+ " nome:"+venditore.get().getNome() + " cognome:"+ venditore.get().getCognome() + " link:"+ venditore.get().getLink() + " areageografica" + venditore.get().getAreageografica());
-
-//                String token = UUID.randomUUID().toString();
-//                // Salva il token nel campo token del modello Acquirente
-//                venditore.get().setToken(token);
-//                // Salva le modifiche nel repository
-//                int valore = utenteRepository.createAndInsertTokenVenditore(token, venditore.get().getIndirizzo_email());
-//                if(valore>0){
-//                    System.out.println("il token del venditore è stato inserito con successo");
-//                }else{
-//                    System.out.println("il token del venditore non è stato inserito.");
-//                }
-//                System.out.println("il token del venditore " + venditore.get().getNome() + " è: " + token);
-
                 Venditore_DTO venditore_dto = convertVenditoreDto(venditore.get());
-                System.out.println("dati venditore dto:"+ " nome:"+venditore_dto.getNome() + " cognome:"+ venditore_dto.getCognome() + " link:"+ venditore_dto.getLink() + " areageografica" + venditore_dto.getAreageografica());
-                //System.out.println("il token del venditoreDTO " + venditore.get().getNome() + " è: " + token);
                 return venditore_dto;
             }
-            System.out.println("venditore non è presente");
         }catch (Exception e){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
@@ -111,10 +74,8 @@ public class UtenteController {
 
     @PutMapping("/updateAcquirente/{acquirente}")
     public void updateAcquirente(@RequestBody Acquirente_DTO acquirente_dto) {
-        System.out.println("Aggiornamento  Acquirente con nome: " + acquirente_dto.getNome() + "cognome:"+acquirente_dto.getCognome());
         try {
             i_utente_service.updateAcquirente(acquirente_dto.getNome(),acquirente_dto.getCognome(), acquirente_dto.getBio(), acquirente_dto.getLink(), acquirente_dto.getAreageografica(), acquirente_dto.getIndirizzo_email());
-            System.out.println("Acquirente aggiornato con successo");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,10 +83,8 @@ public class UtenteController {
 
     @PutMapping("/updatePasswordAcquirente/{password}/{indirizzo_email}")
     public void updatePasswordAcquirente(@PathVariable String password,@PathVariable String indirizzo_email) {
-        System.out.println("Aggiornamento  Acquirente con password: " + password + " email:"+indirizzo_email);
         try {
             i_utente_service.updatePasswordAcquirente(password,indirizzo_email);
-            System.out.println("Password Acquirente aggiornata con successo");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,10 +92,8 @@ public class UtenteController {
 
     @PutMapping("/updateVenditore/{venditore}")
     public void updateVenditore(@RequestBody Venditore_DTO venditore_dto) {
-        System.out.println("Aggiornamento  Venditore con nome: " + venditore_dto.getNome() + "cognome:"+venditore_dto.getCognome());
         try {
             i_utente_service.updateVenditore(venditore_dto.getNome(), venditore_dto.getCognome(), venditore_dto.getBio(), venditore_dto.getLink(), venditore_dto.getAreageografica(), venditore_dto.getIndirizzo_email());
-            System.out.println("Venditore aggiornato con successo");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,10 +101,8 @@ public class UtenteController {
 
     @PutMapping("/updatePasswordVenditore/{password}/{indirizzo_email}")
     public void updatePasswordVenditore(@PathVariable String password,@PathVariable String indirizzo_email) {
-        System.out.println("Aggiornamento  Venditore con password: " + password + " email:"+indirizzo_email);
         try {
             i_utente_service.updatePasswordVenditore(password,indirizzo_email);
-            System.out.println("Password Venditore aggiornata con successo");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,7 +153,6 @@ public class UtenteController {
         System.out.println("entrato in setTokenVenditore, email e token: " + indirizzo_email + ", " + token);
         try{
             int valore = utenteRepository.createAndInsertTokenVenditore(token, indirizzo_email);
-            System.out.println("valore " + valore);
             return valore;
         }catch (Exception e){
             e.printStackTrace();
@@ -208,16 +162,12 @@ public class UtenteController {
 
     @PutMapping("/removeTokenFromVenditore/{indirizzo_email}")
     public int removeTokenFromVenditore(@PathVariable String indirizzo_email){
-        System.out.println("entrato in removeTokenFromVenditore, email: " + indirizzo_email );
         try{
             int valore = utenteRepository.removeTokenFromVenditore( indirizzo_email);
-            System.out.println("valore " + valore);
             if (valore > 0) {
-                System.out.println("Token venditore rimosso con successo dal database");
 
                 return valore;
             } else {
-                System.out.println("Errore durante la rimozione del token venditore nel database");
                 return -1;
             }
         }catch (Exception e){
@@ -228,34 +178,17 @@ public class UtenteController {
 
     @GetMapping("/loginAcquirenteConToken/{token}")
     public Acquirente_DTO loginAcquirenteConToken(@PathVariable String token) throws ResponseStatusException{
-        System.out.println("login acquirente token:" + token);
         try {
             Optional<Acquirente> acquirente = i_utente_service.loginAcquirenteConToken(token);
-
             if (acquirente.isPresent()) {
-                System.out.println("acquirente è presente");
-                System.out.println("dati acquirente :"+ " nome:"+acquirente.get().getNome() + " cognome:"+ acquirente.get().getCognome() + " link:"+ acquirente.get().getLink() + " areageografica" + acquirente.get().getAreageografica());
-
-//                String token = UUID.randomUUID().toString();
-//                // Salva il token nel campo token del modello Acquirente
-//                acquirente.get().setToken(token);
-//                // Salva le modifiche nel repository
-//                utenteRepository.save(acquirente.get());
-//                System.out.println("il token dell'acquirente " + acquirente.get().getNome() + " è: " + token);
-
                 Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
-                System.out.println("dati acquirente dto:"+ " nome:"+acquirente_dto.getNome() + " cognome:"+ acquirente_dto.getCognome() + " link:"+ acquirente_dto.getLink() + " areageografica"+ acquirente_dto.getAreageografica());
-                //acquirente_dto.setToken(token);
-                //System.out.println("il token dell'acquirenteDTO " + acquirente.get().getNome() + " è: " + token);
                 return acquirente_dto;
             }
-            System.out.println("acquirente non è presente");
         }catch (Exception e){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
         return null;
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @GetMapping("/loginVenditoreConToken/{token}")
@@ -266,27 +199,9 @@ public class UtenteController {
             Optional<Venditore> venditore = i_utente_service.loginVenditoreConToken(token);
             System.out.println("venditore no!");
             if(venditore.isPresent()) {
-                System.out.println("venditore è presente");
-                System.out.println("dati venditore :"+ " nome:"+venditore.get().getNome() + " cognome:"+ venditore.get().getCognome() + " link:"+ venditore.get().getLink() + " areageografica" + venditore.get().getAreageografica());
-
-//                String token = UUID.randomUUID().toString();
-//                // Salva il token nel campo token del modello Acquirente
-//                venditore.get().setToken(token);
-//                // Salva le modifiche nel repository
-//                int valore = utenteRepository.createAndInsertTokenVenditore(token, venditore.get().getIndirizzo_email());
-//                if(valore>0){
-//                    System.out.println("il token del venditore è stato inserito con successo");
-//                }else{
-//                    System.out.println("il token del venditore non è stato inserito.");
-//                }
-//                System.out.println("il token del venditore " + venditore.get().getNome() + " è: " + token);
-
                 Venditore_DTO venditore_dto = convertVenditoreDto(venditore.get());
-                System.out.println("dati venditore dto:"+ " nome:"+venditore_dto.getNome() + " cognome:"+ venditore_dto.getCognome() + " link:"+ venditore_dto.getLink() + " areageografica" + venditore_dto.getAreageografica());
-                //System.out.println("il token del venditoreDTO " + venditore.get().getNome() + " è: " + token);
                 return venditore_dto;
             }
-            System.out.println("venditore non è presente");
         }catch (Exception e){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
@@ -298,17 +213,13 @@ public class UtenteController {
 
     @GetMapping("/getAcquirenteByIndirizzo_email/{indirizzo_email}")
     public Acquirente_DTO getAcquirenteByIndirizzo_email(@PathVariable String indirizzo_email) throws ResponseStatusException{
-        System.out.println("getAcquirenteByIndirizzo_email con mail :" + indirizzo_email );
         try {
             Acquirente acquirente = i_utente_service.getAcquirenteByIndirizzo_email(indirizzo_email);
 
             if (acquirente != null) {
-                System.out.println("acquirente è presente");
                 Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente);
-                System.out.println("dati acquirente dto:"+ " nome:"+acquirente_dto.getNome() + " cognome:"+ acquirente_dto.getCognome() + " link:"+ acquirente_dto.getLink() + " areageografica"+ acquirente_dto.getAreageografica());
                 return acquirente_dto;
             }
-            System.out.println("acquirente non è presente");
         }catch (Exception e){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
@@ -317,19 +228,12 @@ public class UtenteController {
     }
     @GetMapping("/getVenditoreByIndirizzo_email/{indirizzo_email}")
     public Venditore_DTO getVenditoreByIndirizzo_email(@PathVariable String indirizzo_email) throws ResponseStatusException{
-        System.out.println("getVenditoreByIndirizzo_email con mail:" + indirizzo_email);
-
         try {
             Venditore venditore = i_utente_service.getVenditoreByIndirizzo_email(indirizzo_email);
             if(venditore!=null) {
-                System.out.println("venditore è presente");
-
                 Venditore_DTO venditore_dto = convertVenditoreDto(venditore);
-                System.out.println("dati venditore dto:"+ " nome:"+venditore_dto.getNome() + " cognome:"+ venditore_dto.getCognome() + " link:"+ venditore_dto.getLink() + " areageografica" + venditore_dto.getAreageografica());
-
                 return venditore_dto;
             }
-            System.out.println("venditore non è presente");
         }catch (Exception e){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
@@ -377,36 +281,27 @@ public class UtenteController {
 
     @GetMapping("/registrazioneAcquirenteDoppio/{indirizzo_email}")
     public Acquirente_DTO ricerca_inAcquirente(@PathVariable String indirizzo_email) throws ResponseStatusException{
-        System.out.println("ricerac acquirente con mail" + indirizzo_email );
         try {
             Optional<Acquirente> acquirente = i_utente_service.ricercaAcquirente(indirizzo_email);
 
             if (acquirente.isPresent()) {
-                System.out.println("acquirente è presente");
                 Acquirente_DTO acquirente_dto = convertAcquirenteDto(acquirente.get());
                 return acquirente_dto;
             }
-            System.out.println("acquirente non è presente");
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @GetMapping("/registrazioneVenditoreDoppio/{indirizzo_email}/")
     public Venditore_DTO ricerca_inVenditore(@PathVariable String indirizzo_email) throws ResponseStatusException{
-        System.out.println("ricerca venditore con mail :" + indirizzo_email );
-
         try {
             Optional<Venditore> venditore = i_utente_service.ricercaVenditore(indirizzo_email);
-            System.out.println("venditore no!");
             if(venditore.isPresent()) {
-                System.out.println("venditore è presente");
                 Venditore_DTO venditore_dto = convertVenditoreDto(venditore.get());
                 return venditore_dto;
             }
-            System.out.println("venditore non è presente");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -417,12 +312,10 @@ public class UtenteController {
 
     @PostMapping("/insertVenditore/{venditore}")
     public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto){
-        System.out.println("entrati in insertVenditore");
         try{
             i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getLink(),venditore_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
-            System.out.println("eccezione in inserimento venditore");
             e.printStackTrace();
             return null;
         }
@@ -430,43 +323,34 @@ public class UtenteController {
 
     @PostMapping("/insertAcquirente/{acquirente}")
     public Long InsertAcquirente(@RequestBody Acquirente_DTO acquirente_dto){
-        System.out.println("entrati in insertAcquirente");
         try{
-            System.out.println("valori di acquirente da inserire: " + acquirente_dto.getBio() + acquirente_dto.getAreageografica() + acquirente_dto.getLink());
             i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getLink(),acquirente_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
-            System.out.println("eccezione in inserimento acquirente");
             e.printStackTrace();
             return null;
         }
     }
     @PostMapping("/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieAcquirente(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
-        System.out.println("entrati salva categoria acquirente");
         try{
                 for(String categoria:lista_categorie) {
                     i_utente_service.insertCategorieAcquirente(indirizzo_email, categoria);
-                    System.out.println("inserita categoria " + categoria );
                 }
             return ;
         }catch (Exception e){
-            System.out.println("eccezione ");
             e.printStackTrace();
         }
     }
 
     @PostMapping("/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
     public void saveCategorieVenditore(@PathVariable String indirizzo_email,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
-        System.out.println("entrati salva categoria Venditore");
         try{
             for(String categoria:lista_categorie) {
                 i_utente_service.insertCategorieVenditore(indirizzo_email, categoria);
-                System.out.println("inserita categoria " + categoria );
             }
             return ;
         }catch (Exception e){
-            System.out.println("eccezione ");
             e.printStackTrace();
         }
     }
