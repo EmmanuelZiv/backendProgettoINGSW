@@ -62,7 +62,7 @@ public class Asta_allingleseController {
     }
 
     @GetMapping("/getAste_allingleseNomeCategoria/{nomiCategorie}")
-    public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@PathVariable("nomiCategorie") ArrayList<String> nomiCategorie){
+    public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         Set<Asta_allinglese> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
@@ -211,7 +211,7 @@ public class Asta_allingleseController {
     }
 
     @PostMapping("/insertAstaInglese/{lista_categorie}")
-    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @PathVariable(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
+    public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
             Long lastInsertedId = asta_allingleseRepository.getLastInsertedId();
             Long id = (lastInsertedId != null) ? lastInsertedId + 1 : 1L; // Gestisce il caso in cui lastInsertedId è null
@@ -256,7 +256,7 @@ public class Asta_allingleseController {
     }
 
     @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
-    public ArrayList<Asta_allinglese_DTO> getAstePerRicerca(@PathVariable(value = "nome", required = false) String nome, @PathVariable(value = "ordinamento") String ordinamento,@PathVariable(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
+    public ArrayList<Asta_allinglese_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         ArrayList<Asta_allinglese> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
             asteTrovate = i_asta_allinglese_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);

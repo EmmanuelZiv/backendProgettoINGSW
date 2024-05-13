@@ -56,7 +56,7 @@ public class Asta_inversaController {
         }
     }
     @GetMapping("/getAste_inversaNomeCategoria/{nomiCategorie}")
-    public List<Asta_inversa_DTO> getAste_inversaNomeCategoria(@PathVariable("nomiCategorie") ArrayList<String> nomiCategorie){
+    public List<Asta_inversa_DTO> getAste_inversaNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         Set<Asta_inversa> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
@@ -202,7 +202,7 @@ public class Asta_inversaController {
     }
 
     @PostMapping("/insertAstaInversa/{asta_inversa}/{lista_categorie}")
-    public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@PathVariable(value = "lista_categorie", required = false) ArrayList<String> lista_categorie,@PathVariable(value ="asta_inversa" ) Asta_inversa_DTO asta_inversa  ){
+    public Long insertAstaInversa(@RequestBody Asta_inversa_DTO asta_inversa_dto,@RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
             //Asta_inversa asta = convertAsta_inversa(asta_inversa_dto);
 
@@ -238,7 +238,7 @@ public class Asta_inversaController {
     }
 
     @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
-    public ArrayList<Asta_inversa_DTO> getAstePerRicerca(@PathVariable(value = "nome", required = false) String nome, @PathVariable(value = "ordinamento") String ordinamento,@PathVariable(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
+    public ArrayList<Asta_inversa_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         ArrayList<Asta_inversa> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
             asteTrovate = i_asta_inversa_service.findByNomeAndCategorieAndCondizioneOrderByPrezzo(nome,nomiCategorie,ordinamento);
