@@ -64,7 +64,7 @@ public class Asta_allingleseController {
     }
 
     @GetMapping("/getAste_allingleseNomeCategoria/{nomiCategorie}")
-    public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
+    public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@PathVariable("nomiCategorie") ArrayList<String> nomiCategorie){
         Set<Asta_allinglese> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
