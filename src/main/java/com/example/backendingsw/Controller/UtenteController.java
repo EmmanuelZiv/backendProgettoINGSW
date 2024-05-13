@@ -90,7 +90,7 @@ public class UtenteController {
     @PutMapping("/updateVenditore/{venditore}")
     public void updateVenditore(@RequestBody Venditore_DTO venditore_dto,@PathVariable(value = "venditore") Venditore_DTO venditore  ) {
         try {
-            i_utente_service.updateVenditore(venditore_dto.getNome(), venditore_dto.getCognome(), venditore_dto.getBio(), venditore_dto.getLink(), venditore_dto.getAreageografica(), venditore_dto.getIndirizzo_email());
+            i_utente_service.updateVenditore(venditore_dto.getNomeDTO(), venditore_dto.getCognomeDTO(), venditore_dto.getBioDTO(), venditore_dto.getLinkDTO(), venditore_dto.getAreageograficaDTO(), venditore_dto.getIndirizzo_emailDTO());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -306,7 +306,7 @@ public class UtenteController {
     @PostMapping("/insertVenditore/{venditore}")
     public Long InsertVenditore(@RequestBody Venditore_DTO venditore_dto,@PathVariable(value ="venditore")Venditore_DTO venditore){
         try{
-            i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getLink(),venditore_dto.getAreageografica());
+            i_utente_service.insertVenditore(venditore_dto.getNomeDTO(), venditore_dto.getCognomeDTO(),venditore_dto.getIndirizzo_emailDTO(),venditore_dto.getPasswordDTO(),venditore_dto.getBioDTO(),venditore_dto.getLinkDTO(),venditore_dto.getAreageograficaDTO());
             return 1L;
         }catch (Exception e){
             e.printStackTrace();

@@ -24,60 +24,60 @@ public class Venditore_DTO {
         this.link = linkV;
     }
 
-    public String getNome() {
+    public String getNomeDTO() {
         return nome;
     }
 
-    public void setNome(String nomeV) {
+    public void setNomeDTO(String nomeV) {
         nome = nomeV;
     }
 
-    public String getCognome() {
+    public String getCognomeDTO() {
         return cognome;
     }
 
-    public void setCognome(String cognomeV) {
+    public void setCognomeDTO(String cognomeV) {
         cognome = cognomeV;
     }
 
-    public String getIndirizzo_email() {
+    public String getIndirizzo_emailDTO() {
         return indirizzo_email;
     }
 
-    public void setIndirizzo_email(String email) {
+    public void setIndirizzo_emailDTO(String email) {
         indirizzo_email = email;
     }
 
-    public String getPassword() {
+    public String getPasswordDTO() {
         return password;
     }
 
-    public void setPassword(String passwordV) {
+    public void setPasswordDTO(String passwordV) {
         this.password = passwordV;
     }
 
 
-    public String getBio() {
+    public String getBioDTO() {
         return bio;
     }
 
-    public void setBio(String descrizione) {
+    public void setBioDTO(String descrizione) {
         bio = descrizione;
     }
 
-    public String getAreageografica() {
+    public String getAreageograficaDTO() {
         return areageografica;
     }
 
-    public void setAreageografica(String paese) {
+    public void setAreageograficaDTO(String paese) {
         areageografica = paese;
     }
 
-    public String getLink() {
+    public String getLinkDTO() {
         return link;
     }
 
-    public void setLink(String linkV) {
+    public void setLinkDTO(String linkV) {
         link = linkV;
     }
 
