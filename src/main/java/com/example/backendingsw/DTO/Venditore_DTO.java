@@ -28,32 +28,32 @@ public class Venditore_DTO {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String nomeV) {
+        nome = nomeV;
     }
 
     public String getCognome() {
         return cognome;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setCognome(String cognomeV) {
+        cognome = cognomeV;
     }
 
     public String getIndirizzo_email() {
         return indirizzo_email;
     }
 
-    public void setIndirizzo_email(String indirizzo_email) {
-        this.indirizzo_email = indirizzo_email;
+    public void setIndirizzo_email(String email) {
+        indirizzo_email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String passwordV) {
+        this.password = passwordV;
     }
 
 
@@ -61,30 +61,30 @@ public class Venditore_DTO {
         return bio;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setBio(String descrizione) {
+        bio = descrizione;
     }
 
     public String getAreageografica() {
         return areageografica;
     }
 
-    public void setAreageografica(String areageografica) {
-        this.areageografica = areageografica;
+    public void setAreageografica(String paese) {
+        areageografica = paese;
     }
 
     public String getLink() {
         return link;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setLink(String linkV) {
+        link = linkV;
     }
 
     public String getToken() {
         return token;
     }
-    public void setToken(String token) {
-        this.token = token;
+    public void setToken(String tokenv) {
+        token = tokenv;
     }
 }
