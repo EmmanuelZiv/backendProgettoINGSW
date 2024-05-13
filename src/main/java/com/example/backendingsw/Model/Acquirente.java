@@ -56,19 +56,19 @@ public class Acquirente {
         this.cognome = cognome;
     }
 
-    public String getIndirizzo_email() {
+    public String getIndirizzo_emailAcquirente() {
         return indirizzo_email;
     }
 
-    public void setIndirizzo_email(String email) {
+    public void setIndirizzo_emailAcquirente(String email) {
         this.indirizzo_email = email;
     }
 
-    public String getPassword() {
+    public String getPasswordAcquirente() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPasswordAcquirente(String password) {
         this.password = password;
     }
 

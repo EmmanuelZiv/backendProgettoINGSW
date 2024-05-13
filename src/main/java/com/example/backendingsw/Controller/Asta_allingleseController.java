@@ -67,7 +67,6 @@ public class Asta_allingleseController {
 
     @GetMapping("/getAste_allingleseNomeCategoria/{nomiCategorie}")
     public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
-        System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
         Set<Asta_allinglese> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
@@ -75,8 +74,7 @@ public class Asta_allingleseController {
             asteUniche.addAll(astePerCategoria);
         }
 
-        System.out.println("Cerco inglesi per categorie: " + nomiCategorie);
-        System.out.println("Trovate " + asteUniche.size() + " aste inglese");
+
 
         List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
         for (Asta_allinglese asta : asteUniche) {
@@ -121,11 +119,9 @@ public class Asta_allingleseController {
             }
             return listAsteInglesiDTO;
         } else {
-            System.out.println("Non sono state trovate aste inversa");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -141,17 +137,14 @@ public class Asta_allingleseController {
             }
             return listAsteAllingleseDTO;
         } else {
-            System.out.println("Non sono state trovate aste all'inglese");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @PostMapping("/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     public Integer partecipaAstaInglese(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email,@PathVariable String offerta,@PathVariable String tempo_offerta,@PathVariable String stato){
         try {
-            System.out.println("id : " + idAstaInglese + ", email: " + indirizzo_email + " ,offerta: " + offerta + " ,tempoofferta: " + tempo_offerta + " ,stato: " + stato);
             float offertaF = Float.parseFloat(offerta);
             Timestamp orario = Timestamp.valueOf(tempo_offerta);
             Integer numeroRitorno = i_asta_allinglese_service.partecipaAstaInglese(idAstaInglese, indirizzo_email, offertaF, orario, stato);
@@ -165,7 +158,6 @@ public class Asta_allingleseController {
     public Asta_allinglese_DTO findAsta_allingleseById(@PathVariable  Long idAstaInglese){
         try{
             Asta_allinglese astaRecuperata = i_asta_allinglese_service.findAsta_allingleseById(idAstaInglese);
-            //Asta_allinglese_DTO astaRecuperataDTO = convertAsta_allingleseDTO(astaRecuperata);
             Asta_allinglese_DTO astaRecuperataDTO = convertiDaModelAaDto(astaRecuperata);
             return astaRecuperataDTO;
         }catch (Exception e){
@@ -177,10 +169,8 @@ public class Asta_allingleseController {
     public Integer verificaAstaIngleseInPreferiti(@PathVariable String indirizzo_email,@PathVariable Long idAstaInglese){
         try{
             Integer verifica = i_asta_allinglese_service.verificaAstaIngleseInPreferiti(indirizzo_email, idAstaInglese);
-            System.out.println("valore di verifica" + verifica);
             return verifica;
         }catch (Exception e){
-            System.out.println("eccezione in verifica preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -189,10 +179,8 @@ public class Asta_allingleseController {
     public Integer inserimentoAstaInPreferiti(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email){
         try{
             Integer inserimento = i_asta_allinglese_service.inserimentoAstaInPreferiti(idAstaInglese,indirizzo_email);
-            System.out.println("valore di inserimento" + inserimento);
             return inserimento;
         }catch (Exception e){
-            System.out.println("eccezione in inserimento preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -201,10 +189,8 @@ public class Asta_allingleseController {
     public Integer eliminazioneAstaInPreferiti(@PathVariable Long idAstaInglese,@PathVariable String indirizzo_email){
         try{
             Integer rimozione = i_asta_allinglese_service.eliminazioneAstaInPreferiti(idAstaInglese,indirizzo_email);
-            System.out.println("valore di rimozione" + rimozione);
             return rimozione;
         }catch (Exception e){
-            System.out.println("eccezione in rimozione preferiti");
             e.printStackTrace();
             return -1;
         }
@@ -221,7 +207,6 @@ public class Asta_allingleseController {
                 }
                 return listAsteAllingleseDTO;
             } else {
-                System.out.println("Non sono state trovate aste all'inglese");
                 return new ArrayList<>();
             }
         }catch (Exception e){
@@ -232,11 +217,9 @@ public class Asta_allingleseController {
 
     @PostMapping("/insertAstaInglese/{asta_inglese}/{lista_categorie}")
     public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
-        System.out.println("entrati in insertAstaInglese");
         try{
             Long lastInsertedId = asta_allingleseRepository.getLastInsertedId();
             Long id = (lastInsertedId != null) ? lastInsertedId + 1 : 1L; // Gestisce il caso in cui lastInsertedId è null
-            System.out.println("inserisco asta con id : " + id);
 
             String intervalString = asta_inglese_dto.getIntervalloTempoOfferte() + " MINUTES'";
             byte[] img = null;
@@ -244,15 +227,12 @@ public class Asta_allingleseController {
                  img = convertBase64ToByteArray(asta_inglese_dto.getPath_immagine());
             }
 
-            //Long id = asta_allingleseRepository.getLastInsertedId() + 1;
-            System.out.println("inserisco asta con id : " + id);
             i_asta_allinglese_service.insert(id,asta_inglese_dto.getNome(), asta_inglese_dto.getDescrizione(),img,asta_inglese_dto.getBaseAsta(),intervalString
             ,asta_inglese_dto.getRialzoMin(),asta_inglese_dto.getPrezzoAttuale(),asta_inglese_dto.getCondizione(),asta_inglese_dto.getId_venditore());
 
             if (lista_categorie != null && !lista_categorie.isEmpty()) {
                 for(String categoria:lista_categorie) {
                     Integer value = i_asta_allinglese_service.insertCategorieAstaInglese(id, categoria);
-                    System.out.println("inserita categoria " + categoria + " per asta di id: " + id);
                 }
             }
             return id;
@@ -266,7 +246,6 @@ public class Asta_allingleseController {
     @GetMapping("/getEmailVincente/{indirizzo_email}/{idAstaInglese}")
 
     public Boolean getEmailVincente(@PathVariable String indirizzo_email,@PathVariable Long idAstaInglese){
-        System.out.println("entrato in getemail vincente con id e email: "+ idAstaInglese + ", " + indirizzo_email);
         try{
             String email_vincente = null;
             email_vincente = i_asta_allinglese_service.getEmailVincente(idAstaInglese);
@@ -296,11 +275,10 @@ public class Asta_allingleseController {
         }
 
         if(ordinamento.equals("ASC")){
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale));
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttualeInglese));
         }else{
-            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttuale).reversed());
+            Collections.sort(asteTrovate, Comparator.comparing(Asta_allinglese::getPrezzoAttualeInglese).reversed());
         }
-        System.out.println("Trovate " + asteTrovate.size() + " aste inglese");
 
         ArrayList<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
         for (Asta_allinglese asta : asteTrovate) {
@@ -325,11 +303,11 @@ public class Asta_allingleseController {
     }
     private Asta_allinglese_DTO convertiDaModelAaDto(Asta_allinglese asta){
         String img = null;
-        if(asta.getPath_immagine()!=null) {
-            img = convertByteArrayToBase64(asta.getPath_immagine());
+        if(asta.getPath_immagineInglese()!=null) {
+            img = convertByteArrayToBase64(asta.getPath_immagineInglese());
         }
-        Asta_allinglese_DTO astaDTO = new Asta_allinglese_DTO(asta.getId(),asta.getNome(), asta.getDescrizione(),img, asta.getBaseAsta(),asta.getIntervalloTempoOfferte(),
-                asta.getIntervalloOfferteBase(),asta.getRialzoMin(),asta.getPrezzoAttuale(),asta.getCondizione(),asta.getIdVenditore());
+        Asta_allinglese_DTO astaDTO = new Asta_allinglese_DTO(asta.getIdInglese(),asta.getNomeInglese(), asta.getDescrizioneInglese(),img, asta.getBaseAstaInglese(),asta.getIntervalloTempoOfferteInglese(),
+                asta.getIntervalloOfferteBaseInglese(),asta.getRialzoMinInglese(),asta.getPrezzoAttualeInglese(),asta.getCondizioneInglese(),asta.getIdVenditoreInglese());
         return astaDTO;
     }
     private Asta_allinglese convertiDaDtoAModel(Asta_allinglese_DTO astaDTO){
