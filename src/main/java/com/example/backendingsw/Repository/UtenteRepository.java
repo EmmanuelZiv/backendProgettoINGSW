@@ -14,8 +14,6 @@ import java.util.Optional;
 
 @Repository
 public interface UtenteRepository extends JpaRepository<Acquirente, String> {
-    // Seleziona tutti gli utenti
-    // Questo metodo è fornito di default da JpaRepository, quindi non è necessario implementarlo manualmente.
     List<Acquirente> findAll();
 
 
@@ -59,7 +57,7 @@ public interface UtenteRepository extends JpaRepository<Acquirente, String> {
     int removeTokenFromAcquirente(String indirizzo_email);
 
     @Query(value = "SELECT * FROM acquirente WHERE indirizzo_email = :indirizzo_email" , nativeQuery = true)
-    public Optional<Acquirente> ricercaAcquirente(@Param("indirizzo_email") String indirizzo_email);
+     Optional<Acquirente> ricercaAcquirente(@Param("indirizzo_email") String indirizzo_email);
 
     @Modifying
     @Transactional

@@ -1,6 +1,5 @@
 package com.example.backendingsw.Repository;
 
-import com.example.backendingsw.Model.NotificheAcquirente;
 import com.example.backendingsw.Model.NotificheVenditore;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

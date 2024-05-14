@@ -38,12 +38,10 @@ public class BackendIngswApplication {
 	public static void main(String[] args) {
 		try {
 			SpringApplication.run(BackendIngswApplication.class, args);
-			System.out.println(BackendIngswApplication.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 			logger.info("Applicazione backend avviata con successo.");
 
 		} catch (Exception e) {
 			logger.error("Errore durante l'avvio dell'applicazione: {}", e.getMessage());
-			// Puoi gestire ulteriori azioni in caso di errore di connessione al database
 		}
 	}
 

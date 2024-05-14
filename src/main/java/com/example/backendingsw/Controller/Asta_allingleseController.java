@@ -1,13 +1,10 @@
 package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.Asta_allinglese_DTO;
-import com.example.backendingsw.DTO.Asta_inversa_DTO;
 import com.example.backendingsw.Model.Asta_allinglese;
-import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Repository.Asta_allingleseRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_allinglese_Service;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +30,14 @@ public class Asta_allingleseController {
         if (!list_asta_allinglese.isEmpty()) {
             List<Asta_allinglese_DTO> listAsteAllingleseDTO = new ArrayList<>();
             for (Asta_allinglese asta : list_asta_allinglese) {
-                //Asta_allinglese_DTO astaDTO = convertAsta_allingleseDTO(asta);
                 Asta_allinglese_DTO astaDTO = convertiDaModelAaDto(asta);
                 listAsteAllingleseDTO.add(astaDTO);
             }
             return listAsteAllingleseDTO;
         } else {
-            System.out.println("Non sono state trovate aste all'inglese");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @GetMapping("/getAste_allingleseNuove")
@@ -58,16 +52,13 @@ public class Asta_allingleseController {
             }
             return listAsteAllingleseDTO;
         } else {
-            System.out.println("Non sono state trovate aste all'inglese");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
     @GetMapping("/getAste_allingleseNomeCategoria")
     public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
-        System.out.println("entrato in getAsteAllIngleseNomeCategoria con lista : " + nomiCategorie);
         Set<Asta_allinglese> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
@@ -100,11 +91,9 @@ public class Asta_allingleseController {
             }
             return listAsteAllingleseDTO;
         } else {
-            System.out.println("Non sono state trovate aste all'inglese");
             return new ArrayList<>();
         }
 
-        //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
 
@@ -151,7 +140,6 @@ public class Asta_allingleseController {
             Integer numeroRitorno = i_asta_allinglese_service.partecipaAstaInglese(idAstaInglese, indirizzo_email, offertaF, orario, stato);
             return numeroRitorno;
         }catch (Exception e){
-            e.printStackTrace();
             return 0;
         }
     }
@@ -162,7 +150,6 @@ public class Asta_allingleseController {
             Asta_allinglese_DTO astaRecuperataDTO = convertiDaModelAaDto(astaRecuperata);
             return astaRecuperataDTO;
         }catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -172,7 +159,6 @@ public class Asta_allingleseController {
             Integer verifica = i_asta_allinglese_service.verificaAstaIngleseInPreferiti(indirizzo_email, idAstaInglese);
             return verifica;
         }catch (Exception e){
-            e.printStackTrace();
             return -1;
         }
     }
@@ -182,7 +168,6 @@ public class Asta_allingleseController {
             Integer inserimento = i_asta_allinglese_service.inserimentoAstaInPreferiti(idAstaInglese,indirizzo_email);
             return inserimento;
         }catch (Exception e){
-            e.printStackTrace();
             return -1;
         }
     }
@@ -192,7 +177,6 @@ public class Asta_allingleseController {
             Integer rimozione = i_asta_allinglese_service.eliminazioneAstaInPreferiti(idAstaInglese,indirizzo_email);
             return rimozione;
         }catch (Exception e){
-            e.printStackTrace();
             return -1;
         }
     }
@@ -211,7 +195,6 @@ public class Asta_allingleseController {
                 return new ArrayList<>();
             }
         }catch (Exception e){
-            e.printStackTrace();
             return new ArrayList<>();
         }
     }
@@ -238,8 +221,6 @@ public class Asta_allingleseController {
             }
             return id;
         }catch (Exception e){
-            System.out.println("eccezione in inserimento aste inglesi");
-            e.printStackTrace();
             return 0L;
         }
     }
@@ -251,12 +232,10 @@ public class Asta_allingleseController {
             String email_vincente = null;
             email_vincente = i_asta_allinglese_service.getEmailVincente(idAstaInglese);
             if(email_vincente!=null){
-                System.out.println("email recuperata"+ email_vincente);
                 return email_vincente.equals(indirizzo_email);
             }
            return false;
         }catch (Exception e){
-            e.printStackTrace();
             return false;
         }
     }
@@ -294,14 +273,7 @@ public class Asta_allingleseController {
 
     @Autowired
     private ModelMapper modelMapper;
-    // Metodo per convertire un Asta_allinglese in un Asta_allinglese_DTO
-    private Asta_allinglese_DTO convertAsta_allingleseDTO(Asta_allinglese asta_allinglese){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        Asta_allinglese_DTO asta_allinglese_DTO = new Asta_allinglese_DTO();
-        asta_allinglese_DTO = modelMapper.map(asta_allinglese, Asta_allinglese_DTO.class);
-        return asta_allinglese_DTO;
-    }
+
     private Asta_allinglese_DTO convertiDaModelAaDto(Asta_allinglese asta){
         String img = null;
         if(asta.getPath_immagineInglese()!=null) {
@@ -311,22 +283,13 @@ public class Asta_allingleseController {
                 asta.getIntervalloOfferteBaseInglese(),asta.getRialzoMinInglese(),asta.getPrezzoAttualeInglese(),asta.getCondizioneInglese(),asta.getIdVenditoreInglese());
         return astaDTO;
     }
-    private Asta_allinglese convertiDaDtoAModel(Asta_allinglese_DTO astaDTO){
-        byte[] img = null;
-        if(astaDTO.getPath_immagine()!=null) {
-            img = convertBase64ToByteArray(astaDTO.getPath_immagine());
-        }
-        Asta_allinglese asta = new Asta_allinglese(astaDTO.getNome(), astaDTO.getDescrizione(),img, astaDTO.getBaseAsta(),astaDTO.getIntervalloTempoOfferte(),
-                astaDTO.getIntervalloOfferteBase(),astaDTO.getRialzoMin(),astaDTO.getPrezzoAttuale(),astaDTO.getCondizione(),astaDTO.getId_venditore());
-        return asta;
-    }
+
 
     public static String convertByteArrayToBase64(byte[] byteArray) {
         return Base64.getEncoder().encodeToString(byteArray);
     }
     public static byte[] convertBase64ToByteArray(String base64String) {
         String base64SenzaSpazi = base64String.replaceAll("\\s+", "");
-        // Decodifica la stringa Base64 in un array di byte
         return Base64.getDecoder().decode(base64SenzaSpazi);
     }
 

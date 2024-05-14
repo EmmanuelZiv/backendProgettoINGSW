@@ -1,7 +1,6 @@
 package com.example.backendingsw.Repository;
 
 import com.example.backendingsw.Model.Asta_allinglese;
-import com.example.backendingsw.Model.SocialVenditore;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +15,6 @@ import java.util.List;
 @Repository
 public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese, Long> {
 
-//    @Query(value = "SELECT a FROM asta_allinglese a WHERE a.condizione = 'aperta' ORDER BY a.intervalloTempoOfferte ASC LIMIT 5")
-//    public List<Asta_allinglese> getAste_allingleseScadenzaRecente();
 
     List<Asta_allinglese> findFirst5ByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione);
 
@@ -28,10 +25,10 @@ public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese
 
 
     @Query("SELECT a FROM Asta_allinglese a WHERE a.condizione='aperta' AND a.idVenditore = :indirizzo_email")
-    public List<Asta_allinglese> findAsta_allingleseApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
+     List<Asta_allinglese> findAsta_allingleseApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Query("SELECT a FROM Asta_allinglese a WHERE a.condizione='chiusa' AND a.idVenditore = :indirizzo_email")
-    public List<Asta_allinglese> findAsta_allingleseChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
+     List<Asta_allinglese> findAsta_allingleseChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
 
     @Modifying

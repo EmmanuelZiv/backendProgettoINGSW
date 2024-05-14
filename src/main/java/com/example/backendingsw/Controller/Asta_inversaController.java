@@ -1,8 +1,6 @@
 package com.example.backendingsw.Controller;
 
-import com.example.backendingsw.DTO.Asta_alribasso_DTO;
 import com.example.backendingsw.DTO.Asta_inversa_DTO;
-import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Model.Asta_inversa;
 import com.example.backendingsw.Service.Interfaces.I_Asta_inversa_Service;
 import org.modelmapper.ModelMapper;
@@ -118,7 +116,6 @@ public class Asta_inversaController {
             int numeroRitorno = i_asta_inversa_service.partecipaAstaInversa(idAstaInversa, indirizzo_email, offertaF, orario, stato);
             return numeroRitorno;
         }catch (Exception e){
-            e.printStackTrace();
             return 0;
         }
     }
@@ -129,7 +126,6 @@ public class Asta_inversaController {
             Asta_inversa_DTO astaRecuperataDTO =convertiDaModelAaDto(astaRecuperata);
             return astaRecuperataDTO;
         }catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -140,7 +136,6 @@ public class Asta_inversaController {
             Integer verifica = i_asta_inversa_service.verificaAstaInversaInPreferiti(indirizzo_email, idAstaInversa);
             return verifica;
         }catch (Exception e){
-            e.printStackTrace();
             return -1;
         }
     }
@@ -150,7 +145,6 @@ public class Asta_inversaController {
             Integer inserimento = i_asta_inversa_service.inserimentoAstaInPreferiti(idAstaInversa,indirizzo_email);
             return inserimento;
         }catch (Exception e){
-            e.printStackTrace();
             return -1;
         }
     }
@@ -160,7 +154,6 @@ public class Asta_inversaController {
             Integer rimozione = i_asta_inversa_service.eliminazioneAstaInPreferiti(idAstaInversa,indirizzo_email);
             return rimozione;
         }catch (Exception e){
-            e.printStackTrace();
             return -1;
         }
     }
@@ -217,13 +210,11 @@ public class Asta_inversaController {
             }
             return id_asta;
         }catch (Exception e){
-            e.printStackTrace();
             return 0L;
         }
     }
     @GetMapping("/getEmailVincente/{indirizzo_email}/{idAstaInversa}")
     public Boolean getEmailVincente(@PathVariable String indirizzo_email,@PathVariable Long idAstaInversa){
-        System.out.println("entrato in getemail vincente con id e email: "+ idAstaInversa + ", " + indirizzo_email);
         try{
             String email_vincente = null;
             email_vincente = i_asta_inversa_service.getEmailVincente(idAstaInversa);
@@ -232,7 +223,6 @@ public class Asta_inversaController {
             }
             return false;
         }catch (Exception e){
-            e.printStackTrace();
             return false;
         }
     }
@@ -301,7 +291,6 @@ public class Asta_inversaController {
             Date parsedDate = dateFormat.parse(astaDTO.getDataDiScadenza());
             timestamp = new Timestamp(parsedDate.getTime());
         } catch (ParseException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
@@ -317,7 +306,6 @@ public class Asta_inversaController {
     }
     public static byte[] convertBase64ToByteArray(String base64String) {
         String base64SenzaSpazi = base64String.replaceAll("\\s+", "");
-        // Decodifica la stringa Base64 in un array di byte
         return Base64.getDecoder().decode(base64SenzaSpazi);
     }
 

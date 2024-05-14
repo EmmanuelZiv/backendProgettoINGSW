@@ -3,9 +3,9 @@ package com.example.backendingsw.Controller;
 
 import com.example.backendingsw.DTO.*;
 import com.example.backendingsw.Model.*;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.TopicManagementResponse;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -20,6 +20,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/utenteController")
 public class UtenteController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UtenteController.class);
 
     @Autowired
     @Qualifier("Impl_Utente_Service")
@@ -37,7 +39,6 @@ public class UtenteController {
                 return acquirente_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
         return null;
@@ -58,7 +59,7 @@ public class UtenteController {
                 return venditore_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
         }
 
         return null;
@@ -76,7 +77,7 @@ public class UtenteController {
         try {
             i_utente_service.updateAcquirente(acquirente_dto.getNome(),acquirente_dto.getCognome(), acquirente_dto.getBio(), acquirente_dto.getLink(), acquirente_dto.getAreageografica(), acquirente_dto.getIndirizzo_email());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error during updateAcquirente", e);
         }
     }
 
@@ -85,7 +86,7 @@ public class UtenteController {
         try {
             i_utente_service.updatePasswordAcquirente(password,indirizzo_email);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error during updatePasswordAcquirente", e);
         }
     }
 
@@ -94,7 +95,7 @@ public class UtenteController {
         try {
             i_utente_service.updateVenditore(venditore_dto.getNome(), venditore_dto.getCognome(), venditore_dto.getBio(), venditore_dto.getLink(), venditore_dto.getAreageografica(), venditore_dto.getIndirizzo_email());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error during updateVenditore", e);
         }
     }
 
@@ -103,58 +104,47 @@ public class UtenteController {
         try {
             i_utente_service.updatePasswordVenditore(password,indirizzo_email);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error during updatePasswordVenditore", e);
         }
     }
 
 
     @PutMapping("/setTokenAcquirente/{indirizzo_email}/{token}")
     public int setTokenAcquirente(@PathVariable String indirizzo_email, @PathVariable String token){
-        System.out.println("entrato in setTokenAcquirente, email e token: " + indirizzo_email + ", " + token);
         try{
             int valore = utenteRepository.createAndInsertTokenAcquirente(token,indirizzo_email);
             if (valore > 0) {
-                System.out.println("Token Acquirente inserito con successo nel database");
-
-
                 return valore;
             } else {
-                System.out.println("Errore durante l'inserimento del token Acquirente nel database");
                 return -1;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during setTokenAcquirente", e);
             return -1;
         }
     }
 
     @PutMapping("/removeTokenFromAcquirente/{indirizzo_email}")
     public int removeTokenFromAcquirente(@PathVariable String indirizzo_email){
-        System.out.println("entrato in removeTokenFromAcquirente, email: "  + indirizzo_email );
         try{
             int valore = utenteRepository.removeTokenFromAcquirente(indirizzo_email);
             if (valore > 0) {
-                System.out.println("Token Acquirente rimosso con successo dal database");
-
-
                 return valore;
             } else {
-                System.out.println("Errore durante la rimozione del token Acquirente nel database");
                 return -1;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during removeTokenFromAcquirente", e);
             return -1;
         }
     }
     @PutMapping("/setTokenVenditore/{indirizzo_email}/{token}")
     public int setTokenVenditore(@PathVariable String indirizzo_email, @PathVariable String token){
-        System.out.println("entrato in setTokenVenditore, email e token: " + indirizzo_email + ", " + token);
         try{
             int valore = utenteRepository.createAndInsertTokenVenditore(token, indirizzo_email);
             return valore;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during setTokenVenditore", e);
             return -1;
         }
     }
@@ -164,13 +154,12 @@ public class UtenteController {
         try{
             int valore = utenteRepository.removeTokenFromVenditore( indirizzo_email);
             if (valore > 0) {
-
                 return valore;
             } else {
                 return -1;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during removeTokenFromVenditore", e);
             return -1;
         }
     }
@@ -184,24 +173,21 @@ public class UtenteController {
                 return acquirente_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during loginAcquirenteConToken", e);
         }
         return null;
     }
 
     @GetMapping("/loginVenditoreConToken/{token}")
     public Venditore_DTO loginVenditoreConToken(@PathVariable String token) throws ResponseStatusException{
-        System.out.println("login venditore con token" + token);
-
         try {
             Optional<Venditore> venditore = i_utente_service.loginVenditoreConToken(token);
-            System.out.println("venditore no!");
             if(venditore.isPresent()) {
                 Venditore_DTO venditore_dto = convertVenditoreDto(venditore.get());
                 return venditore_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during loginVenditoreConToken", e);
         }
 
         return null;
@@ -218,7 +204,7 @@ public class UtenteController {
                 return acquirente_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during getAcquirenteByIndirizzoEmail", e);
         }
         return null;
     }
@@ -231,7 +217,7 @@ public class UtenteController {
                 return venditore_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during getVenditoreByIndirizzoEmail", e);
         }
 
         return null;
@@ -240,14 +226,7 @@ public class UtenteController {
 
     @Autowired
     private ModelMapper modelMapper;
-    private Acquirente convertAcquirenteEntity(Acquirente_DTO acquirente_dto){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        Acquirente acquirente = new Acquirente();
-        acquirente = modelMapper.map(acquirente_dto, Acquirente.class);
 
-        return acquirente;
-    }
     private Acquirente_DTO convertAcquirenteDto(Acquirente acquirente){
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
@@ -264,14 +243,7 @@ public class UtenteController {
         venditore_dto = modelMapper.map(venditore, Venditore_DTO.class);
         return venditore_dto;
     }
-    // Metodo per convertire un Venditore_DTO in un Venditore
-    private Venditore convertVenditoreEntity(Venditore_DTO venditore_dto){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        Venditore venditore = new Venditore();
-        venditore = modelMapper.map(venditore_dto, Venditore.class);
-        return venditore;
-    }
+
 
 
     @GetMapping("/registrazioneAcquirenteDoppio/{indirizzo_email}")
@@ -284,7 +256,7 @@ public class UtenteController {
                 return acquirente_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during ricercaInAcquirente", e);
         }
         return null;
     }
@@ -298,7 +270,7 @@ public class UtenteController {
                 return venditore_dto;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during ricercaInVenditore", e);
         }
 
         return null;
@@ -311,7 +283,7 @@ public class UtenteController {
             i_utente_service.insertVenditore(venditore_dto.getNome(), venditore_dto.getCognome(),venditore_dto.getIndirizzo_email(),venditore_dto.getPassword(),venditore_dto.getBio(),venditore_dto.getLink(),venditore_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during insertVenditore", e);
             return null;
         }
     }
@@ -322,7 +294,7 @@ public class UtenteController {
             i_utente_service.insertAcquirente(acquirente_dto.getNome(), acquirente_dto.getCognome(),acquirente_dto.getIndirizzo_email(),acquirente_dto.getPassword(),acquirente_dto.getBio(),acquirente_dto.getLink(),acquirente_dto.getAreageografica());
             return 1L;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during insertAcquirente", e);
             return null;
         }
     }
@@ -332,9 +304,8 @@ public class UtenteController {
             for(String categoria:lista_categorie) {
                 i_utente_service.insertCategorieAcquirente(indirizzo_email, categoria);
             }
-            return ;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during saveCategorieAcquirente", e);
         }
     }
 
@@ -344,9 +315,8 @@ public class UtenteController {
             for(String categoria:lista_categorie) {
                 i_utente_service.insertCategorieVenditore(indirizzo_email, categoria);
             }
-            return ;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error during saveCategorieVenditore", e);
         }
     }
 }

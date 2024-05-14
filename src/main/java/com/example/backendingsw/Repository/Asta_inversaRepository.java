@@ -1,6 +1,5 @@
 package com.example.backendingsw.Repository;
 
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_inversa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,10 +21,10 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
     List<Asta_inversa> findByCategorieNomeAndCondizioneAperta(String nomeCategoria);
 
     @Query("SELECT a FROM Asta_inversa a WHERE a.condizione='aperta' AND a.id_acquirente = :indirizzo_email")
-    public List<Asta_inversa> findAsta_inversaApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
+     List<Asta_inversa> findAsta_inversaApertaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Query("SELECT a FROM Asta_inversa a WHERE a.condizione='chiusa' AND a.id_acquirente = :indirizzo_email")
-    public List<Asta_inversa> findAsta_inversaChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
+     List<Asta_inversa> findAsta_inversaChiusaByEmail(@Param("indirizzo_email") String indirizzo_email);
 
     @Modifying
     @Transactional
@@ -56,11 +55,6 @@ public interface Asta_inversaRepository extends JpaRepository<Asta_inversa, Long
     @Query(value = "SELECT aa.* FROM preferitiVenditore pv JOIN asta_inversa aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'inversa'", nativeQuery = true)
     ArrayList<Asta_inversa> getAsteInversaPreferite(String indirizzo_email);
 
-//    @Modifying
-//    @Transactional
-//    @Query(value = "INSERT INTO asta_inversa (nome,descizione,path_immagine,prezzoMax,prezzoAttuale,dataDiScadenza,condizione,id_acquirente) VALUES (?1, ?2, ?3, ?4,?5,?6,?7,?8)", nativeQuery = true)
-//    Long insertAstaInversa(String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente);
-//
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO AsteCategorieInversa (id_asta_inversa, nomeCategoria) VALUES (?1, ?2)",nativeQuery = true)

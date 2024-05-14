@@ -7,15 +7,12 @@ import com.google.firebase.FirebaseOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -61,16 +58,14 @@ public class NotificationListenerService {
                 avviaServizioNotificaFirebase();
                 logger.info("Servizio di notifica Firebase avviato con successo.");
             } catch (IOException e) {
-                System.out.println("Errore nell'avvio del servizio di notifica Firebase");
-                e.printStackTrace();
+                logger.error("Errore nell'avvio del servizio di notifica Firebase", e);
                 throw new RuntimeException(e);
             }
 
             // Avvio del thread per la ricezione delle notifiche
             startNotificationListenerThread();
         } catch (SQLException e) {
-            e.printStackTrace();
-            // Gestione dell'errore
+            logger.error("Error during init notification listener service", e);
         }
     }
 
@@ -82,8 +77,7 @@ public class NotificationListenerService {
                     processVenditoreNotifications();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
-                // Gestione dell'errore
+                logger.error("Error during startNotificationListenerThread", e);
             }
         });
         notificationListenerThread.start();
@@ -140,7 +134,7 @@ public class NotificationListenerService {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error during cleanUp notification listener service", e);
             // Gestione dell'errore
         }
     }
