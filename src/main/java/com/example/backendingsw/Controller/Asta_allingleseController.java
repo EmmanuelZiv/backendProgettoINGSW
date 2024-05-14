@@ -291,7 +291,6 @@ public class Asta_allingleseController {
 
     }
 
-
     @Autowired
     private ModelMapper modelMapper;
     // Metodo per convertire un Asta_allinglese in un Asta_allinglese_DTO
