@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -143,11 +144,13 @@ public class NotificationListenerService {
             // Gestione dell'errore
         }
     }
-    public static void avviaServizioNotificaFirebase() throws IOException {
-        Resource resource = new ClassPathResource("progettoingsw2324-firebase-adminsdk-j6oq4-e1fc5c6973.json");
-        InputStream inputStream = resource.getInputStream();
+
+    @Value("${private_key_firebase}")
+    private String firebasePrivateKey;
+
+    public void avviaServizioNotificaFirebase() throws IOException {
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(inputStream))
+                .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream(firebasePrivateKey.getBytes())))
                 .build();
         FirebaseApp.initializeApp(options);
     }
