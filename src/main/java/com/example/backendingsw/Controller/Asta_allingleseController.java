@@ -65,8 +65,9 @@ public class Asta_allingleseController {
         //else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Errore: user name o password errata");
     }
 
-    @GetMapping("/getAste_allingleseNomeCategoria/{nomiCategorie}")
+    @GetMapping("/getAste_allingleseNomeCategoria")
     public List<Asta_allinglese_DTO> getAste_allingleseNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
+        System.out.println("entrato in getAsteAllIngleseNomeCategoria con lista : " + nomiCategorie);
         Set<Asta_allinglese> asteUniche = new HashSet<>();
 
         for (String nomeCategoria : nomiCategorie) {
@@ -215,7 +216,7 @@ public class Asta_allingleseController {
         }
     }
 
-    @PostMapping("/insertAstaInglese/{asta_inglese}/{lista_categorie}")
+    @PostMapping("/insertAstaInglese")
     public Long insertAstaInglese(@RequestBody Asta_allinglese_DTO asta_inglese_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
             Long lastInsertedId = asta_allingleseRepository.getLastInsertedId();
@@ -260,7 +261,7 @@ public class Asta_allingleseController {
         }
     }
 
-    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    @GetMapping("/getAstePerRicerca")
     public ArrayList<Asta_allinglese_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         ArrayList<Asta_allinglese> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){

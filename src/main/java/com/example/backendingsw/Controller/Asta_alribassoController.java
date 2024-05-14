@@ -35,7 +35,7 @@ public class Asta_alribassoController {
         }
     }
 
-    @GetMapping("/getAste_alribassoNomeCategoria/{nomiCategorie}")
+    @GetMapping("/getAste_alribassoNomeCategoria")
     public List<Asta_alribasso_DTO> getAste_alribassoNomeCategoria(@RequestParam("nomiCategorie") ArrayList<String> nomiCategorie){
         Set<Asta_alribasso> asteUniche = new HashSet<>();
 
@@ -161,17 +161,18 @@ public class Asta_alribassoController {
         }
 
     }
-    @PostMapping("/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
+    @PostMapping("/insertAstaRibasso")
     public Long insertAstaRibasso(@RequestBody Asta_alribasso_DTO asta_ribasso_dto, @RequestParam(value = "lista_categorie", required = false) ArrayList<String> lista_categorie){
         try{
-
-            String intervalString = asta_ribasso_dto.getIntervalloDecrementaleDTO() + " MINUTES'";
+            System.out.println("entrato in insert asta ribasso con valori : " + asta_ribasso_dto.getNome() + asta_ribasso_dto.getPrezzoAttuale() + asta_ribasso_dto.getIntervalloDecrementale());
+            System.out.println("categorie numero : " + lista_categorie.size());
+            String intervalString = asta_ribasso_dto.getIntervalloDecrementale() + " MINUTES'";
             byte[] img = null;
-            if(asta_ribasso_dto.getPath_immagineDTO()!=null) {
-                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagineDTO());
+            if(asta_ribasso_dto.getPath_immagine()!=null) {
+                img = convertBase64ToByteArray(asta_ribasso_dto.getPath_immagine());
             }
-            i_asta_alribasso_service.insert(asta_ribasso_dto.getNomeDTO(), asta_ribasso_dto.getDescrizioneDTO(),img,asta_ribasso_dto.getPrezzoBaseDTO(),intervalString,
-                    asta_ribasso_dto.getDecrementoAutomaticoCifraDTO(),asta_ribasso_dto.getPrezzoMinDTO(),asta_ribasso_dto.getPrezzoAttualeDTO(),asta_ribasso_dto.getCondizioneDTO(),asta_ribasso_dto.getId_venditoreDTO());
+            i_asta_alribasso_service.insert(asta_ribasso_dto.getNome(), asta_ribasso_dto.getDescrizione(),img,asta_ribasso_dto.getPrezzoBase(),intervalString,
+                    asta_ribasso_dto.getDecrementoAutomaticoCifra(),asta_ribasso_dto.getPrezzoMin(),asta_ribasso_dto.getPrezzoAttuale(),asta_ribasso_dto.getCondizione(),asta_ribasso_dto.getId_venditore());
 
             Long id_asta = i_asta_alribasso_service.getLastInsertedId();
 
@@ -187,7 +188,7 @@ public class Asta_alribassoController {
         }
     }
 
-    @GetMapping("/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    @GetMapping("/getAstePerRicerca")
     public ArrayList<Asta_alribasso_DTO> getAstePerRicerca(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "ordinamento") String ordinamento,@RequestParam(value = "nomiCategorie", required = false) ArrayList<String> nomiCategorie){
         ArrayList<Asta_alribasso> asteTrovate = new ArrayList<>();
         if(nome!=null && !nome.isEmpty() && nomiCategorie != null && !nomiCategorie.isEmpty() && ordinamento != null && !ordinamento.isEmpty()){
@@ -239,11 +240,11 @@ public class Asta_alribassoController {
     }
     private Asta_alribasso convertiDaDtoAModel(Asta_alribasso_DTO astaDTO){
         byte[] img = null;
-        if(astaDTO.getPath_immagineDTO()!=null) {
-            img = convertBase64ToByteArray(astaDTO.getPath_immagineDTO());
+        if(astaDTO.getPath_immagine()!=null) {
+            img = convertBase64ToByteArray(astaDTO.getPath_immagine());
         }
-        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNomeDTO(), astaDTO.getDescrizioneDTO(),img, astaDTO.getPrezzoBaseDTO(),astaDTO.getIntervalloDecrementaleDTO(),
-                astaDTO.getIntervalloDecrementaleDTO(),astaDTO.getDecrementoAutomaticoCifraDTO(),astaDTO.getPrezzoMinDTO(),astaDTO.getPrezzoAttualeDTO(),astaDTO.getCondizioneDTO(),astaDTO.getId_venditoreDTO());
+        Asta_alribasso asta = new Asta_alribasso(astaDTO.getNome(), astaDTO.getDescrizione(),img, astaDTO.getPrezzoBase(),astaDTO.getIntervalloDecrementale(),
+                astaDTO.getIntervalloDecrementale(),astaDTO.getDecrementoAutomaticoCifra(),astaDTO.getPrezzoMin(),astaDTO.getPrezzoAttuale(),astaDTO.getCondizione(),astaDTO.getId_venditore());
         return asta;
     }
 
