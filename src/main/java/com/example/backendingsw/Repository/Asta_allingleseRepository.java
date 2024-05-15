@@ -16,12 +16,12 @@ import java.util.List;
 public interface Asta_allingleseRepository extends JpaRepository<Asta_allinglese, Long> {
 
 
-    List<Asta_allinglese> findFirst5ByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione);
+    List<Asta_allinglese> findFirst15ByCondizioneOrderByIntervalloTempoOfferteAsc(String condizione);
 
-    List<Asta_allinglese> findFirst5ByCondizioneOrderByIdDesc(String condizione);
+    List<Asta_allinglese> findFirst15ByCondizioneOrderByIdDesc(String condizione);
 
-    @Query("SELECT a FROM Asta_allinglese a JOIN AsteCategorieAllInglese ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria ORDER BY a.intervalloTempoOfferte ASC ")
-    List<Asta_allinglese> findFirst5ByCategorieNomeAndCondizioneAperta(String nomeCategoria);
+    @Query("SELECT a FROM Asta_allinglese a JOIN AsteCategorieAllInglese ac ON a.id = ac.asta.id WHERE a.condizione = 'aperta' AND ac.nomeCategoria = :nomeCategoria ORDER BY a.intervalloTempoOfferte ASC LIMIT 15")
+    List<Asta_allinglese> findFirst15ByCategorieNomeAndCondizioneAperta(String nomeCategoria);
 
 
     @Query("SELECT a FROM Asta_allinglese a WHERE a.condizione='aperta' AND a.idVenditore = :indirizzo_email")

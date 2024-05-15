@@ -1,6 +1,5 @@
 package com.example.backendingsw.Service.Implementations;
 
-import com.example.backendingsw.Model.Asta_allinglese;
 import com.example.backendingsw.Model.Asta_alribasso;
 import com.example.backendingsw.Repository.Asta_alribassoRepository;
 import com.example.backendingsw.Service.Interfaces.I_Asta_alribasso_Service;
@@ -17,11 +16,11 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
 
     @Override
     public List<Asta_alribasso> findByCondizioneOrderByIdDesc(String condizione){
-        return asta_alribassoRepository.findByCondizioneOrderByIdDesc("aperta");
+        return asta_alribassoRepository.findFirst15ByCondizioneOrderByIdDesc("aperta");
     }
     @Override
     public List<Asta_alribasso> findByCategorieNomeAndCondizioneAperta(String nomeCategoria){
-        return asta_alribassoRepository.findByCategorieNomeAndCondizioneAperta(nomeCategoria);
+        return asta_alribassoRepository.findFirst15ByCategorieNomeAndCondizioneAperta(nomeCategoria);
     }
 
     @Override
