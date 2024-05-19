@@ -37,7 +37,6 @@ public class Impl_Asta_alribasso_Service implements I_Asta_alribasso_Service {
         try{
             return asta_alribassoRepository.acquistaAstaAlRibasso(idAstaAlRibasso, indirizzo_email, prezzoAcquisto);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Errore durante l'inserimento dell'asta al ribasso nel database.");
         }
     }
